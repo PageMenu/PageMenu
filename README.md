@@ -34,7 +34,7 @@ First you will have to create a view controller that is supposed to serve as the
 
 ## Credits ##
 
-* Niklas Fahl - iOS Developer
+* <a href="https://github.com/fahlout">Niklas Fahl</a> - iOS Developer
 
 ## License ##
 
