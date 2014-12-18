@@ -3,10 +3,6 @@ PageMenu
 
 A paging menu controller built from other view controllers allowing the user to switch between controller views with an easy tap or swipe gesture
 
-<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen1.png" alt="PageMenuScreen1">
-<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen2.png" alt="PageMenuScreen2">
-<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen3.png" alt="PageMenuScreen3">
-
 
 ## Installation
 
