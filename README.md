@@ -33,6 +33,19 @@ First you will have to create a view controller that is supposed to serve as the
 var pageMenu : CAPSPageMenu?
 ```
 
+3. Add the following code in the viewDidAppear function in your view controller
+
+```objective-c
+// Array to keep track of controllers in page menu
+var controllerArray : [UIViewController] = []
+
+// Create variables for all view controllers you want to put in the page menu, initialize them, and add each to the controller array. 
+// Make sure the title property of all view controllers is set
+// Example:
+var controller : TestViewController = TestViewController(nibName: "TestViewController", bundle: nil)
+controller.title = "SAMPLE TITLE"
+controllerArray.append(controller)
+```
 
 ## Future Work
 
