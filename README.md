@@ -22,8 +22,7 @@ First you will have to create a view controller that is supposed to serve as the
 
 
 ```objective-c
-// Push CAPSWebView initializing just secondary color and url
-self.testNavigationController!.pushViewController(CAPSWebView(url: "google.com", primary: nil, secondary: UIColor.grayColor()), animated: false)
+// TODO: Code samples
 ```
 
 
