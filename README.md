@@ -32,6 +32,10 @@ First you will have to create a view controller that is supposed to serve as the
 * Landscape support
 * etc.
 
+## Credits ##
+
+* Niklas Fahl - iOS Developer
+
 ## License ##
 
 Copyright (c) 2014 The Board of Trustees of The University of Alabama
