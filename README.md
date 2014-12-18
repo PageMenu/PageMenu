@@ -29,13 +29,13 @@ First you will have to create a view controller that is supposed to serve as the
 
 2)  Add a property for CAPSPageMenu in your base view controller
 
-```objective-c
+```swift
 var pageMenu : CAPSPageMenu?
 ```
 
 3)  Add the following code in the viewDidAppear function in your view controller
 
-```objective-c
+```swift
 // Array to keep track of controllers in page menu
 var controllerArray : [UIViewController] = []
 
