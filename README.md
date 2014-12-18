@@ -72,7 +72,7 @@ self.view.addSubview(pageMenu!.view)
 
 - [ ] No xib file required
 - [ ] Objective-C version
-- [ ] Landscape support
+- [ ] Screen rotation support
 
 ## Credits ##
 
