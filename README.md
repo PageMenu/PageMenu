@@ -7,6 +7,10 @@ A paging menu controller built from other view controllers allowing the user to 
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen2.png" alt="PageMenuScreen2">
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen3.png" alt="PageMenuScreen3">
 
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
 
 ## Installation
 
