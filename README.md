@@ -20,7 +20,7 @@ The only class required for CAPSPageMenu is located in the CAPSPageMenu folder i
 
 * <code>CAPSPageMenu.swift<code>
 
-## How to use CAPSWebView
+## How to use CAPSPageMenu
 
 First you will have to create a view controller that is supposed to serve as the base of the page menu. This can be a view controller with its xib file as a separate file as well as having its xib file in storyboard. Following this you will have to go through a few simple steps outlined below in order to get everything up and running.
 
