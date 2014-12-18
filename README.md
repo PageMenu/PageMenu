@@ -34,9 +34,9 @@ First you will have to create a view controller that is supposed to serve as the
 
 ## Future Work
 
-[ ] No xib file required
-[ ] Objective-C version
-[ ] Landscape support
+- [ ] No xib file required
+- [ ] Objective-C version
+- [ ] Landscape support
 
 ## Credits ##
 
