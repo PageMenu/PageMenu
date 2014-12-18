@@ -16,9 +16,10 @@ Coming in the future.
 
 **Manual Installation**
 
-The only class required for CAPSPageMenu is located in the CAPSPageMenu folder in the root of this repository as listed below:
+The classes required for CAPSPageMenu are located in the CAPSPageMenu folder in the root of this repository as listed below:
 
 * <code>CAPSPageMenu.swift<code>
+* <code>CAPSPageMenu.xib<code>
 
 ## How to use CAPSPageMenu
 
@@ -33,9 +34,9 @@ First you will have to create a view controller that is supposed to serve as the
 
 ## Future Work
 
-* Objective-C version
-* Landscape support
-* etc.
+[] No xib file required
+[] Objective-C version
+[] Landscape support
 
 ## Credits ##
 
