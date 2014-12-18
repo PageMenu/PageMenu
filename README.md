@@ -25,15 +25,15 @@ The classes required for CAPSPageMenu are located in the CAPSPageMenu folder in 
 
 First you will have to create a view controller that is supposed to serve as the base of the page menu. This can be a view controller with its xib file as a separate file as well as having its xib file in storyboard. Following this you will have to go through a few simple steps outlined below in order to get everything up and running.
 
-1) Add the files listed in the installation section to your project
+1)  Add the files listed in the installation section to your project
 
-2) Add a property for CAPSPageMenu in your base view controller
+2)  Add a property for CAPSPageMenu in your base view controller
 
 ```objective-c
 var pageMenu : CAPSPageMenu?
 ```
 
-3) Add the following code in the viewDidAppear function in your view controller
+3)  Add the following code in the viewDidAppear function in your view controller
 
 ```objective-c
 // Array to keep track of controllers in page menu
@@ -45,6 +45,25 @@ var controllerArray : [UIViewController] = []
 var controller : TestViewController = TestViewController(nibName: "TestViewController", bundle: nil)
 controller.title = "SAMPLE TITLE"
 controllerArray.append(controller)
+
+// Initialize page menu with the controllers
+pageMenu = CAPSPageMenu(viewControllers: controllerArray)
+
+// Set frame for page menu
+// Example:
+pageMenu!.view.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
+
+// Customize page menu to your liking (optional) or use default settings
+// Example:
+pageMenu!.scrollMenuBackgroundColor = UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0)
+pageMenu!.viewBackgroundColor = UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)
+pageMenu!.selectionIndicatorColor = UIColor.orangeColor()
+pageMenu!.bottomMenuHairlineColor = UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0)
+pageMenu!.menuItemFont = UIFont(name: "HelveticaNeue", size: 13.0)
+pageMenu!.menuHeight = 40.0
+
+// Lastly add page menu as subview of base view controller view
+self.view.addSubview(pageMenu!.view)
 ```
 
 ## Future Work
