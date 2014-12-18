@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CAPSPageMenu" customModule="NFTopMenuController" customModuleProvider="target">
+            <connections>
+                <outlet property="controllerScrollView" destination="plh-rY-xsh" id="OzA-LQ-Hwq"/>
+                <outlet property="menuHeightConstraint" destination="juj-1G-e63" id="7zN-Ti-z5b"/>
+                <outlet property="menuScrollView" destination="ab8-b1-SGM" id="Hdi-0L-C6s"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ab8-b1-SGM">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="juj-1G-e63"/>
+                    </constraints>
+                </scrollView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plh-rY-xsh">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="ab8-b1-SGM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1Ln-Oj-MEA"/>
+                <constraint firstAttribute="trailing" secondItem="ab8-b1-SGM" secondAttribute="trailing" id="1gh-sp-qNt"/>
+                <constraint firstAttribute="trailing" secondItem="plh-rY-xsh" secondAttribute="trailing" id="2QT-Qm-E7S"/>
+                <constraint firstAttribute="bottom" secondItem="plh-rY-xsh" secondAttribute="bottom" id="GV3-kG-kQB"/>
+                <constraint firstItem="plh-rY-xsh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Utc-Xr-uWq"/>
+                <constraint firstItem="plh-rY-xsh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fO0-7C-YCY"/>
+                <constraint firstAttribute="bottom" secondItem="ab8-b1-SGM" secondAttribute="bottom" id="l66-pQ-rpS"/>
+                <constraint firstItem="ab8-b1-SGM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xGN-8K-xkn"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="l66-pQ-rpS"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="336" y="733"/>
+        </view>
+    </objects>
+</document>
