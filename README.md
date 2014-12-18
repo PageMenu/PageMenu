@@ -25,15 +25,15 @@ The classes required for CAPSPageMenu are located in the CAPSPageMenu folder in 
 
 First you will have to create a view controller that is supposed to serve as the base of the page menu. This can be a view controller with its xib file as a separate file as well as having its xib file in storyboard. Following this you will have to go through a few simple steps outlined below in order to get everything up and running.
 
-1. Add the files listed in the installation section to your project
+1) Add the files listed in the installation section to your project
 
-2. Add a property for CAPSPageMenu in your base view controller
+2) Add a property for CAPSPageMenu in your base view controller
 
 ```objective-c
 var pageMenu : CAPSPageMenu?
 ```
 
-3. Add the following code in the viewDidAppear function in your view controller
+3) Add the following code in the viewDidAppear function in your view controller
 
 ```objective-c
 // Array to keep track of controllers in page menu
