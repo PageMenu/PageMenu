@@ -265,7 +265,6 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             
             // Calculate tapped page
             var itemIndex : Int = Int((tappedPoint.x - menuMargin / 2) / (menuMargin + menuItemWidth))
-            println(itemIndex)
             
             // Update page if changed
             if itemIndex != currentPageIndex {

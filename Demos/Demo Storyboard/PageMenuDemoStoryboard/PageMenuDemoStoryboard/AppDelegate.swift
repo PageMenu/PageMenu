@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  NFTopMenuController
+//  PageMenuDemoStoryboard
 //
-//  Created by Niklas Fahl on 12/16/14.
-//  Copyright (c) 2014 Niklas Fahl. All rights reserved.
+//  Created by Niklas Fahl on 12/19/14.
+//  Copyright (c) 2014 CAPS. All rights reserved.
 //
 
 import UIKit

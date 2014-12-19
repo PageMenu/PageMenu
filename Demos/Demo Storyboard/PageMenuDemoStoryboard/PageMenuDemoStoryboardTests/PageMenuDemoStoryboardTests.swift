@@ -1,15 +1,15 @@
 //
-//  NFTopMenuControllerTests.swift
-//  NFTopMenuControllerTests
+//  PageMenuDemoStoryboardTests.swift
+//  PageMenuDemoStoryboardTests
 //
-//  Created by Niklas Fahl on 12/16/14.
-//  Copyright (c) 2014 Niklas Fahl. All rights reserved.
+//  Created by Niklas Fahl on 12/19/14.
+//  Copyright (c) 2014 CAPS. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class NFTopMenuControllerTests: XCTestCase {
+class PageMenuDemoStoryboardTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
