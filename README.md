@@ -37,10 +37,10 @@ var pageMenu : CAPSPageMenu?
 // Array to keep track of controllers in page menu
 var controllerArray : [UIViewController] = []
 
-// Create variables for all view controllers you want to put in the page menu, initialize them, and add each to the controller array. 
+// Create variables for all view controllers you want to put in the page menu, initialize them, and add each to the controller array. (Can be any UIViewController subclass)
 // Make sure the title property of all view controllers is set
 // Example:
-var controller : TestViewController = TestViewController(nibName: "TestViewController", bundle: nil)
+var controller : UIViewController = UIViewController(nibName: "controllerNibName", bundle: nil)
 controller.title = "SAMPLE TITLE"
 controllerArray.append(controller)
 
