@@ -15,7 +15,7 @@ Coming once Swift support gets added to Cocoa Pods.
 
 **Manual Installation**
 
-The only class required for CAPSPageMenu is located in the CAPSPageMenu folder in the root of this repository as listed below:
+The class file required for CAPSPageMenu is located in the CAPSPageMenu folder in the root of this repository as listed below:
 
 * <code>CAPSPageMenu.swift<code>
 
