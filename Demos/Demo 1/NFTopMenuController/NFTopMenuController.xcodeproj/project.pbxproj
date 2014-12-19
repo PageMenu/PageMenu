@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9794CF551A448709001BE084 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9794CF541A448709001BE084 /* CAPSPageMenu.swift */; };
 		9E1FBDDB1A4082F600AB30BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1FBDDA1A4082F600AB30BE /* AppDelegate.swift */; };
 		9E1FBDDD1A4082F600AB30BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1FBDDC1A4082F600AB30BE /* ViewController.swift */; };
 		9E1FBDE01A4082F600AB30BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1FBDDE1A4082F600AB30BE /* Main.storyboard */; };
@@ -65,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9794CF541A448709001BE084 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../CAPSPageMenu/CAPSPageMenu.swift; sourceTree = "<group>"; };
 		9E1FBDD51A4082F600AB30BE /* NFTopMenuController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NFTopMenuController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1FBDD91A4082F600AB30BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E1FBDDA1A4082F600AB30BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 		9EF6E7101A4252BC001622DE /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9794CF541A448709001BE084 /* CAPSPageMenu.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				9EB362A51A422889002886E2 /* TestCollectionViewController.swift in Sources */,
 				9EF6E73B1A426370001622DE /* MoodCollectionViewCell.swift in Sources */,
 				9E1FBDDB1A4082F600AB30BE /* AppDelegate.swift in Sources */,
+				9794CF551A448709001BE084 /* CAPSPageMenu.swift in Sources */,
 				9EF6E71A1A42543A001622DE /* FriendTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -261,4 +261,3 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         }
     }
 }
-
