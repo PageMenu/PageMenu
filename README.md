@@ -66,13 +66,26 @@ pageMenu!.menuHeight = 40.0
 self.view.addSubview(pageMenu!.view)
 ```
 
-4) You should now be ready to use CAPSPageMenu!! 🎉
+4)  You should now be ready to use CAPSPageMenu!! 🎉
+
+## Customization
+
+There are many ways you are able to customize page menu for your needs and there will be more customizations coming in the future to make sure page menu conforms to your app design
+
+1)  Colors
+
+    -
+
+2)  Dimensions
+
+3)  Others
 
 ## Future Work
 
 - [ ] No xib file required
 - [ ] Objective-C version
 - [ ] Screen rotation support
+- [ ] More customization options
 
 ## Credits ##
 
