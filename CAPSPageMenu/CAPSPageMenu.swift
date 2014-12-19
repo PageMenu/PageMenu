@@ -146,6 +146,12 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             menuBottomHairline.backgroundColor = bottomMenuHairlineColor
         }
         
+        // Disable scroll bars
+        menuScrollView.showsHorizontalScrollIndicator = false
+        menuScrollView.showsVerticalScrollIndicator = false
+        controllerScrollView.showsHorizontalScrollIndicator = false
+        controllerScrollView.showsVerticalScrollIndicator = false
+        
         // Set background color behind scroll views and for menu scroll view
         self.view.backgroundColor = viewBackgroundColor
         menuScrollView.backgroundColor = scrollMenuBackgroundColor
@@ -206,8 +212,10 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         }
         
         // Set selected color for title label of selected menu item
-        if menuItems[currentPageIndex].titleLabel != nil {
-            menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
+        if menuItems.count > 0 {
+            if menuItems[currentPageIndex].titleLabel != nil {
+                menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
+            }
         }
         
         // Configure selection indicator view
@@ -247,9 +255,11 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 self.selectionIndicatorView.frame = CGRectMake((self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin, self.selectionIndicatorView.frame.origin.y, self.selectionIndicatorView.frame.width, self.selectionIndicatorView.frame.height)
                 
                 // Switch newly selected menu item title label to selected color and old one to unselected color
-                if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
-                    self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
-                    self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                if self.menuItems.count > 0 {
+                    if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
+                        self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
+                        self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                    }
                 }
             })
         }
