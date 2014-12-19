@@ -37,7 +37,9 @@ var pageMenu : CAPSPageMenu?
 // Array to keep track of controllers in page menu
 var controllerArray : [UIViewController] = []
 
-// Create variables for all view controllers you want to put in the page menu, initialize them, and add each to the controller array. (Can be any UIViewController subclass)
+// Create variables for all view controllers you want to put in the 
+// page menu, initialize them, and add each to the controller array. 
+// (Can be any UIViewController subclass)
 // Make sure the title property of all view controllers is set
 // Example:
 var controller : UIViewController = UIViewController(nibName: "controllerNibName", bundle: nil)
@@ -61,6 +63,7 @@ pageMenu!.menuItemFont = UIFont(name: "HelveticaNeue", size: 13.0)
 pageMenu!.menuHeight = 40.0
 
 // Lastly add page menu as subview of base view controller view
+// or use pageMenu controller in you view hierachy as desired
 self.view.addSubview(pageMenu!.view)
 ```
 
