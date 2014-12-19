@@ -138,7 +138,7 @@ There are many ways you are able to customize page menu for your needs and there
 
         addBottomMenuHairline (Bool)
 
-## Apps using this
+## Apps using PageMenu
 
 Please let me know if your app in the AppStore uses this library so I can add your app to this list.
 
