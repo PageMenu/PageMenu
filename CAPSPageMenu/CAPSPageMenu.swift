@@ -29,10 +29,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
 
     // MARK: - Properties
     
-    @IBOutlet var menuHeightConstraint: NSLayoutConstraint!
-    
-    @IBOutlet var menuScrollView: UIScrollView!
-    @IBOutlet var controllerScrollView: UIScrollView!
+    let menuScrollView = UIScrollView()
+    let controllerScrollView = UIScrollView()
     var controllerArray : [AnyObject] = []
     var menuItems : [MenuItemView] = []
     
@@ -61,7 +59,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     // MARK: - View life cycle
     
     init(viewControllers: [AnyObject]) {
-        super.init(nibName: "NFScrollMenuViewController", bundle: nil)
+        super.init()
         
         controllerArray = viewControllers
     }
@@ -73,8 +71,30 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Set menu height (important to be in view will appear)
-        menuHeightConstraint.constant = menuHeight
+        // Set up menu scroll view
+        menuScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        self.view.addSubview(menuScrollView)
+        
+        let viewsDictionary = ["menuScrollView":menuScrollView, "controllerScrollView":controllerScrollView]
+        
+        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[menuScrollView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuScrollView(\(menuHeight))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        self.view.addConstraints(menuScrollView_constraint_H)
+        self.view.addConstraints(menuScrollView_constraint_V)
+        
+        // Set up controller scroll view
+        controllerScrollView.pagingEnabled = true
+        controllerScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        self.view.addSubview(controllerScrollView)
+        
+        let controllerScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[controllerScrollView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let controllerScrollView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:|[controllerScrollView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        self.view.addConstraints(controllerScrollView_constraint_H)
+        self.view.addConstraints(controllerScrollView_constraint_V)
     }
     
     override func viewDidLoad() {
@@ -228,7 +248,4 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             })
         }
     }
-    
-    
-    // MARK: Future work - Landscape mode
 }

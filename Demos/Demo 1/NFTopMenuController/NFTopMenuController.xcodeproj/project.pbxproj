@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9794CF1C1A447761001BE084 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9794CF1A1A447761001BE084 /* CAPSPageMenu.swift */; };
-		9794CF1D1A447761001BE084 /* CAPSPageMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9794CF1B1A447761001BE084 /* CAPSPageMenu.xib */; };
+		9794CF531A4485CF001BE084 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9794CF521A4485CF001BE084 /* CAPSPageMenu.swift */; };
 		9E1FBDDB1A4082F600AB30BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1FBDDA1A4082F600AB30BE /* AppDelegate.swift */; };
 		9E1FBDDD1A4082F600AB30BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1FBDDC1A4082F600AB30BE /* ViewController.swift */; };
 		9E1FBDE01A4082F600AB30BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1FBDDE1A4082F600AB30BE /* Main.storyboard */; };
@@ -67,8 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9794CF1A1A447761001BE084 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../CAPSPageMenu/CAPSPageMenu.swift; sourceTree = "<group>"; };
-		9794CF1B1A447761001BE084 /* CAPSPageMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CAPSPageMenu.xib; path = ../../../../CAPSPageMenu/CAPSPageMenu.xib; sourceTree = "<group>"; };
+		9794CF521A4485CF001BE084 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../../PageMenu/CAPSPageMenu/CAPSPageMenu.swift; sourceTree = "<group>"; };
 		9E1FBDD51A4082F600AB30BE /* NFTopMenuController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NFTopMenuController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1FBDD91A4082F600AB30BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E1FBDDA1A4082F600AB30BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -201,8 +199,7 @@
 		9EF6E7101A4252BC001622DE /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				9794CF1A1A447761001BE084 /* CAPSPageMenu.swift */,
-				9794CF1B1A447761001BE084 /* CAPSPageMenu.xib */,
+				9794CF521A4485CF001BE084 /* CAPSPageMenu.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -399,7 +396,6 @@
 				9EF6E7261A425E67001622DE /* woman4.jpg in Resources */,
 				9EF6E7401A427DF2001622DE /* relax.png in Resources */,
 				9EF6E71B1A42543A001622DE /* FriendTableViewCell.xib in Resources */,
-				9794CF1D1A447761001BE084 /* CAPSPageMenu.xib in Resources */,
 				9EB362A21A4225CE002886E2 /* TestTableViewController.xib in Resources */,
 				9E1FBDFD1A4083A000AB30BE /* TestViewController.xib in Resources */,
 				9EF6E7651A42867C001622DE /* mood1.jpg in Resources */,
@@ -440,7 +436,7 @@
 				9EB362A51A422889002886E2 /* TestCollectionViewController.swift in Sources */,
 				9EF6E73B1A426370001622DE /* MoodCollectionViewCell.swift in Sources */,
 				9E1FBDDB1A4082F600AB30BE /* AppDelegate.swift in Sources */,
-				9794CF1C1A447761001BE084 /* CAPSPageMenu.swift in Sources */,
+				9794CF531A4485CF001BE084 /* CAPSPageMenu.swift in Sources */,
 				9EF6E71A1A42543A001622DE /* FriendTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
