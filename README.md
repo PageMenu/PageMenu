@@ -76,24 +76,68 @@ There are many ways you are able to customize page menu for your needs and there
 
   * Background color behind the page menu scroll view to blend in view controller backgrounds 
 
-        var pageMenu : CAPSPageMenu?
+        viewBackgroundColor
 
   * Scroll menu background color
+
+        viewBackgroundColor
+
+
   * Selection indicator color
+
+        viewBackgroundColor
+
+
   * Selected menu item label color
+
+        viewBackgroundColor
+
+
   * Unselected menu item label color
+
+        viewBackgroundColor
+
+
   * Bottom menu hairline color
+
+        viewBackgroundColor
+
+
 
 2)  Dimensions
 
   * Scroll menu height
+
+        viewBackgroundColor
+
+
   * Scroll menu margin (leading space before first menu item and after last menu item as well as in between items)
+
+        viewBackgroundColor
+
+
   * Scroll menu item width
+
+        viewBackgroundColor
+
+
   * Selection indicator height
+
+        viewBackgroundColor
+
+
 
 3)  Others
   * Menu item title label font
+
+        viewBackgroundColor
+
+
   * Bottom menu hairline
+
+        viewBackgroundColor
+
+
 
 ## Future Work
 
