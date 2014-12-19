@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader2.png" alt="PageMenuHeader">
+<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader3.png" alt="PageMenuHeader">
 ========
 
 A paging menu controller built from other view controllers allowing the user to switch between controller views with an easy tap or swipe gesture
