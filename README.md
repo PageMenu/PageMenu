@@ -1,6 +1,5 @@
 PageMenu
 ========
-by Niklas Fahl
 
 A paging menu controller built from other view controllers allowing the user to switch between controller views with an easy tap or swipe gesture
 
