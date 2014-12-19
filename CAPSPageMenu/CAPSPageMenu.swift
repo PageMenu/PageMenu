@@ -82,6 +82,28 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        setUpUserInterface()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        configureUserInterface()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    
+    // MARK: - UI Setup
+    
+    func setUpUserInterface() {
         // Set up menu scroll view
         menuScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
@@ -106,30 +128,30 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         
         self.view.addConstraints(controllerScrollView_constraint_H)
         self.view.addConstraints(controllerScrollView_constraint_V)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         
-        setUpUserInterface()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    
-    // MARK: - UI Setup
-    
-    func setUpUserInterface() {
-        // Set background color behind scroll views
+        // Add hairline to menu scroll view
+        if addBottomMenuHairline {
+            var menuBottomHairline : UIView = UIView()
+            
+            menuBottomHairline.setTranslatesAutoresizingMaskIntoConstraints(false)
+            
+            self.view.addSubview(menuBottomHairline)
+            
+            let menuBottomHairline_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[menuBottomHairline]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
+            let menuBottomHairline_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(menuHeight)-[menuBottomHairline(0.5)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
+            
+            self.view.addConstraints(menuBottomHairline_constraint_H)
+            self.view.addConstraints(menuBottomHairline_constraint_V)
+            
+            menuBottomHairline.backgroundColor = bottomMenuHairlineColor
+        }
+        
+        // Set background color behind scroll views and for menu scroll view
         self.view.backgroundColor = viewBackgroundColor
-        
+        menuScrollView.backgroundColor = scrollMenuBackgroundColor
+    }
+    
+    func configureUserInterface() {
         // Add tap gesture recognizer to controller scroll view to recognize menu item selection
         let menuItemTapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleMenuItemTap:"))
         menuItemTapGestureRecognizer.numberOfTapsRequired = 1
@@ -140,30 +162,35 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         // Set delegate for controller scroll view
         controllerScrollView.delegate = self
         
-        // Set up menu scroll view content size and background color for menu scroll view
+        // Configure menu scroll view content size
         menuScrollView.contentSize = CGSizeMake((menuItemWidth + menuMargin) * CGFloat(controllerArray.count) + menuMargin, menuScrollView.frame.height)
-        menuScrollView.backgroundColor = scrollMenuBackgroundColor
         
-        // Set up controller scroll view
+        // Configure controller scroll view content size
         controllerScrollView.contentSize = CGSizeMake(controllerScrollView.frame.width * CGFloat(controllerArray.count), controllerScrollView.frame.height)
         
         var index : CGFloat = 0.0
         
         for controller in controllerArray {
             if controller.isKindOfClass(UIViewController) {
+                // Configure each controllers' frame
                 (controller as UIViewController).view.frame = CGRectMake(controllerScrollView.frame.width * index, menuScrollView.frame.height, controllerScrollView.frame.width, controllerScrollView.frame.height - menuScrollView.frame.height)
                 
+                // Add controller as subview to controller scroll view
                 controllerScrollView.addSubview((controller as UIViewController).view)
                 
                 // Set up menu item for menu scroll view
                 var menuItemView : MenuItemView = MenuItemView(frame: CGRectMake(menuItemWidth * index + menuMargin * (index + 1), 0.0, menuItemWidth, menuScrollView.frame.height))
                 menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuScrollView.frame.height, indicatorHeight: selectionIndicatorHeight)
                 
+                // Configure menu item label font if font is set by user
                 if menuItemFont != nil {
                     menuItemView.titleLabel!.font = menuItemFont
                 }
+                
                 menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
                 menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
+                
+                // Set title depending on if controller has a title set
                 if (controller as UIViewController).title != nil {
                     menuItemView.titleLabel!.text = controller.title!
                 } else {
@@ -183,14 +210,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
         }
         
-        // Add hairline to menu scroll view
-        if addBottomMenuHairline {
-            var menuBottomHairline : UIView = UIView(frame: CGRectMake(-150.0, menuScrollView.frame.height - 0.5, menuScrollView.contentSize.width + 300.0, 0.5))
-            menuBottomHairline.backgroundColor = bottomMenuHairlineColor
-            menuScrollView.addSubview(menuBottomHairline)
-        }
-        
-        // Set up selection indicator view
+        // Configure selection indicator view
         selectionIndicatorView = UIView(frame: CGRectMake(menuMargin, menuScrollView.frame.height - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight))
         selectionIndicatorView.backgroundColor = selectionIndicatorColor
         menuScrollView.addSubview(selectionIndicatorView)
