@@ -140,6 +140,7 @@ There are many ways you are able to customize page menu for your needs and there
 
 ## Future Work
 
+- [ ] More demos
 - [ ] Screen rotation support
 - [ ] Objective-C version
 - [ ] More customization options
