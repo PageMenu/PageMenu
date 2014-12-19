@@ -70,15 +70,27 @@ self.view.addSubview(pageMenu!.view)
 
 ## Customization
 
-There are many ways you are able to customize page menu for your needs and there will be more customizations coming in the future to make sure page menu conforms to your app design
+There are many ways you are able to customize page menu for your needs and there will be more customizations coming in the future to make sure page menu conforms to your app design. These will all be properties in CAPSPageMenu that can be changed from your base view controller. (Property names given with each item below)
 
 1)  Colors
 
-    -
+  * Background color behind the page menu scroll view to blend in view controller backgrounds
+  * Scroll menu background color
+  * Selection indicator color
+  * Selected menu item label color
+  * Unselected menu item label color
+  * Bottom menu hairline color
 
 2)  Dimensions
 
+  * Scroll menu height
+  * Scroll menu margin (leading space before first menu item and after last menu item as well as in between items)
+  * Scroll menu item width
+  * Selection indicator height
+
 3)  Others
+  * Menu item title label font
+  * Bottom menu hairline
 
 ## Future Work
 
