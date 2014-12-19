@@ -74,7 +74,10 @@ There are many ways you are able to customize page menu for your needs and there
 
 1)  Colors
 
-  * Background color behind the page menu scroll view to blend in view controller backgrounds
+  * Background color behind the page menu scroll view to blend in view controller backgrounds 
+```swift
+var pageMenu : CAPSPageMenu?
+```
   * Scroll menu background color
   * Selection indicator color
   * Selected menu item label color
