@@ -12,7 +12,7 @@ A paging menu controller built from other view controllers allowing the user to 
 
 **Cocoa Pods**
 
-Coming once Swift support gets added to Cocoa Pods
+Coming once Swift support gets added to Cocoa Pods.
 
 **Manual Installation**
 
