@@ -1,8 +1,8 @@
 PageMenu
 ========
-<p align="right">by Niklas Fahl</p>
 
 A paging menu controller built from other view controllers allowing the user to switch between controller views with an easy tap or swipe gesture
+<p align="right">Made with love by Niklas Fahl</p>
 
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemo.gif" alt="PageMenuDemo">
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen1.png" alt="PageMenuScreen1">
