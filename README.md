@@ -76,31 +76,31 @@ There are many ways you are able to customize page menu for your needs and there
 
   * Background color behind the page menu scroll view to blend in view controller backgrounds 
 
-        viewBackgroundColor
+        viewBackgroundColor (UIColor)
 
   * Scroll menu background color
 
-        viewBackgroundColor
+        scrollMenuBackgroundColor (UIColor)
 
 
   * Selection indicator color
 
-        viewBackgroundColor
+        selectionIndicatorColor (UIColor)
 
 
   * Selected menu item label color
 
-        viewBackgroundColor
+        selectedMenuItemLabelColor (UIColor)
 
 
   * Unselected menu item label color
 
-        viewBackgroundColor
+        unselectedMenuItemLabelColor (UIColor)
 
 
   * Bottom menu hairline color
 
-        viewBackgroundColor
+        bottomMenuHairlineColor (UIColor)
 
 
 
@@ -108,34 +108,34 @@ There are many ways you are able to customize page menu for your needs and there
 
   * Scroll menu height
 
-        viewBackgroundColor
+        menuHeight (CGFloat)
 
 
   * Scroll menu margin (leading space before first menu item and after last menu item as well as in between items)
 
-        viewBackgroundColor
+        menuMargin (CGFloat)
 
 
   * Scroll menu item width
 
-        viewBackgroundColor
+        menuItemWidth (CGFloat)
 
 
   * Selection indicator height
 
-        viewBackgroundColor
+        selectionIndicatorHeight (CGFloat)
 
 
 
 3)  Others
   * Menu item title label font
 
-        viewBackgroundColor
+        menuItemFont (UIFont)
 
 
   * Bottom menu hairline
 
-        viewBackgroundColor
+        addBottomMenuHairline (Bool)
 
 
 
