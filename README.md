@@ -6,6 +6,7 @@ A paging menu controller built from other view controllers allowing the user to 
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemo.gif" alt="PageMenuDemo">
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen1.png" alt="PageMenuScreen1">
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen2.png" alt="PageMenuScreen2">
+<p align="right">by Niklas Fahl</p>
 
 ## Installation
 
