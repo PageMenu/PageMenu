@@ -16,10 +16,9 @@ Coming in the future.
 
 **Manual Installation**
 
-The classes required for CAPSPageMenu are located in the CAPSPageMenu folder in the root of this repository as listed below:
+The only class required for CAPSPageMenu is located in the CAPSPageMenu folder in the root of this repository as listed below:
 
 * <code>CAPSPageMenu.swift<code>
-* <code>CAPSPageMenu.xib<code>
 
 ## How to use CAPSPageMenu
 
