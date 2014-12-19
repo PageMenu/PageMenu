@@ -140,9 +140,8 @@ There are many ways you are able to customize page menu for your needs and there
 
 ## Future Work
 
-- [ ] No xib file required
-- [ ] Objective-C version
 - [ ] Screen rotation support
+- [ ] Objective-C version
 - [ ] More customization options
 
 ## Credits ##
