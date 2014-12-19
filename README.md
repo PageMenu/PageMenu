@@ -25,7 +25,7 @@ First you will have to create a view controller that is supposed to serve as the
 
 1)  Add the files listed in the installation section to your project
 
-2)  Add a property for CAPSPageMenu in your base view controller
+2)  Add a variable or property for CAPSPageMenu in your base view controller
 
 ```swift
 var pageMenu : CAPSPageMenu?
