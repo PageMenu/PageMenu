@@ -13,7 +13,6 @@
 		9E0B90121A468DC30095E919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90111A468DC30095E919 /* Images.xcassets */; };
 		9E0B90151A468DC30095E919 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90131A468DC30095E919 /* LaunchScreen.xib */; };
 		9E0B90211A468DC30095E919 /* PageMenuDemoMenuItemWidthBasedOnTitleTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0B90201A468DC30095E919 /* PageMenuDemoMenuItemWidthBasedOnTitleTextTests.swift */; };
-		9E0B902C1A468DFB0095E919 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0B902B1A468DFB0095E919 /* CAPSPageMenu.swift */; };
 		9E0B90311A468E220095E919 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0B902F1A468E220095E919 /* FriendTableViewCell.swift */; };
 		9E0B90321A468E220095E919 /* FriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90301A468E220095E919 /* FriendTableViewCell.xib */; };
 		9E0B90351A468E760095E919 /* MoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0B90331A468E760095E919 /* MoodCollectionViewCell.swift */; };
@@ -43,6 +42,7 @@
 		9E0B90671A468ED70095E919 /* woman3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90521A468ED70095E919 /* woman3.jpg */; };
 		9E0B90681A468ED70095E919 /* woman4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90531A468ED70095E919 /* woman4.jpg */; };
 		9E0B90691A468ED70095E919 /* woman5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90541A468ED70095E919 /* woman5.jpg */; };
+		9E0B906B1A471F610095E919 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0B906A1A471F610095E919 /* CAPSPageMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +66,6 @@
 		9E0B901A1A468DC30095E919 /* PageMenuDemoMenuItemWidthBasedOnTitleTextTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PageMenuDemoMenuItemWidthBasedOnTitleTextTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E0B901F1A468DC30095E919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E0B90201A468DC30095E919 /* PageMenuDemoMenuItemWidthBasedOnTitleTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageMenuDemoMenuItemWidthBasedOnTitleTextTests.swift; sourceTree = "<group>"; };
-		9E0B902B1A468DFB0095E919 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../CAPSPageMenu/CAPSPageMenu.swift; sourceTree = "<group>"; };
 		9E0B902F1A468E220095E919 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		9E0B90301A468E220095E919 /* FriendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendTableViewCell.xib; sourceTree = "<group>"; };
 		9E0B90331A468E760095E919 /* MoodCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -96,6 +95,7 @@
 		9E0B90521A468ED70095E919 /* woman3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woman3.jpg; sourceTree = "<group>"; };
 		9E0B90531A468ED70095E919 /* woman4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woman4.jpg; sourceTree = "<group>"; };
 		9E0B90541A468ED70095E919 /* woman5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woman5.jpg; sourceTree = "<group>"; };
+		9E0B906A1A471F610095E919 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../PageMenu/CAPSPageMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +179,7 @@
 		9E0B902A1A468DDE0095E919 /* CAPSPageMenu */ = {
 			isa = PBXGroup;
 			children = (
-				9E0B902B1A468DFB0095E919 /* CAPSPageMenu.swift */,
+				9E0B906A1A471F610095E919 /* CAPSPageMenu.swift */,
 			);
 			name = CAPSPageMenu;
 			sourceTree = "<group>";
@@ -361,8 +361,8 @@
 			files = (
 				9E0B90351A468E760095E919 /* MoodCollectionViewCell.swift in Sources */,
 				9E0B900D1A468DC30095E919 /* ViewController.swift in Sources */,
+				9E0B906B1A471F610095E919 /* CAPSPageMenu.swift in Sources */,
 				9E0B900B1A468DC30095E919 /* AppDelegate.swift in Sources */,
-				9E0B902C1A468DFB0095E919 /* CAPSPageMenu.swift in Sources */,
 				9E0B903B1A468E8E0095E919 /* TestCollectionViewController.swift in Sources */,
 				9E0B903D1A468E8E0095E919 /* TestTableViewController.swift in Sources */,
 				9E0B90311A468E220095E919 /* FriendTableViewCell.swift in Sources */,
@@ -557,6 +557,7 @@
 				9E0B90261A468DC30095E919 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9E0B90271A468DC30095E919 /* Build configuration list for PBXNativeTarget "PageMenuDemoMenuItemWidthBasedOnTitleTextTests" */ = {
 			isa = XCConfigurationList;
@@ -565,6 +566,7 @@
 				9E0B90291A468DC30095E919 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
