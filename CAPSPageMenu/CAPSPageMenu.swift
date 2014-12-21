@@ -231,6 +231,11 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             }
         }
         
+        // Set new content size for menu scroll view if needed
+        if menuItemWidthBasedOnTitleTextWidth {
+            menuScrollView.contentSize = CGSizeMake((totalMenuItemWidthIfDifferentWidths + menuMargin) + CGFloat(controllerArray.count) * menuMargin, menuScrollView.frame.height)
+        }
+        
         // Set selected color for title label of selected menu item
         if menuItems.count > 0 {
             if menuItems[currentPageIndex].titleLabel != nil {
