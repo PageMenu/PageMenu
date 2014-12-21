@@ -67,7 +67,7 @@ pageMenu!.menuHeight = 40.0
 self.view.addSubview(pageMenu!.view)
 ```
 
-4)  You should now be ready to use CAPSPageMenu!! 🎉
+4)  You should now be ready to use PageMenu!! 🎉
 
 ## Customization
 
