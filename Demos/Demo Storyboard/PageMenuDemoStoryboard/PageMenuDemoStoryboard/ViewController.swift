@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         pageMenu!.viewBackgroundColor = UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)
         pageMenu!.selectionIndicatorColor = UIColor.orangeColor()
         pageMenu!.bottomMenuHairlineColor = UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-        pageMenu!.menuItemFont = UIFont(name: "HelveticaNeue", size: 13.0)
+        pageMenu!.menuItemFont = UIFont(name: "HelveticaNeue", size: 13.0)!
         pageMenu!.menuHeight = 40.0
         
         self.view.addSubview(pageMenu!.view)

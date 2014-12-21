@@ -44,11 +44,13 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     let controllerScrollView = UIScrollView()
     var controllerArray : [AnyObject] = []
     var menuItems : [MenuItemView] = []
+    var menuItemWidths : [CGFloat] = []
     
     var menuHeight : CGFloat = 34.0
     var menuMargin : CGFloat = 15.0
     var menuItemWidth : CGFloat = 111.0
     var selectionIndicatorHeight : CGFloat = 3.0
+    var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
     
     var selectionIndicatorView : UIView = UIView()
     
@@ -62,9 +64,10 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var viewBackgroundColor : UIColor = UIColor.whiteColor()
     var bottomMenuHairlineColor : UIColor = UIColor.whiteColor()
     
-    var menuItemFont : UIFont?
+    var menuItemFont : UIFont = UIFont(name: "HelveticaNeue", size: 15.0)!
     
     var addBottomMenuHairline : Bool = true
+    var menuItemWidthBasedOnTitleTextWidth : Bool = false
     
     
     // MARK: - View life cycle
@@ -185,13 +188,30 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 controllerScrollView.addSubview((controller as UIViewController).view)
                 
                 // Set up menu item for menu scroll view
-                var menuItemView : MenuItemView = MenuItemView(frame: CGRectMake(menuItemWidth * index + menuMargin * (index + 1), 0.0, menuItemWidth, menuScrollView.frame.height))
+                var menuItemFrame : CGRect = CGRect()
+                
+                if menuItemWidthBasedOnTitleTextWidth {
+                    var controllerTitle : String? = (controller as UIViewController).title
+                    
+                    var titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
+                    
+                    var itemWidthRect : CGRect = (titleText as NSString).boundingRectWithSize(CGSizeMake(1000, 1000), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:menuItemFont], context: nil)
+                    
+                    menuItemWidth = itemWidthRect.width
+                    
+                    menuItemFrame = CGRectMake(totalMenuItemWidthIfDifferentWidths + menuMargin + (menuMargin * index), 0.0, menuItemWidth, menuScrollView.frame.height)
+                    
+                    totalMenuItemWidthIfDifferentWidths += itemWidthRect.width
+                    menuItemWidths.append(itemWidthRect.width)
+                } else {
+                    menuItemFrame = CGRectMake(menuItemWidth * index + menuMargin * (index + 1), 0.0, menuItemWidth, menuScrollView.frame.height)
+                }
+                
+                var menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
                 menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuScrollView.frame.height, indicatorHeight: selectionIndicatorHeight)
                 
                 // Configure menu item label font if font is set by user
-                if menuItemFont != nil {
-                    menuItemView.titleLabel!.font = menuItemFont
-                }
+                menuItemView.titleLabel!.font = menuItemFont
                 
                 menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
                 menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
@@ -219,7 +239,15 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         }
         
         // Configure selection indicator view
-        selectionIndicatorView = UIView(frame: CGRectMake(menuMargin, menuScrollView.frame.height - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight))
+        var selectionIndicatorFrame : CGRect = CGRect()
+        
+        if menuItemWidthBasedOnTitleTextWidth {
+            selectionIndicatorFrame = CGRectMake(menuMargin, menuScrollView.frame.height - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
+        } else {
+            selectionIndicatorFrame = CGRectMake(menuMargin, menuScrollView.frame.height - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
+        }
+        
+        selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
         selectionIndicatorView.backgroundColor = selectionIndicatorColor
         menuScrollView.addSubview(selectionIndicatorView)
     }
@@ -252,7 +280,23 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             
             // Move selection indicator view when swiping
             UIView.animateWithDuration(0.15, animations: { () -> Void in
-                self.selectionIndicatorView.frame = CGRectMake((self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin, self.selectionIndicatorView.frame.origin.y, self.selectionIndicatorView.frame.width, self.selectionIndicatorView.frame.height)
+                var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
+                var selectionIndicatorX : CGFloat = 0.0
+                
+                if self.menuItemWidthBasedOnTitleTextWidth {
+                    selectionIndicatorWidth = self.menuItemWidths[page]
+                    selectionIndicatorX += self.menuMargin
+                    
+                    if page > 0 {
+                        for i in 0...(page - 1) {
+                            selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
+                        }
+                    }
+                } else {
+                    selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin
+                }
+                
+                self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
                 
                 // Switch newly selected menu item title label to selected color and old one to unselected color
                 if self.menuItems.count > 0 {
@@ -274,7 +318,27 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         if tappedPoint.y < menuScrollView.frame.height {
             
             // Calculate tapped page
-            var itemIndex : Int = Int((tappedPoint.x - menuMargin / 2) / (menuMargin + menuItemWidth))
+            var itemIndex : Int = 0
+            
+            if menuItemWidthBasedOnTitleTextWidth {
+                // Base case being first item
+                var menuItemLeftBound : CGFloat = 0.0
+                var menuItemRightBound : CGFloat = menuItemWidths[0] + menuMargin
+                
+                if !(tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound) {
+                    for i in 1...controllerArray.count - 1 {
+                        menuItemLeftBound = menuItemRightBound + 1.0
+                        menuItemRightBound = menuItemLeftBound + menuItemWidths[i] + menuMargin
+                        
+                        if tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound {
+                            itemIndex = i
+                            break
+                        }
+                    }
+                }
+            } else {
+                itemIndex = Int((tappedPoint.x - menuMargin / 2) / (menuMargin + menuItemWidth))
+            }
             
             // Update page if changed
             if itemIndex != currentPageIndex {
@@ -282,7 +346,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 currentPageIndex = itemIndex
             }
             
-            // Move selection indicator view when swiping
+            // Move controller scroll view when tapping menu item
             UIView.animateWithDuration(0.7, animations: { () -> Void in
                 var xOffset : CGFloat = CGFloat(itemIndex) * self.controllerScrollView.frame.width
                 self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: true)
