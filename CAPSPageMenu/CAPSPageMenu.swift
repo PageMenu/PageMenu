@@ -323,7 +323,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             if menuItemWidthBasedOnTitleTextWidth {
                 // Base case being first item
                 var menuItemLeftBound : CGFloat = 0.0
-                var menuItemRightBound : CGFloat = menuItemWidths[0] + menuMargin
+                var menuItemRightBound : CGFloat = menuItemWidths[0] + menuMargin + (menuMargin / 2)
                 
                 if !(tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound) {
                     for i in 1...controllerArray.count - 1 {
