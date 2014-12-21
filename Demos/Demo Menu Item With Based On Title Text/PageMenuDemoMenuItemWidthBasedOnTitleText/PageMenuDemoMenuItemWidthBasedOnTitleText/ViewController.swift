@@ -36,11 +36,11 @@ class ViewController: UIViewController {
         var controller2 : TestCollectionViewController = TestCollectionViewController(nibName: "TestCollectionViewController", bundle: nil)
         controller2.title = "mood"
         controllerArray.append(controller2)
-        var controller3 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
-        controller3.title = "music"
+        var controller3 : TestCollectionViewController = TestCollectionViewController(nibName: "TestCollectionViewController", bundle: nil)
+        controller3.title = "favorites"
         controllerArray.append(controller3)
-        var controller4 : TestCollectionViewController = TestCollectionViewController(nibName: "TestCollectionViewController", bundle: nil)
-        controller4.title = "favorites"
+        var controller4 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
+        controller4.title = "music"
         controllerArray.append(controller4)
         
         // Initialize scroll menu
