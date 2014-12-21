@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader3.png" alt="PageMenuHeader">
 ========
 
-A fully customizable and flexible paging menu controller built from other view controllers allowing the user to switch between controller views with an easy tap or swipe gesture similar to what Spotify uses
+A fully customizable and flexible paging menu controller built from other view controllers allowing the user to switch between any kind of view controller with an easy tap or swipe gesture similar to what Spotify uses
 
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemo.gif" alt="PageMenuDemo">
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen1.png" alt="PageMenuScreen1">
@@ -15,11 +15,11 @@ Coming once Swift support gets added to Cocoa Pods.
 
 **Manual Installation**
 
-The class file required for CAPSPageMenu is located in the CAPSPageMenu folder in the root of this repository as listed below:
+The class file required for PageMenu is located in the PageMenu folder in the root of this repository as listed below:
 
 * <code>CAPSPageMenu.swift<code>
 
-## How to use CAPSPageMenu
+## How to use PageMenu
 
 First you will have to create a view controller that is supposed to serve as the base of the page menu. This can be a view controller with its xib file as a separate file as well as having its xib file in storyboard. Following this you will have to go through a few simple steps outlined below in order to get everything up and running.
 
