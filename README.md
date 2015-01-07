@@ -149,7 +149,6 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 
 ## Future Work
 
-- [ ] More demos
 - [x] Screen rotation support (working on bug fix)
 - [ ] Objective-C version
 - [ ] More customization options
