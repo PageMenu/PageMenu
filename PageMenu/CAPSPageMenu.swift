@@ -69,6 +69,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var addBottomMenuHairline : Bool = true
     var menuItemWidthBasedOnTitleTextWidth : Bool = false
     
+    var currentOrientationIsPortrait : Bool = true
+    var pageIndexForOrientationChange : Int = 0
+    
     
     // MARK: - View life cycle
     
@@ -76,6 +79,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"orientationChanged", name:UIDeviceOrientationDidChangeNotification, object:nil)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -261,56 +266,58 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     // MARK: - Scroll view delegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        var ratio : CGFloat = 1.0
-        
-        if scrollView.isEqual(controllerScrollView) {
-            // Calculate ratio between scroll views
-            ratio = (menuScrollView.contentSize.width - self.view.frame.width) / (controllerScrollView.contentSize.width - self.view.frame.width)
+        if (currentOrientationIsPortrait && self.interfaceOrientation.isPortrait) || (!currentOrientationIsPortrait && self.interfaceOrientation.isLandscape) {
+            var ratio : CGFloat = 1.0
             
-            if menuScrollView.contentSize.width > self.view.frame.width {
-                var offset : CGPoint = menuScrollView.contentOffset
-                offset.x = controllerScrollView.contentOffset.x * ratio
-                menuScrollView.setContentOffset(offset, animated: false)
-            }
-            
-            // Calculate current page
-            var width : CGFloat = scrollView.frame.size.width;
-            var page : Int = Int((scrollView.contentOffset.x + (0.5 * width)) / width)
-            
-            // Update page if changed
-            if page != currentPageIndex {
-                lastPageIndex = currentPageIndex
-                currentPageIndex = page
-            }
-            
-            // Move selection indicator view when swiping
-            UIView.animateWithDuration(0.15, animations: { () -> Void in
-                var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
-                var selectionIndicatorX : CGFloat = 0.0
+            if scrollView.isEqual(controllerScrollView) {
+                // Calculate ratio between scroll views
+                ratio = (menuScrollView.contentSize.width - self.view.frame.width) / (controllerScrollView.contentSize.width - self.view.frame.width)
                 
-                if self.menuItemWidthBasedOnTitleTextWidth {
-                    selectionIndicatorWidth = self.menuItemWidths[page]
-                    selectionIndicatorX += self.menuMargin
+                if menuScrollView.contentSize.width > self.view.frame.width {
+                    var offset : CGPoint = menuScrollView.contentOffset
+                    offset.x = controllerScrollView.contentOffset.x * ratio
+                    menuScrollView.setContentOffset(offset, animated: false)
+                }
+                
+                // Calculate current page
+                var width : CGFloat = controllerScrollView.frame.size.width;
+                var page : Int = Int((controllerScrollView.contentOffset.x + (0.5 * width)) / width)
+                
+                // Update page if changed
+                if page != currentPageIndex {
+                    lastPageIndex = currentPageIndex
+                    currentPageIndex = page
+                }
+                
+                // Move selection indicator view when swiping
+                UIView.animateWithDuration(0.15, animations: { () -> Void in
+                    var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
+                    var selectionIndicatorX : CGFloat = 0.0
                     
-                    if page > 0 {
-                        for i in 0...(page - 1) {
-                            selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
+                    if self.menuItemWidthBasedOnTitleTextWidth {
+                        selectionIndicatorWidth = self.menuItemWidths[page]
+                        selectionIndicatorX += self.menuMargin
+                        
+                        if page > 0 {
+                            for i in 0...(page - 1) {
+                                selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
+                            }
+                        }
+                    } else {
+                        selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin
+                    }
+                    
+                    self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
+                    
+                    // Switch newly selected menu item title label to selected color and old one to unselected color
+                    if self.menuItems.count > 0 {
+                        if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
+                            self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
+                            self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
                         }
                     }
-                } else {
-                    selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin
-                }
-                
-                self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
-                
-                // Switch newly selected menu item title label to selected color and old one to unselected color
-                if self.menuItems.count > 0 {
-                    if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
-                        self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
-                        self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
-                    }
-                }
-            })
+                })
+            }
         }
     }
     
@@ -357,5 +364,37 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: true)
             })
         }
+    }
+    
+    
+    // MARK: - Orientation Change
+    
+    // Layout views after orientation change
+    func orientationChanged() {
+        if (currentOrientationIsPortrait && UIDevice.currentDevice().orientation.isLandscape) || (!currentOrientationIsPortrait && UIDevice.currentDevice().orientation.isPortrait) {
+            // Configure controller scroll view content size
+            controllerScrollView.contentSize = CGSizeMake(controllerScrollView.frame.width * CGFloat(controllerArray.count), controllerScrollView.frame.height)
+            
+            var subviewIndex : CGFloat = 0.0
+            
+            for view : UIView in controllerScrollView.subviews as [UIView] {
+                view.frame = CGRectMake(controllerScrollView.frame.width * subviewIndex, menuScrollView.frame.height, controllerScrollView.frame.width, controllerScrollView.frame.height - menuScrollView.frame.height)
+                
+                subviewIndex++
+            }
+            
+            var xOffset : CGFloat = CGFloat(self.currentPageIndex) * controllerScrollView.frame.width
+            controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: controllerScrollView.contentOffset.y), animated: true)
+            
+            var ratio : CGFloat = (menuScrollView.contentSize.width - self.view.frame.width) / (controllerScrollView.contentSize.width - self.view.frame.width)
+            
+            if menuScrollView.contentSize.width > self.view.frame.width {
+                var offset : CGPoint = menuScrollView.contentOffset
+                offset.x = controllerScrollView.contentOffset.x * ratio
+                menuScrollView.setContentOffset(offset, animated: false)
+            }
+        }
+        
+        currentOrientationIsPortrait = self.interfaceOrientation.isPortrait
     }
 }
