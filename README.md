@@ -11,7 +11,11 @@ A fully customizable and flexible paging menu controller built from other view c
 
 **Cocoa Pods**
 
-Coming once Swift support gets added to Cocoa Pods.
+PageMenu is available through [CocoaPods](http://cocoapods.org).
+
+To install add the following line to your Podfile:
+
+    pod 'PageMenu'
 
 **Manual Installation**
 
