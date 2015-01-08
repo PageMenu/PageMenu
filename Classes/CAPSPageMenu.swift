@@ -71,6 +71,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
+    var didLayoutSubviewsAfterRotation : Bool = false
     
     
     // MARK: - View life cycle
@@ -79,8 +80,6 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"orientationChanged", name:UIDeviceOrientationDidChangeNotification, object:nil)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -279,44 +278,48 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     menuScrollView.setContentOffset(offset, animated: false)
                 }
                 
-                // Calculate current page
-                var width : CGFloat = controllerScrollView.frame.size.width;
-                var page : Int = Int((controllerScrollView.contentOffset.x + (0.5 * width)) / width)
-                
-                // Update page if changed
-                if page != currentPageIndex {
-                    lastPageIndex = currentPageIndex
-                    currentPageIndex = page
-                }
-                
-                // Move selection indicator view when swiping
-                UIView.animateWithDuration(0.15, animations: { () -> Void in
-                    var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
-                    var selectionIndicatorX : CGFloat = 0.0
+                if didLayoutSubviewsAfterRotation {
+                    didLayoutSubviewsAfterRotation = false
+                } else {
+                    // Calculate current page
+                    var width : CGFloat = controllerScrollView.frame.size.width;
+                    var page : Int = Int((controllerScrollView.contentOffset.x + (0.5 * width)) / width)
                     
-                    if self.menuItemWidthBasedOnTitleTextWidth {
-                        selectionIndicatorWidth = self.menuItemWidths[page]
-                        selectionIndicatorX += self.menuMargin
+                    // Update page if changed
+                    if page != currentPageIndex {
+                        lastPageIndex = currentPageIndex
+                        currentPageIndex = page
+                    }
+                    
+                    // Move selection indicator view when swiping
+                    UIView.animateWithDuration(0.15, animations: { () -> Void in
+                        var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
+                        var selectionIndicatorX : CGFloat = 0.0
                         
-                        if page > 0 {
-                            for i in 0...(page - 1) {
-                                selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
+                        if self.menuItemWidthBasedOnTitleTextWidth {
+                            selectionIndicatorWidth = self.menuItemWidths[page]
+                            selectionIndicatorX += self.menuMargin
+                            
+                            if page > 0 {
+                                for i in 0...(page - 1) {
+                                    selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
+                                }
+                            }
+                        } else {
+                            selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin
+                        }
+                        
+                        self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
+                        
+                        // Switch newly selected menu item title label to selected color and old one to unselected color
+                        if self.menuItems.count > 0 {
+                            if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
+                                self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
+                                self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
                             }
                         }
-                    } else {
-                        selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin
-                    }
-                    
-                    self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
-                    
-                    // Switch newly selected menu item title label to selected color and old one to unselected color
-                    if self.menuItems.count > 0 {
-                        if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
-                            self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
-                            self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
-                        }
-                    }
-                })
+                    })
+                }
             }
         }
     }
@@ -369,9 +372,13 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     
     // MARK: - Orientation Change
     
-    // Layout views after orientation change
-    func orientationChanged() {
-        if (currentOrientationIsPortrait && UIDevice.currentDevice().orientation.isLandscape) || (!currentOrientationIsPortrait && UIDevice.currentDevice().orientation.isPortrait) {
+    override func viewDidLayoutSubviews() {
+        var oldCurrentOrientationIsPortrait : Bool = currentOrientationIsPortrait
+        currentOrientationIsPortrait = self.interfaceOrientation.isPortrait
+        
+        if (oldCurrentOrientationIsPortrait && UIDevice.currentDevice().orientation.isLandscape) || (!oldCurrentOrientationIsPortrait && UIDevice.currentDevice().orientation.isPortrait) {
+            didLayoutSubviewsAfterRotation = true
+            
             // Configure controller scroll view content size
             controllerScrollView.contentSize = CGSizeMake(controllerScrollView.frame.width * CGFloat(controllerArray.count), controllerScrollView.frame.height)
             
@@ -394,7 +401,5 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 menuScrollView.setContentOffset(offset, animated: false)
             }
         }
-        
-        currentOrientationIsPortrait = self.interfaceOrientation.isPortrait
     }
 }
