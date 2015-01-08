@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E0B906D1A471F860095E919 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0B906C1A471F860095E919 /* CAPSPageMenu.swift */; };
 		9EF0BA411A44DD7400F4DFF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0BA401A44DD7400F4DFF9 /* AppDelegate.swift */; };
 		9EF0BA481A44DD7400F4DFF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EF0BA471A44DD7400F4DFF9 /* Images.xcassets */; };
 		9EF0BA4B1A44DD7400F4DFF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EF0BA491A44DD7400F4DFF9 /* LaunchScreen.xib */; };
 		9EF0BA571A44DD7400F4DFF9 /* PageMenuDemoNoStoryboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0BA561A44DD7400F4DFF9 /* PageMenuDemoNoStoryboardTests.swift */; };
 		9EF0BA641A44E14F00F4DFF9 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0BA621A44E14F00F4DFF9 /* TestViewController.swift */; };
 		9EF0BA651A44E14F00F4DFF9 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EF0BA631A44E14F00F4DFF9 /* TestViewController.xib */; };
+		A6DA204D1A5ECA870048E0C0 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA204C1A5ECA870048E0C0 /* CAPSPageMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,7 +27,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9E0B906C1A471F860095E919 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../PageMenu/CAPSPageMenu.swift; sourceTree = "<group>"; };
 		9EF0BA3B1A44DD7400F4DFF9 /* PageMenuDemoNoStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PageMenuDemoNoStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF0BA3F1A44DD7400F4DFF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EF0BA401A44DD7400F4DFF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +37,7 @@
 		9EF0BA561A44DD7400F4DFF9 /* PageMenuDemoNoStoryboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageMenuDemoNoStoryboardTests.swift; sourceTree = "<group>"; };
 		9EF0BA621A44E14F00F4DFF9 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		9EF0BA631A44E14F00F4DFF9 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
+		A6DA204C1A5ECA870048E0C0 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../Classes/CAPSPageMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				9EF0BA401A44DD7400F4DFF9 /* AppDelegate.swift */,
-				9E0B906C1A471F860095E919 /* CAPSPageMenu.swift */,
+				A6DA204C1A5ECA870048E0C0 /* CAPSPageMenu.swift */,
 				9EF0BA621A44E14F00F4DFF9 /* TestViewController.swift */,
 				9EF0BA631A44E14F00F4DFF9 /* TestViewController.xib */,
 				9EF0BA471A44DD7400F4DFF9 /* Images.xcassets */,
@@ -217,7 +217,7 @@
 			files = (
 				9EF0BA411A44DD7400F4DFF9 /* AppDelegate.swift in Sources */,
 				9EF0BA641A44E14F00F4DFF9 /* TestViewController.swift in Sources */,
-				9E0B906D1A471F860095E919 /* CAPSPageMenu.swift in Sources */,
+				A6DA204D1A5ECA870048E0C0 /* CAPSPageMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

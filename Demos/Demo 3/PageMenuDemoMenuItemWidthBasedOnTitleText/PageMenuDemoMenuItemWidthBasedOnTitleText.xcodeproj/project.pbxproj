@@ -42,7 +42,7 @@
 		9E0B90671A468ED70095E919 /* woman3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90521A468ED70095E919 /* woman3.jpg */; };
 		9E0B90681A468ED70095E919 /* woman4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90531A468ED70095E919 /* woman4.jpg */; };
 		9E0B90691A468ED70095E919 /* woman5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90541A468ED70095E919 /* woman5.jpg */; };
-		9E0B906B1A471F610095E919 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0B906A1A471F610095E919 /* CAPSPageMenu.swift */; };
+		A6DA20511A5ECAA80048E0C0 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA20501A5ECAA80048E0C0 /* CAPSPageMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +95,7 @@
 		9E0B90521A468ED70095E919 /* woman3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woman3.jpg; sourceTree = "<group>"; };
 		9E0B90531A468ED70095E919 /* woman4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woman4.jpg; sourceTree = "<group>"; };
 		9E0B90541A468ED70095E919 /* woman5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woman5.jpg; sourceTree = "<group>"; };
-		9E0B906A1A471F610095E919 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../PageMenu/CAPSPageMenu.swift; sourceTree = "<group>"; };
+		A6DA20501A5ECAA80048E0C0 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../Classes/CAPSPageMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +179,7 @@
 		9E0B902A1A468DDE0095E919 /* CAPSPageMenu */ = {
 			isa = PBXGroup;
 			children = (
-				9E0B906A1A471F610095E919 /* CAPSPageMenu.swift */,
+				A6DA20501A5ECAA80048E0C0 /* CAPSPageMenu.swift */,
 			);
 			name = CAPSPageMenu;
 			sourceTree = "<group>";
@@ -361,7 +361,7 @@
 			files = (
 				9E0B90351A468E760095E919 /* MoodCollectionViewCell.swift in Sources */,
 				9E0B900D1A468DC30095E919 /* ViewController.swift in Sources */,
-				9E0B906B1A471F610095E919 /* CAPSPageMenu.swift in Sources */,
+				A6DA20511A5ECAA80048E0C0 /* CAPSPageMenu.swift in Sources */,
 				9E0B900B1A468DC30095E919 /* AppDelegate.swift in Sources */,
 				9E0B903B1A468E8E0095E919 /* TestCollectionViewController.swift in Sources */,
 				9E0B903D1A468E8E0095E919 /* TestTableViewController.swift in Sources */,
