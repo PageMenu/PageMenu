@@ -185,11 +185,11 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         
         for controller in controllerArray {
             if controller.isKindOfClass(UIViewController) {
-                // Configure each controllers' frame
+                // Add controller to scrollview and as child view controller
+                self.addChildViewController(controller as UIViewController)
                 (controller as UIViewController).view.frame = CGRectMake(controllerScrollView.frame.width * index, menuScrollView.frame.height, controllerScrollView.frame.width, controllerScrollView.frame.height - menuScrollView.frame.height)
-                
-                // Add controller as subview to controller scroll view
                 controllerScrollView.addSubview((controller as UIViewController).view)
+                self.didMoveToParentViewController(self)
                 
                 // Set up menu item for menu scroll view
                 var menuItemFrame : CGRect = CGRect()
