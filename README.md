@@ -2,9 +2,9 @@
 ========
 
 **Update - Version 1.1.0 Release**
-**- Major performance improvements**
-**- Auto-rotation bug fixed**
-**- Customization option added for scroll animation duration on menu item tap**
+* Major performance improvements
+* Auto-rotation bug fixed
+* Customization option added for scroll animation duration on menu item tap
 
 A fully customizable and flexible paging menu controller built from other view controllers allowing the user to switch between any kind of view controller with an easy tap or swipe gesture similar to what Spotify uses
 
