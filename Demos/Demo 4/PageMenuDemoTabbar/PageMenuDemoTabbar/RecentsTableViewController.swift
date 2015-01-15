@@ -21,6 +21,20 @@ class RecentsTableViewController: UITableViewController {
         self.tableView.registerNib(UINib(nibName: "RecentsTableViewCell", bundle: nil), forCellReuseIdentifier: "RecentsTableViewCell")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        println("recents page: viewWillAppear")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.tableView.showsVerticalScrollIndicator = false
+        super.viewDidAppear(animated)
+        self.tableView.showsVerticalScrollIndicator = true
+        
+//        println("recents page: viewDidAppear")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

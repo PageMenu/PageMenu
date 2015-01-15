@@ -20,21 +20,8 @@ class PageMenuOneViewController: UIViewController {
         userPhotoImageView.layer.cornerRadius = 8
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // MARK: - UI Setup
-        
-        
-        
-//        self.title = "PAGE MENU"
-//        self.navigationController?.navigationBar.barTintColor = UIColor.orangeColor()
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-//        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
-//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-//        var font : UIFont = UIFont(name: "HelveticaNeue-Light", size: 35.0)!
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: font]
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
         // MARK: - Scroll menu setup
         
@@ -50,6 +37,13 @@ class PageMenuOneViewController: UIViewController {
         var controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
         controller3.title = "contacts"
         controllerArray.append(controller3)
+        
+        for i in 0...10 {
+            var controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
+            controller3.title = "contr\(i)"
+//            controller3.view.backgroundColor = getRandomColor()
+            controllerArray.append(controller3)
+        }
         
         // Initialize scroll menu
         pageMenu = CAPSPageMenu(viewControllers: controllerArray)
@@ -71,5 +65,17 @@ class PageMenuOneViewController: UIViewController {
         pageMenu!.unselectedMenuItemLabelColor = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4)
         
         self.view.addSubview(pageMenu!.view)
+    }
+    
+    func getRandomColor() -> UIColor{
+        
+        var randomRed:CGFloat = CGFloat(drand48())
+        
+        var randomGreen:CGFloat = CGFloat(drand48())
+        
+        var randomBlue:CGFloat = CGFloat(drand48())
+        
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        
     }
 }

@@ -7,8 +7,9 @@
         <!--Contacts-->
         <scene sceneID="mX6-t5-XOj">
             <objects>
-                <navigationController id="xmR-3w-HY9" sceneMemberID="viewController">
+                <navigationController navigationBarHidden="YES" id="xmR-3w-HY9" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Contacts" id="e1w-oe-ljq"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" translucent="NO" id="vkc-oI-4Em">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -66,11 +67,11 @@
                         <viewControllerLayoutGuide type="bottom" id="OQr-ot-gQ3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qKy-GN-1hL">
-                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXO-pq-GWb">
-                                <rect key="frame" x="0.0" y="20" width="600" height="40"/>
+                                <rect key="frame" x="0.0" y="40" width="600" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="man9.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="WpS-sy-ORf">
                                         <rect key="frame" x="546" y="6" width="34" height="34"/>
@@ -119,7 +120,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="IXO-pq-GWb" firstAttribute="top" secondItem="UZW-JH-KEB" secondAttribute="bottom" id="Iab-u5-z8k"/>
+                            <constraint firstItem="IXO-pq-GWb" firstAttribute="top" secondItem="UZW-JH-KEB" secondAttribute="top" constant="20" id="Iab-u5-z8k"/>
                             <constraint firstItem="IXO-pq-GWb" firstAttribute="leading" secondItem="qKy-GN-1hL" secondAttribute="leading" id="chp-1U-ZHb"/>
                             <constraint firstAttribute="trailing" secondItem="IXO-pq-GWb" secondAttribute="trailing" id="lwH-A8-iyh"/>
                         </constraints>

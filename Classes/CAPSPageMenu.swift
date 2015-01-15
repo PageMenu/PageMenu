@@ -51,6 +51,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var menuItemWidth : CGFloat = 111.0
     var selectionIndicatorHeight : CGFloat = 3.0
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
+    var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     
     var selectionIndicatorView : UIView = UIView()
     
@@ -72,7 +73,15 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
     var didLayoutSubviewsAfterRotation : Bool = false
+    var didScrollAlready : Bool = false
     
+    var lastControllerScrollViewContentOffset : CGFloat = 0.0
+    
+    var lastScrollDirection : String = ""
+    var startingPageForScroll : Int = 0
+    var didTapMenuItemToScroll : Bool = false
+    
+    var pagesAddedDictionary : [Int : Int] = [:]
     
     // MARK: - View life cycle
     
@@ -176,20 +185,22 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         controllerScrollView.delegate = self
         
         // Configure menu scroll view content size
-        menuScrollView.contentSize = CGSizeMake((menuItemWidth + menuMargin) * CGFloat(controllerArray.count) + menuMargin, menuScrollView.frame.height)
+        menuScrollView.contentSize = CGSizeMake((menuItemWidth + menuMargin) * CGFloat(controllerArray.count) + menuMargin, menuHeight)
         
         // Configure controller scroll view content size
-        controllerScrollView.contentSize = CGSizeMake(controllerScrollView.frame.width * CGFloat(controllerArray.count), controllerScrollView.frame.height)
+        controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), self.view.frame.height - menuHeight)
         
         var index : CGFloat = 0.0
         
         for controller in controllerArray {
             if controller.isKindOfClass(UIViewController) {
-                // Add controller to scrollview and as child view controller
-                self.addChildViewController(controller as UIViewController)
-                (controller as UIViewController).view.frame = CGRectMake(controllerScrollView.frame.width * index, menuScrollView.frame.height, controllerScrollView.frame.width, controllerScrollView.frame.height - menuScrollView.frame.height)
-                controllerScrollView.addSubview((controller as UIViewController).view)
-                self.didMoveToParentViewController(self)
+                if index == 0.0 {
+                    // Add first two controllers to scrollview and as child view controller
+                    self.addChildViewController(controller as UIViewController)
+                    (controller as UIViewController).view.frame = CGRectMake(self.view.frame.width * index, menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
+                    controllerScrollView.addSubview((controller as UIViewController).view)
+                    self.didMoveToParentViewController(self)
+                }
                 
                 // Set up menu item for menu scroll view
                 var menuItemFrame : CGRect = CGRect()
@@ -203,16 +214,16 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     
                     menuItemWidth = itemWidthRect.width
                     
-                    menuItemFrame = CGRectMake(totalMenuItemWidthIfDifferentWidths + menuMargin + (menuMargin * index), 0.0, menuItemWidth, menuScrollView.frame.height)
+                    menuItemFrame = CGRectMake(totalMenuItemWidthIfDifferentWidths + menuMargin + (menuMargin * index), 0.0, menuItemWidth, menuHeight)
                     
                     totalMenuItemWidthIfDifferentWidths += itemWidthRect.width
                     menuItemWidths.append(itemWidthRect.width)
                 } else {
-                    menuItemFrame = CGRectMake(menuItemWidth * index + menuMargin * (index + 1), 0.0, menuItemWidth, menuScrollView.frame.height)
+                    menuItemFrame = CGRectMake(menuItemWidth * index + menuMargin * (index + 1), 0.0, menuItemWidth, menuHeight)
                 }
                 
                 var menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
-                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuScrollView.frame.height, indicatorHeight: selectionIndicatorHeight)
+                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight)
                 
                 // Configure menu item label font if font is set by user
                 menuItemView.titleLabel!.font = menuItemFont
@@ -234,10 +245,10 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 index++
             }
         }
-        
+
         // Set new content size for menu scroll view if needed
         if menuItemWidthBasedOnTitleTextWidth {
-            menuScrollView.contentSize = CGSizeMake((totalMenuItemWidthIfDifferentWidths + menuMargin) + CGFloat(controllerArray.count) * menuMargin, menuScrollView.frame.height)
+            menuScrollView.contentSize = CGSizeMake((totalMenuItemWidthIfDifferentWidths + menuMargin) + CGFloat(controllerArray.count) * menuMargin, menuHeight)
         }
         
         // Set selected color for title label of selected menu item
@@ -251,9 +262,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         var selectionIndicatorFrame : CGRect = CGRect()
         
         if menuItemWidthBasedOnTitleTextWidth {
-            selectionIndicatorFrame = CGRectMake(menuMargin, menuScrollView.frame.height - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
         } else {
-            selectionIndicatorFrame = CGRectMake(menuMargin, menuScrollView.frame.height - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
         }
         
         selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
@@ -265,63 +276,203 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     // MARK: - Scroll view delegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        if (currentOrientationIsPortrait && self.interfaceOrientation.isPortrait) || (!currentOrientationIsPortrait && self.interfaceOrientation.isLandscape) {
-            var ratio : CGFloat = 1.0
-            
+        if !didLayoutSubviewsAfterRotation {
             if scrollView.isEqual(controllerScrollView) {
-                // Calculate ratio between scroll views
-                ratio = (menuScrollView.contentSize.width - self.view.frame.width) / (controllerScrollView.contentSize.width - self.view.frame.width)
-                
-                if menuScrollView.contentSize.width > self.view.frame.width {
-                    var offset : CGPoint = menuScrollView.contentOffset
-                    offset.x = controllerScrollView.contentOffset.x * ratio
-                    menuScrollView.setContentOffset(offset, animated: false)
-                }
-                
-                if didLayoutSubviewsAfterRotation {
-                    didLayoutSubviewsAfterRotation = false
-                } else {
-                    // Calculate current page
-                    var width : CGFloat = controllerScrollView.frame.size.width;
-                    var page : Int = Int((controllerScrollView.contentOffset.x + (0.5 * width)) / width)
-                    
-                    // Update page if changed
-                    if page != currentPageIndex {
-                        lastPageIndex = currentPageIndex
-                        currentPageIndex = page
-                    }
-                    
-                    // Move selection indicator view when swiping
-                    UIView.animateWithDuration(0.15, animations: { () -> Void in
-                        var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
-                        var selectionIndicatorX : CGFloat = 0.0
-                        
-                        if self.menuItemWidthBasedOnTitleTextWidth {
-                            selectionIndicatorWidth = self.menuItemWidths[page]
-                            selectionIndicatorX += self.menuMargin
-                            
-                            if page > 0 {
-                                for i in 0...(page - 1) {
-                                    selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
+                if scrollView.contentOffset.x >= 0.0 && scrollView.contentOffset.x <= (CGFloat(controllerArray.count - 1) * self.view.frame.width) {
+                    if (currentOrientationIsPortrait && self.interfaceOrientation.isPortrait) || (!currentOrientationIsPortrait && self.interfaceOrientation.isLandscape) {
+                        // Check if scroll direction changed
+                        if !didTapMenuItemToScroll {
+                            if didScrollAlready {
+                                var newScrollDirection : String  = ""
+                                
+                                if (CGFloat(startingPageForScroll) * scrollView.frame.width > scrollView.contentOffset.x) {
+                                    newScrollDirection = "right"
+                                } else if (CGFloat(startingPageForScroll) * scrollView.frame.width < scrollView.contentOffset.x) {
+                                    newScrollDirection = "left"
+                                }
+                                
+                                if newScrollDirection != "" {
+                                    if !lastScrollDirection.isEqual(newScrollDirection) {
+                                        var index : Int = newScrollDirection == "left" ? currentPageIndex + 1 : currentPageIndex - 1
+                                        
+                                        if index >= 0 && index < controllerArray.count {
+                                            // Check dictionary if page was already added
+                                            if pagesAddedDictionary[index] != index {
+                                                addPageAtIndex(index)
+                                                pagesAddedDictionary[index] = index
+                                            }
+                                        }
+                                    }
+                                    
+                                    lastScrollDirection = newScrollDirection
                                 }
                             }
-                        } else {
-                            selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin
+                            
+                            if !didScrollAlready {
+                                if (lastControllerScrollViewContentOffset > scrollView.contentOffset.x) {
+                                    if currentPageIndex != 0 {
+                                        // Add page to the left of current page
+                                        var index : Int = currentPageIndex - 1
+                                        
+                                        if pagesAddedDictionary[index] != index && index < controllerArray.count && index >= 0 {
+                                            addPageAtIndex(index)
+                                            pagesAddedDictionary[index] = index
+                                        }
+                                        
+                                        lastScrollDirection = "right"
+                                    }
+                                } else if (lastControllerScrollViewContentOffset < scrollView.contentOffset.x) {
+                                    if currentPageIndex != controllerArray.count - 1 {
+                                        // Add page to the right of current page
+                                        var index : Int = currentPageIndex + 1
+                                        
+                                        if pagesAddedDictionary[index] != index && index < controllerArray.count && index >= 0 {
+                                            addPageAtIndex(index)
+                                            pagesAddedDictionary[index] = index
+                                        }
+                                        
+                                        lastScrollDirection = "left"
+                                    }
+                                }
+                                
+                                didScrollAlready = true
+                            }
+                            
+                            lastControllerScrollViewContentOffset = scrollView.contentOffset.x
+                        }
+                    
+                        var ratio : CGFloat = 1.0
+                        
+                        
+                        // Calculate ratio between scroll views
+                        ratio = (menuScrollView.contentSize.width - self.view.frame.width) / (controllerScrollView.contentSize.width - self.view.frame.width)
+                        
+                        if menuScrollView.contentSize.width > self.view.frame.width {
+                            var offset : CGPoint = menuScrollView.contentOffset
+                            offset.x = controllerScrollView.contentOffset.x * ratio
+                            menuScrollView.setContentOffset(offset, animated: false)
                         }
                         
-                        self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
+                        // Calculate current page
+                        var width : CGFloat = controllerScrollView.frame.size.width;
+                        var page : Int = Int((controllerScrollView.contentOffset.x + (0.5 * width)) / width)
                         
-                        // Switch newly selected menu item title label to selected color and old one to unselected color
-                        if self.menuItems.count > 0 {
-                            if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
-                                self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
-                                self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                        // Update page if changed
+                        if page != currentPageIndex {
+                            lastPageIndex = currentPageIndex
+                            currentPageIndex = page
+                            
+                            if pagesAddedDictionary[page] != page && page < controllerArray.count && page >= 0 {
+                                addPageAtIndex(page)
+                                pagesAddedDictionary[page] = page
+                            }
+                            
+                            if !didTapMenuItemToScroll {
+                                // Add last page to pages dictionary to make sure it gets removed after scrolling
+                                if pagesAddedDictionary[lastPageIndex] != lastPageIndex {
+                                    pagesAddedDictionary[lastPageIndex] = lastPageIndex
+                                }
+                                
+                                // Make sure only up to 3 page views are in memory when fast scrolling, otherwise there should only be one in memory
+                                var indexLeftTwo : Int = page - 2
+                                if pagesAddedDictionary[indexLeftTwo] == indexLeftTwo {
+                                    pagesAddedDictionary.removeValueForKey(indexLeftTwo)
+                                    removePageAtIndex(indexLeftTwo)
+                                }
+                                var indexRightTwo : Int = page + 2
+                                if pagesAddedDictionary[indexRightTwo] == indexRightTwo {
+                                    pagesAddedDictionary.removeValueForKey(indexRightTwo)
+                                    removePageAtIndex(indexRightTwo)
+                                }
                             }
                         }
+                        
+                        // Move selection indicator view when swiping
+                        if page >= 0 && page < controllerArray.count {
+                            UIView.animateWithDuration(0.15, animations: { () -> Void in
+                                var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
+                                var selectionIndicatorX : CGFloat = 0.0
+                                
+                                if self.menuItemWidthBasedOnTitleTextWidth {
+                                    selectionIndicatorWidth = self.menuItemWidths[page]
+                                    selectionIndicatorX += self.menuMargin
+                                    
+                                    if page > 0 {
+                                        for i in 0...(page - 1) {
+                                            selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
+                                        }
+                                    }
+                                } else {
+                                    selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin
+                                }
+                                
+                                self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
+                                
+                                // Switch newly selected menu item title label to selected color and old one to unselected color
+                                if self.menuItems.count > 0 {
+                                    if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
+                                        self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
+                                        self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                                    }
+                                }
+                            })
+                        }
+                    }
+                } else {
+                    var ratio : CGFloat = 1.0
+                    
+                    ratio = (menuScrollView.contentSize.width - self.view.frame.width) / (controllerScrollView.contentSize.width - self.view.frame.width)
+                    
+                    if menuScrollView.contentSize.width > self.view.frame.width {
+                        var offset : CGPoint = menuScrollView.contentOffset
+                        offset.x = controllerScrollView.contentOffset.x * ratio
+                        menuScrollView.setContentOffset(offset, animated: false)
+                    }
+                }
+                
+                // If user tapped item everything but current page need to be removed
+                if didTapMenuItemToScroll {
+                    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(scrollAnimationDurationOnMenuItemTap) * Int64(NSEC_PER_MSEC))
+                    dispatch_after(time, dispatch_get_main_queue(), {
+                        self.scrollViewDidEndTapScrollingAnimation()
                     })
                 }
             }
+        } else {
+            didLayoutSubviewsAfterRotation = false
         }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        if scrollView.isEqual(controllerScrollView) {
+            // Remove all but current page after decelerating
+            for key in pagesAddedDictionary.keys {
+                if key != currentPageIndex {
+                    removePageAtIndex(key)
+                }
+            }
+            
+            didScrollAlready = false
+            startingPageForScroll = currentPageIndex
+            
+            // Empty out pages in dictionary
+            pagesAddedDictionary.removeAll(keepCapacity: false)
+        }
+    }
+    
+    func scrollViewDidEndTapScrollingAnimation() {
+        // Remove all but current page after decelerating
+        for key in pagesAddedDictionary.keys {
+            if key != currentPageIndex {
+                removePageAtIndex(key)
+            }
+        }
+        
+        startingPageForScroll = currentPageIndex
+        didTapMenuItemToScroll = false
+        
+        // Empty out pages in dictionary
+        pagesAddedDictionary.removeAll(keepCapacity: false)
     }
     
     
@@ -357,16 +508,63 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             
             // Update page if changed
             if itemIndex != currentPageIndex {
+                startingPageForScroll = itemIndex
                 lastPageIndex = currentPageIndex
                 currentPageIndex = itemIndex
+                didTapMenuItemToScroll = true
+                
+                // Add pages in between current and tapped page if necessary
+                var smallerIndex : Int = lastPageIndex < currentPageIndex ? lastPageIndex : currentPageIndex
+                var largerIndex : Int = lastPageIndex > currentPageIndex ? lastPageIndex : currentPageIndex
+               
+                if smallerIndex + 1 != largerIndex {
+                    for index in (smallerIndex + 1)...(largerIndex - 1) {
+                        if pagesAddedDictionary[index] != index {
+                            addPageAtIndex(index)
+                            pagesAddedDictionary[index] = index
+                        }
+                    }
+                }
+                
+                addPageAtIndex(itemIndex)
+                
+                // Add page from which tap is initiated so it can be removed after tap is done
+                pagesAddedDictionary[lastPageIndex] = lastPageIndex
             }
             
             // Move controller scroll view when tapping menu item
-            UIView.animateWithDuration(0.7, animations: { () -> Void in
+            var duration : Double = Double(scrollAnimationDurationOnMenuItemTap) / Double(1000)
+            
+            UIView.animateWithDuration(duration, animations: { () -> Void in
                 var xOffset : CGFloat = CGFloat(itemIndex) * self.controllerScrollView.frame.width
-                self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: true)
+                self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
             })
         }
+    }
+    
+    
+    // MARK: - Remove/Add Page
+    func addPageAtIndex(index : Int) {
+        var newVC : UIViewController = controllerArray[index] as UIViewController
+        
+        newVC.willMoveToParentViewController(self)
+        
+        newVC.view.frame = CGRectMake(self.view.frame.width * CGFloat(index), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
+        
+        self.addChildViewController(newVC)
+        self.controllerScrollView.addSubview(newVC.view)
+        newVC.didMoveToParentViewController(self)
+    }
+    
+    func removePageAtIndex(index : Int) {
+        var oldVC : UIViewController = controllerArray[index] as UIViewController
+        
+        oldVC.willMoveToParentViewController(nil)
+        
+        oldVC.view.removeFromSuperview()
+        oldVC.removeFromParentViewController()
+        
+        oldVC.didMoveToParentViewController(nil)
     }
     
     
@@ -380,18 +578,14 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             didLayoutSubviewsAfterRotation = true
             
             // Configure controller scroll view content size
-            controllerScrollView.contentSize = CGSizeMake(controllerScrollView.frame.width * CGFloat(controllerArray.count), controllerScrollView.frame.height)
-            
-            var subviewIndex : CGFloat = 0.0
+            controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), self.view.frame.height - menuHeight)
             
             for view : UIView in controllerScrollView.subviews as [UIView] {
-                view.frame = CGRectMake(controllerScrollView.frame.width * subviewIndex, menuScrollView.frame.height, controllerScrollView.frame.width, controllerScrollView.frame.height - menuScrollView.frame.height)
-                
-                subviewIndex++
+                view.frame = CGRectMake(self.view.frame.width * CGFloat(currentPageIndex), menuHeight, controllerScrollView.frame.width, self.view.frame.height - menuHeight)
             }
             
             var xOffset : CGFloat = CGFloat(self.currentPageIndex) * controllerScrollView.frame.width
-            controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: controllerScrollView.contentOffset.y), animated: true)
+            controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: controllerScrollView.contentOffset.y), animated: false)
             
             var ratio : CGFloat = (menuScrollView.contentSize.width - self.view.frame.width) / (controllerScrollView.contentSize.width - self.view.frame.width)
             

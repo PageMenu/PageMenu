@@ -18,6 +18,20 @@ class TestTableViewController: UITableViewController {
         
         self.tableView.registerNib(UINib(nibName: "FriendTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendTableViewCell")
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        println("favorites page: viewWillAppear")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.tableView.showsVerticalScrollIndicator = false
+        super.viewDidAppear(animated)
+        self.tableView.showsVerticalScrollIndicator = true
+        
+//        println("favorites page: viewDidAppear")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

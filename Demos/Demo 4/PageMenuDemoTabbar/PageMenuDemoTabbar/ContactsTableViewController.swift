@@ -20,6 +20,19 @@ class ContactsTableViewController: UITableViewController {
         self.tableView.registerNib(UINib(nibName: "ContactTableViewCell", bundle: nil), forCellReuseIdentifier: "ContactTableViewCell")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        println("\(self.title) page: viewWillAppear")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+//        println("contacts page: viewDidAppear")
+        self.tableView.showsVerticalScrollIndicator = false
+        super.viewDidAppear(animated)
+        self.tableView.showsVerticalScrollIndicator = true
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
