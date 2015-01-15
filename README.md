@@ -1,7 +1,10 @@
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader3.png" alt="PageMenuHeader">
 ========
 
-**NOTE: Performance improvements as well as auto-rotation fixes are in the works.**
+**Update - Version 1.1.0 Release**
+**- Major performance improvements**
+**- Auto-rotation bug fixed**
+**- Customization option added for scroll animation duration on menu item tap**
 
 A fully customizable and flexible paging menu controller built from other view controllers allowing the user to switch between any kind of view controller with an easy tap or swipe gesture similar to what Spotify uses
 
@@ -148,6 +151,10 @@ There are many ways you are able to customize page menu for your needs and there
   * Menu item witdh based on title text width (see Demo 3)
 
         menuItemWidthBasedOnTitleTextWidth (Bool)
+
+  * Scroll animation duration on menu item tap in milliseconds
+
+        scrollAnimationDurationOnMenuItemTap (Int)
 
 ## Apps using PageMenu
 
