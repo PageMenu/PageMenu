@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader3.png" alt="PageMenuHeader">
 ========
 
-## Update - Version 1.1.0 Release
+## Update - Version 1.1.0 Release (01/15/2015)
 * Major performance improvements
 * Auto-rotation bug fixed
 * Customization option added for scroll animation duration on menu item tap
