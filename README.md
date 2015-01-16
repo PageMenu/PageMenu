@@ -1,7 +1,13 @@
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader3.png" alt="PageMenuHeader">
 ========
 
-## Update - Version 1.1.0 Release (01/15/2015)
+## Updates
+
+**1.1.1 Release (01/16/2015)**
+* Fixed bug that prevented user from tapping anything within a controller
+* Menu now fully scrollable
+
+**1.1.0 Release (01/15/2015)**
 * Major performance improvements
 * Auto-rotation bug fixed
 * Customization option added for scroll animation duration on menu item tap
