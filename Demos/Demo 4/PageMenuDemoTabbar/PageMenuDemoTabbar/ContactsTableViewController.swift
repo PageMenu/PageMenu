@@ -75,4 +75,11 @@ class ContactsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.001
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println("did select contact row")
+        let contactPrompt = UIAlertController(title: "Contact Selected", message: "You have selected a contact.", preferredStyle: UIAlertControllerStyle.Alert)
+        contactPrompt.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        presentViewController(contactPrompt, animated: true, completion: nil)
+    }
 }

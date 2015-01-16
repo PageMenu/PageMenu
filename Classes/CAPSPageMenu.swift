@@ -120,18 +120,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     // MARK: - UI Setup
     
     func setUpUserInterface() {
-        // Set up menu scroll view
-        menuScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        self.view.addSubview(menuScrollView)
-        
         let viewsDictionary = ["menuScrollView":menuScrollView, "controllerScrollView":controllerScrollView]
-        
-        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[menuScrollView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuScrollView(\(menuHeight))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        
-        self.view.addConstraints(menuScrollView_constraint_H)
-        self.view.addConstraints(menuScrollView_constraint_V)
         
         // Set up controller scroll view
         controllerScrollView.pagingEnabled = true
@@ -144,6 +133,17 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         
         self.view.addConstraints(controllerScrollView_constraint_H)
         self.view.addConstraints(controllerScrollView_constraint_V)
+        
+        // Set up menu scroll view
+        menuScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        self.view.addSubview(menuScrollView)
+        
+        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[menuScrollView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuScrollView(\(menuHeight))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        self.view.addConstraints(menuScrollView_constraint_H)
+        self.view.addConstraints(menuScrollView_constraint_V)
         
         // Add hairline to menu scroll view
         if addBottomMenuHairline {
@@ -179,7 +179,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         menuItemTapGestureRecognizer.numberOfTapsRequired = 1
         menuItemTapGestureRecognizer.numberOfTouchesRequired = 1
         menuItemTapGestureRecognizer.delegate = self
-        controllerScrollView.addGestureRecognizer(menuItemTapGestureRecognizer)
+        menuScrollView.addGestureRecognizer(menuItemTapGestureRecognizer)
         
         // Set delegate for controller scroll view
         controllerScrollView.delegate = self
