@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         pageMenu = CAPSPageMenu(viewControllers: controllerArray)
         
         // Set frame for scroll menu (set y origin to height of navbar if navbar is used and is transparent)
-        pageMenu!.view.frame = CGRectMake(0.0, 64.0, self.view.frame.width, self.view.frame.height - 64.0)
+        pageMenu!.view.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
         
         // Customize menu (Optional)
         pageMenu!.scrollMenuBackgroundColor = UIColor.whiteColor()

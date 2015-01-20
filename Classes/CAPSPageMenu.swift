@@ -22,9 +22,15 @@ import UIKit
 class MenuItemView: UIView {
     
     var titleLabel : UILabel?
+    var menuItemSeparator : UIView?
     
     func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat) {
         titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
+        
+        menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth, floor(menuScrollViewHeight * 0.2), 0.5, menuScrollViewHeight - (2.0 * floor(menuScrollViewHeight * 0.2))))
+        menuItemSeparator!.backgroundColor = UIColor.lightGrayColor()
+        menuItemSeparator!.hidden = true
+        self.addSubview(menuItemSeparator!)
         
         self.addSubview(titleLabel!)
     }
@@ -258,10 +264,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 // Add separator between menu items when using as segmented control
                 if useMenuLikeSegmentedControl {
                     if Int(index) < controllerArray.count - 1 {
-                        var menuItemSeparator : UIView = UIView(frame: CGRectMake(menuItemView.frame.width, floor(menuHeight * 0.2), 0.5, menuHeight - (2.0 * floor(menuHeight * 0.2))))
-                        println("\(menuItemSeparator.frame.height), \(menuItemSeparator.frame.origin.y)")
-                        menuItemSeparator.backgroundColor = UIColor.lightGrayColor()
-                        menuItemView.addSubview(menuItemSeparator)
+                        menuItemView.menuItemSeparator!.hidden = false
                     }
                 }
                 
@@ -610,6 +613,21 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             
             // Configure controller scroll view content size
             controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), self.view.frame.height - menuHeight)
+            
+            //Resize menu items if using as segmented control
+            if useMenuLikeSegmentedControl {
+                menuScrollView.contentSize = CGSizeMake(self.view.frame.width, menuHeight)
+                
+                var index : Int = 0
+                
+                for item : MenuItemView in menuItems as [MenuItemView] {
+                    item.frame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
+                    item.titleLabel!.frame = CGRectMake(0.0, 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
+                    item.menuItemSeparator!.frame = CGRectMake(item.frame.width, item.menuItemSeparator!.frame.origin.y, item.menuItemSeparator!.frame.width, item.menuItemSeparator!.frame.height)
+                    
+                    index++
+                }
+            }
             
             for view : UIView in controllerScrollView.subviews as [UIView] {
                 view.frame = CGRectMake(self.view.frame.width * CGFloat(currentPageIndex), menuHeight, controllerScrollView.frame.width, self.view.frame.height - menuHeight)
