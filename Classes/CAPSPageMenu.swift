@@ -109,7 +109,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        configureUserInterface()
+        if menuScrollView.subviews.count == 0 {
+            configureUserInterface()
+        }
     }
     
     override func didReceiveMemoryWarning() {
