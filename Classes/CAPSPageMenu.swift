@@ -32,6 +32,8 @@ class MenuItemView: UIView {
     func setTitleText(text: NSString) {
         if titleLabel != nil {
             titleLabel!.text = text
+            titleLabel!.numberOfLines = 0
+            titleLabel!.sizeToFit()
         }
     }
 }
@@ -69,6 +71,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     
     var addBottomMenuHairline : Bool = true
     var menuItemWidthBasedOnTitleTextWidth : Bool = false
+    var useMenuLikeSegmentedControl : Bool = false
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -186,8 +189,14 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         // Set delegate for controller scroll view
         controllerScrollView.delegate = self
         
-        // Configure menu scroll view content size
-        menuScrollView.contentSize = CGSizeMake((menuItemWidth + menuMargin) * CGFloat(controllerArray.count) + menuMargin, menuHeight)
+        // Configure menu scroll view
+        if useMenuLikeSegmentedControl {
+            menuScrollView.scrollEnabled = false
+            menuScrollView.contentSize = CGSizeMake(self.view.frame.width, menuHeight)
+            menuMargin = 0.0
+        } else {
+            menuScrollView.contentSize = CGSizeMake((menuItemWidth + menuMargin) * CGFloat(controllerArray.count) + menuMargin, menuHeight)
+        }
         
         // Configure controller scroll view content size
         controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), self.view.frame.height - menuHeight)
@@ -207,7 +216,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 // Set up menu item for menu scroll view
                 var menuItemFrame : CGRect = CGRect()
                 
-                if menuItemWidthBasedOnTitleTextWidth {
+                if useMenuLikeSegmentedControl {
+                    menuItemFrame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
+                } else if menuItemWidthBasedOnTitleTextWidth {
                     var controllerTitle : String? = (controller as UIViewController).title
                     
                     var titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
@@ -225,8 +236,12 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 }
                 
                 var menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
-                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight)
-                
+                if useMenuLikeSegmentedControl {
+                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight)
+                } else {
+                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight)
+                }
+                    
                 // Configure menu item label font if font is set by user
                 menuItemView.titleLabel!.font = menuItemFont
                 
@@ -238,6 +253,16 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     menuItemView.titleLabel!.text = controller.title!
                 } else {
                     menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
+                }
+                
+                // Add separator between menu items when using as segmented control
+                if useMenuLikeSegmentedControl {
+                    if Int(index) < controllerArray.count - 1 {
+                        var menuItemSeparator : UIView = UIView(frame: CGRectMake(menuItemView.frame.width, floor(menuHeight * 0.2), 0.5, menuHeight - (2.0 * floor(menuHeight * 0.2))))
+                        println("\(menuItemSeparator.frame.height), \(menuItemSeparator.frame.origin.y)")
+                        menuItemSeparator.backgroundColor = UIColor.lightGrayColor()
+                        menuItemView.addSubview(menuItemSeparator)
+                    }
                 }
                 
                 // Add menu item view to menu scroll view
@@ -263,7 +288,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         // Configure selection indicator view
         var selectionIndicatorFrame : CGRect = CGRect()
         
-        if menuItemWidthBasedOnTitleTextWidth {
+        if useMenuLikeSegmentedControl {
+            selectionIndicatorFrame = CGRectMake(0.0, menuHeight - selectionIndicatorHeight, self.view.frame.width / CGFloat(controllerArray.count), selectionIndicatorHeight)
+        } else if menuItemWidthBasedOnTitleTextWidth {
             selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
         } else {
             selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
@@ -395,7 +422,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                                 var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
                                 var selectionIndicatorX : CGFloat = 0.0
                                 
-                                if self.menuItemWidthBasedOnTitleTextWidth {
+                                if self.menuItemWidthBasedOnTitleTextWidth && !self.useMenuLikeSegmentedControl {
                                     selectionIndicatorWidth = self.menuItemWidths[page]
                                     selectionIndicatorX += self.menuMargin
                                     
@@ -488,7 +515,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             // Calculate tapped page
             var itemIndex : Int = 0
             
-            if menuItemWidthBasedOnTitleTextWidth {
+            if useMenuLikeSegmentedControl {
+                itemIndex = Int(tappedPoint.x / (self.view.frame.width / CGFloat(controllerArray.count)))
+            } else if menuItemWidthBasedOnTitleTextWidth {
                 // Base case being first item
                 var menuItemLeftBound : CGFloat = 0.0
                 var menuItemRightBound : CGFloat = menuItemWidths[0] + menuMargin + (menuMargin / 2)
