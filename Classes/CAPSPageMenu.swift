@@ -24,11 +24,16 @@ class MenuItemView: UIView {
     var titleLabel : UILabel?
     var menuItemSeparator : UIView?
     
-    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat) {
+    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool) {
         titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
         
-        menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth, floor(menuScrollViewHeight * 0.2), 0.5, menuScrollViewHeight - (2.0 * floor(menuScrollViewHeight * 0.2))))
+        menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth, floor(menuScrollViewHeight * ((1.0 - separatorPercentageHeight) / 2.0)), separatorWidth, floor(menuScrollViewHeight * separatorPercentageHeight)))
         menuItemSeparator!.backgroundColor = UIColor.lightGrayColor()
+        
+        if separatorRoundEdges {
+            menuItemSeparator!.layer.cornerRadius = menuItemSeparator!.frame.width / 2
+        }
+        
         menuItemSeparator!.hidden = true
         self.addSubview(menuItemSeparator!)
         
@@ -74,6 +79,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var bottomMenuHairlineColor : UIColor = UIColor.whiteColor()
     
     var menuItemFont : UIFont = UIFont(name: "HelveticaNeue", size: 15.0)!
+    var menuItemSeparatorPercentageHeight : CGFloat = 0.2
+    var menuItemSeparatorWidth : CGFloat = 0.5
+    var menuItemSeparatorRoundEdges : Bool = false
     
     var addBottomMenuHairline : Bool = true
     var menuItemWidthBasedOnTitleTextWidth : Bool = false
@@ -243,9 +251,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 
                 var menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
                 if useMenuLikeSegmentedControl {
-                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight)
+                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges)
                 } else {
-                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight)
+                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges)
                 }
                     
                 // Configure menu item label font if font is set by user
@@ -342,7 +350,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                             
                             if !didScrollAlready {
                                 if (lastControllerScrollViewContentOffset > scrollView.contentOffset.x) {
-                                    if currentPageIndex != 0 {
+                                    if currentPageIndex != controllerArray.count - 1 {
                                         // Add page to the left of current page
                                         var index : Int = currentPageIndex - 1
                                         
@@ -354,7 +362,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                                         lastScrollDirection = "right"
                                     }
                                 } else if (lastControllerScrollViewContentOffset < scrollView.contentOffset.x) {
-                                    if currentPageIndex != controllerArray.count - 1 {
+                                    if currentPageIndex != 0 {
                                         // Add page to the right of current page
                                         var index : Int = currentPageIndex + 1
                                         
@@ -420,35 +428,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                         }
                         
                         // Move selection indicator view when swiping
-                        if page >= 0 && page < controllerArray.count {
-                            UIView.animateWithDuration(0.15, animations: { () -> Void in
-                                var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
-                                var selectionIndicatorX : CGFloat = 0.0
-                                
-                                if self.menuItemWidthBasedOnTitleTextWidth && !self.useMenuLikeSegmentedControl {
-                                    selectionIndicatorWidth = self.menuItemWidths[page]
-                                    selectionIndicatorX += self.menuMargin
-                                    
-                                    if page > 0 {
-                                        for i in 0...(page - 1) {
-                                            selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
-                                        }
-                                    }
-                                } else {
-                                    selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(page) + self.menuMargin
-                                }
-                                
-                                self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
-                                
-                                // Switch newly selected menu item title label to selected color and old one to unselected color
-                                if self.menuItems.count > 0 {
-                                    if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
-                                        self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
-                                        self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
-                                    }
-                                }
-                            })
-                        }
+                        moveSelectionIndicator(page)
                     }
                 } else {
                     var ratio : CGFloat = 1.0
@@ -472,6 +452,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             }
         } else {
             didLayoutSubviewsAfterRotation = false
+            
+            // Move selection indicator view when swiping
+            moveSelectionIndicator(currentPageIndex)
         }
     }
     
@@ -505,6 +488,43 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         
         // Empty out pages in dictionary
         pagesAddedDictionary.removeAll(keepCapacity: false)
+    }
+    
+    
+    // MARK: - Handle Selection Indicator
+    func moveSelectionIndicator(pageIndex: Int) {
+        if pageIndex >= 0 && pageIndex < controllerArray.count {
+            UIView.animateWithDuration(0.15, animations: { () -> Void in
+                var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
+                var selectionIndicatorX : CGFloat = 0.0
+                
+                if self.useMenuLikeSegmentedControl {
+                    selectionIndicatorX = CGFloat(pageIndex) * (self.view.frame.width / CGFloat(self.controllerArray.count))
+                    selectionIndicatorWidth = self.view.frame.width / CGFloat(self.controllerArray.count)
+                } else if self.menuItemWidthBasedOnTitleTextWidth {
+                    selectionIndicatorWidth = self.menuItemWidths[pageIndex]
+                    selectionIndicatorX += self.menuMargin
+                    
+                    if pageIndex > 0 {
+                        for i in 0...(pageIndex - 1) {
+                            selectionIndicatorX += (self.menuMargin + self.menuItemWidths[i])
+                        }
+                    }
+                } else {
+                    selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(pageIndex) + self.menuMargin
+                }
+                
+                self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
+                
+                // Switch newly selected menu item title label to selected color and old one to unselected color
+                if self.menuItems.count > 0 {
+                    if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
+                        self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
+                        self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                    }
+                }
+            })
+        }
     }
     
     
@@ -618,6 +638,12 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             if useMenuLikeSegmentedControl {
                 menuScrollView.contentSize = CGSizeMake(self.view.frame.width, menuHeight)
                 
+                // Resize selectionIndicator bar
+                var selectionIndicatorX : CGFloat = CGFloat(currentPageIndex) * (self.view.frame.width / CGFloat(self.controllerArray.count))
+                var selectionIndicatorWidth : CGFloat = self.view.frame.width / CGFloat(self.controllerArray.count)
+                selectionIndicatorView.frame =  CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
+                
+                // Resize menu items
                 var index : Int = 0
                 
                 for item : MenuItemView in menuItems as [MenuItemView] {
