@@ -560,39 +560,41 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 itemIndex = Int((tappedPoint.x - menuMargin / 2) / (menuMargin + menuItemWidth))
             }
             
-            // Update page if changed
-            if itemIndex != currentPageIndex {
-                startingPageForScroll = itemIndex
-                lastPageIndex = currentPageIndex
-                currentPageIndex = itemIndex
-                didTapMenuItemToScroll = true
-                
-                // Add pages in between current and tapped page if necessary
-                var smallerIndex : Int = lastPageIndex < currentPageIndex ? lastPageIndex : currentPageIndex
-                var largerIndex : Int = lastPageIndex > currentPageIndex ? lastPageIndex : currentPageIndex
-               
-                if smallerIndex + 1 != largerIndex {
-                    for index in (smallerIndex + 1)...(largerIndex - 1) {
-                        if pagesAddedDictionary[index] != index {
-                            addPageAtIndex(index)
-                            pagesAddedDictionary[index] = index
+            if itemIndex >= 0 && itemIndex < controllerArray.count {
+                // Update page if changed
+                if itemIndex != currentPageIndex {
+                    startingPageForScroll = itemIndex
+                    lastPageIndex = currentPageIndex
+                    currentPageIndex = itemIndex
+                    didTapMenuItemToScroll = true
+                    
+                    // Add pages in between current and tapped page if necessary
+                    var smallerIndex : Int = lastPageIndex < currentPageIndex ? lastPageIndex : currentPageIndex
+                    var largerIndex : Int = lastPageIndex > currentPageIndex ? lastPageIndex : currentPageIndex
+                   
+                    if smallerIndex + 1 != largerIndex {
+                        for index in (smallerIndex + 1)...(largerIndex - 1) {
+                            if pagesAddedDictionary[index] != index {
+                                addPageAtIndex(index)
+                                pagesAddedDictionary[index] = index
+                            }
                         }
                     }
+                    
+                    addPageAtIndex(itemIndex)
+                    
+                    // Add page from which tap is initiated so it can be removed after tap is done
+                    pagesAddedDictionary[lastPageIndex] = lastPageIndex
                 }
                 
-                addPageAtIndex(itemIndex)
+                // Move controller scroll view when tapping menu item
+                var duration : Double = Double(scrollAnimationDurationOnMenuItemTap) / Double(1000)
                 
-                // Add page from which tap is initiated so it can be removed after tap is done
-                pagesAddedDictionary[lastPageIndex] = lastPageIndex
+                UIView.animateWithDuration(duration, animations: { () -> Void in
+                    var xOffset : CGFloat = CGFloat(itemIndex) * self.controllerScrollView.frame.width
+                    self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
+                })
             }
-            
-            // Move controller scroll view when tapping menu item
-            var duration : Double = Double(scrollAnimationDurationOnMenuItemTap) / Double(1000)
-            
-            UIView.animateWithDuration(duration, animations: { () -> Void in
-                var xOffset : CGFloat = CGFloat(itemIndex) * self.controllerScrollView.frame.width
-                self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
-            })
         }
     }
     
