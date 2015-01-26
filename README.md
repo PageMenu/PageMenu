@@ -3,6 +3,11 @@
 
 ## Updates
 
+**1.2.0 Release (01/26/2015)**
+* Added ability to center menu items if they don't span over entire width of the PageMenu view (currently only supported for fixed menu item width)
+* Added ability to use PageMenu in a similar way as segmented control
+* Added function to move to any page index in PageMenu
+
 **1.1.1 Release (01/16/2015)**
 * Fixed bug that prevented user from tapping anything within a controller
 * Menu now fully scrollable
