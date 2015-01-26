@@ -153,7 +153,30 @@ There are many ways you are able to customize page menu for your needs and there
 
 
 
-3)  Others
+3)  Segmented Control
+
+  * Use PageMenu as segmented control
+
+        useMenuLikeSegmentedControl (Bool)
+
+   
+  * Menu item separator width in pixels
+
+        menuItemSeparatorWidth (CGFloat)
+
+
+  * Menu item separator height in percentage of menu height
+
+        menuItemSeparatorPercentageHeight (CGFloat)
+
+
+  * Menu item separator has rounded edges
+
+        menuItemSeparatorRoundEdges (Bool)
+
+
+
+4)  Others
   * Menu item title label font
 
         menuItemFont (UIFont)
@@ -168,9 +191,17 @@ There are many ways you are able to customize page menu for your needs and there
 
         menuItemWidthBasedOnTitleTextWidth (Bool)
 
+
   * Scroll animation duration on menu item tap in milliseconds
 
         scrollAnimationDurationOnMenuItemTap (Int)
+
+
+  * Center menu items in menu if they don't span entire width (Not currently supported for menu item width based on title)
+
+        centerMenuItems (Bool)
+
+
 
 ## Apps using PageMenu
 
