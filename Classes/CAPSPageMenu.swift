@@ -27,7 +27,7 @@ class MenuItemView: UIView {
     func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool) {
         titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
         
-        menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth, floor(menuScrollViewHeight * ((1.0 - separatorPercentageHeight) / 2.0)), separatorWidth, floor(menuScrollViewHeight * separatorPercentageHeight)))
+        menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth - (separatorWidth / 2), floor(menuScrollViewHeight * ((1.0 - separatorPercentageHeight) / 2.0)), separatorWidth, floor(menuScrollViewHeight * separatorPercentageHeight)))
         menuItemSeparator!.backgroundColor = UIColor.lightGrayColor()
         
         if separatorRoundEdges {
@@ -65,6 +65,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var selectionIndicatorHeight : CGFloat = 3.0
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
     var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
+    var startingMenuMargin : CGFloat = 0.0
     
     var selectionIndicatorView : UIView = UIView()
     
@@ -86,6 +87,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var addBottomMenuHairline : Bool = true
     var menuItemWidthBasedOnTitleTextWidth : Bool = false
     var useMenuLikeSegmentedControl : Bool = false
+    var centerMenuItems : Bool = false
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -102,6 +104,11 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     
     // MARK: - View life cycle
     
+    /**
+    Initialize PageMenu with view controllers
+    
+    :param: viewControllers List of view controllers that must be subclasses of UIViewController
+    */
     init(viewControllers: [AnyObject]) {
         super.init(nibName: nil, bundle: nil)
         
@@ -246,7 +253,17 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     totalMenuItemWidthIfDifferentWidths += itemWidthRect.width
                     menuItemWidths.append(itemWidthRect.width)
                 } else {
-                    menuItemFrame = CGRectMake(menuItemWidth * index + menuMargin * (index + 1), 0.0, menuItemWidth, menuHeight)
+                    if centerMenuItems && index == 0.0  {
+                        startingMenuMargin = ((self.view.frame.width - ((CGFloat(controllerArray.count) * menuItemWidth) + (CGFloat(controllerArray.count - 1) * menuMargin))) / 2.0) -  menuMargin
+                        
+                        if startingMenuMargin < 0.0 {
+                            startingMenuMargin = 0.0
+                        }
+                        
+                        menuItemFrame = CGRectMake(startingMenuMargin + menuMargin, 0.0, menuItemWidth, menuHeight)
+                    } else {
+                        menuItemFrame = CGRectMake(menuItemWidth * index + menuMargin * (index + 1) + startingMenuMargin, 0.0, menuItemWidth, menuHeight)
+                    }
                 }
                 
                 var menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
@@ -304,7 +321,11 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         } else if menuItemWidthBasedOnTitleTextWidth {
             selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
         } else {
-            selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
+            if centerMenuItems  {
+                selectionIndicatorFrame = CGRectMake(startingMenuMargin + menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
+            } else {
+                selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
+            }
         }
         
         selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
@@ -511,7 +532,11 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                         }
                     }
                 } else {
-                    selectionIndicatorX = (self.menuMargin + self.menuItemWidth) * CGFloat(pageIndex) + self.menuMargin
+                    if self.centerMenuItems && pageIndex == 0 {
+                        selectionIndicatorX = self.startingMenuMargin + self.menuMargin
+                    } else {
+                        selectionIndicatorX = self.menuItemWidth * CGFloat(pageIndex) + self.menuMargin * CGFloat(pageIndex + 1) + self.startingMenuMargin
+                    }
                 }
                 
                 self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
@@ -557,7 +582,19 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     }
                 }
             } else {
-                itemIndex = Int((tappedPoint.x - menuMargin / 2) / (menuMargin + menuItemWidth))
+                println(tappedPoint.x)
+                println(startingMenuMargin)
+                
+                var rawItemIndex : CGFloat = ((tappedPoint.x - startingMenuMargin) - menuMargin / 2) / (menuMargin + menuItemWidth)
+                
+                // Prevent moving to first item when tapping left to first item
+                if rawItemIndex < 0 {
+                    itemIndex = -1
+                } else {
+                    itemIndex = Int(rawItemIndex)
+                }
+                
+                println(itemIndex)
             }
             
             if itemIndex >= 0 && itemIndex < controllerArray.count {
@@ -651,7 +688,29 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 for item : MenuItemView in menuItems as [MenuItemView] {
                     item.frame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
                     item.titleLabel!.frame = CGRectMake(0.0, 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
-                    item.menuItemSeparator!.frame = CGRectMake(item.frame.width, item.menuItemSeparator!.frame.origin.y, item.menuItemSeparator!.frame.width, item.menuItemSeparator!.frame.height)
+                    item.menuItemSeparator!.frame = CGRectMake(item.frame.width - (menuItemSeparatorWidth / 2), item.menuItemSeparator!.frame.origin.y, item.menuItemSeparator!.frame.width, item.menuItemSeparator!.frame.height)
+                    
+                    index++
+                }
+            } else if centerMenuItems {
+                startingMenuMargin = ((self.view.frame.width - ((CGFloat(controllerArray.count) * menuItemWidth) + (CGFloat(controllerArray.count - 1) * menuMargin))) / 2.0) -  menuMargin
+                
+                if startingMenuMargin < 0.0 {
+                    startingMenuMargin = 0.0
+                }
+                
+                var selectionIndicatorX : CGFloat = self.menuItemWidth * CGFloat(currentPageIndex) + self.menuMargin * CGFloat(currentPageIndex + 1) + self.startingMenuMargin
+                selectionIndicatorView.frame =  CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, self.selectionIndicatorView.frame.width, self.selectionIndicatorView.frame.height)
+                
+                // Recalculate frame for menu items if centered
+                var index : Int = 0
+                
+                for item : MenuItemView in menuItems as [MenuItemView] {
+                    if index == 0 {
+                        item.frame = CGRectMake(startingMenuMargin + menuMargin, 0.0, menuItemWidth, menuHeight)
+                    } else {
+                        item.frame = CGRectMake(menuItemWidth * CGFloat(index) + menuMargin * CGFloat(index + 1) + startingMenuMargin, 0.0, menuItemWidth, menuHeight)
+                    }
                     
                     index++
                 }
@@ -671,6 +730,52 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 offset.x = controllerScrollView.contentOffset.x * ratio
                 menuScrollView.setContentOffset(offset, animated: false)
             }
+        }
+    }
+    
+    
+    // MARK: - Move to page index
+    
+    /**
+    Move to page at index
+    
+    :param: index Index of the page to move to
+    */
+    func moveToPage(index: Int) {
+        if index >= 0 && index < controllerArray.count {
+            // Update page if changed
+            if index != currentPageIndex {
+                startingPageForScroll = index
+                lastPageIndex = currentPageIndex
+                currentPageIndex = index
+                didTapMenuItemToScroll = true
+                
+                // Add pages in between current and tapped page if necessary
+                var smallerIndex : Int = lastPageIndex < currentPageIndex ? lastPageIndex : currentPageIndex
+                var largerIndex : Int = lastPageIndex > currentPageIndex ? lastPageIndex : currentPageIndex
+                
+                if smallerIndex + 1 != largerIndex {
+                    for i in (smallerIndex + 1)...(largerIndex - 1) {
+                        if pagesAddedDictionary[i] != i {
+                            addPageAtIndex(i)
+                            pagesAddedDictionary[i] = i
+                        }
+                    }
+                }
+                
+                addPageAtIndex(index)
+                
+                // Add page from which tap is initiated so it can be removed after tap is done
+                pagesAddedDictionary[lastPageIndex] = lastPageIndex
+            }
+            
+            // Move controller scroll view when tapping menu item
+            var duration : Double = Double(scrollAnimationDurationOnMenuItemTap) / Double(1000)
+            
+            UIView.animateWithDuration(duration, animations: { () -> Void in
+                var xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
+                self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
+            })
         }
     }
 }

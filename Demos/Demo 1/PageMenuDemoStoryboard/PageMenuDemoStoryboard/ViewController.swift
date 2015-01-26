@@ -25,6 +25,9 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orangeColor()]
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<-", style: UIBarButtonItemStyle.Done, target: self, action: "didTapGoToLeft")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "->", style: UIBarButtonItemStyle.Done, target: self, action: "didTapGoToRight")
+        
         // MARK: - Scroll menu setup
         
         // Initialize view controllers to display and place in array
@@ -56,8 +59,26 @@ class ViewController: UIViewController {
         pageMenu!.bottomMenuHairlineColor = UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0)
         pageMenu!.menuItemFont = UIFont(name: "HelveticaNeue", size: 13.0)!
         pageMenu!.menuHeight = 40.0
+        pageMenu!.menuItemWidth = 90.0
+        pageMenu!.centerMenuItems = true
         
         self.view.addSubview(pageMenu!.view)
+    }
+    
+    func didTapGoToLeft() {
+        var currentIndex = pageMenu!.currentPageIndex
+        
+        if currentIndex > 0 {
+            pageMenu!.moveToPage(currentIndex - 1)
+        }
+    }
+    
+    func didTapGoToRight() {
+        var currentIndex = pageMenu!.currentPageIndex
+        
+        if currentIndex < pageMenu!.controllerArray.count {
+            pageMenu!.moveToPage(currentIndex + 1)
+        }
     }
 }
 

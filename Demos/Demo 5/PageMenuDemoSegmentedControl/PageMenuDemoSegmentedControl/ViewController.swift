@@ -51,8 +51,8 @@ class ViewController: UIViewController {
         pageMenu!.selectedMenuItemLabelColor = UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)
         pageMenu!.unselectedMenuItemLabelColor = UIColor(red: 40.0/255.0, green: 40.0/255.0, blue: 40.0/255.0, alpha: 1.0)
         pageMenu!.useMenuLikeSegmentedControl = true
-        pageMenu!.menuItemSeparatorWidth = 1.0
-        pageMenu!.menuItemSeparatorPercentageHeight = 0.5
+        pageMenu!.menuItemSeparatorWidth = 4.3
+        pageMenu!.menuItemSeparatorPercentageHeight = 0.1
         pageMenu!.menuItemSeparatorRoundEdges = true
         
         self.view.addSubview(pageMenu!.view)
