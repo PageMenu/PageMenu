@@ -16,12 +16,12 @@ A fully customizable and flexible paging menu controller built from other view c
 **Similar to Spotify**
 
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemo.gif" alt="PageMenuDemo">
-<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen5.png" alt="PageMenuScreen2">
+<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen8.png" alt="PageMenuScreen2">
 
 **Similar to Windows Phone**
 
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemo2.gif" alt="PageMenuDemo2">
-<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen5.png" alt="PageMenuScreen2">
+<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen7.png" alt="PageMenuScreen2">
 
 **Similar to Instagram segmented control**
 
