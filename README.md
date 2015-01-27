@@ -209,9 +209,11 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 
 ## Future Work
 
-- [x] Screen rotation support
 - [ ] Objective-C version
+- [ ] Infinite scroll option
 - [ ] More customization options
+- [x] Screen rotation support
+
 
 ## Update Log
 
