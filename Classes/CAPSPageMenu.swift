@@ -364,9 +364,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                                             }
                                         }
                                     }
-                                    
-                                    lastScrollDirection = newScrollDirection
                                 }
+                                
+                                lastScrollDirection = newScrollDirection
                             }
                             
                             if !didScrollAlready {
@@ -490,6 +490,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             
             didScrollAlready = false
             startingPageForScroll = currentPageIndex
+            
             
             // Empty out pages in dictionary
             pagesAddedDictionary.removeAll(keepCapacity: false)

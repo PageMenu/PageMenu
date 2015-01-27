@@ -32,6 +32,9 @@ class ViewController: UIViewController {
         var controller2 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller2.title = "RECENTS"
         controllerArray.append(controller2)
+        var controller3 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
+        controller3.title = "FRIENDS"
+        controllerArray.append(controller3)
         
         // Initialize scroll menu
         pageMenu = CAPSPageMenu(viewControllers: controllerArray)
