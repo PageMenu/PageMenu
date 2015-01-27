@@ -22,7 +22,7 @@ class TestTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        println("favorites page: viewWillAppear")
+        println("\(self.title) page: viewWillAppear")
     }
     
     override func viewDidAppear(animated: Bool) {
