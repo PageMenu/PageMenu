@@ -46,21 +46,18 @@ class ViewController: UIViewController {
         controller4.title = "FAVORITES"
         controllerArray.append(controller4)
         
-        // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray)
-        
-        // Set frame for scroll menu (set y origin to height of navbar if navbar is used and is transparent)
-        pageMenu!.view.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
-        
         // Customize menu (Optional)
-        pageMenu!.scrollMenuBackgroundColor = UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0)
-        pageMenu!.viewBackgroundColor = UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)
-        pageMenu!.selectionIndicatorColor = UIColor.orangeColor()
-        pageMenu!.bottomMenuHairlineColor = UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-        pageMenu!.menuItemFont = UIFont(name: "HelveticaNeue", size: 13.0)!
-        pageMenu!.menuHeight = 40.0
-        pageMenu!.menuItemWidth = 90.0
-        pageMenu!.centerMenuItems = true
+        var parameters: [String: AnyObject] = ["scrollMenuBackgroundColor": UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0),
+            "viewBackgroundColor": UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0),
+            "selectionIndicatorColor": UIColor.orangeColor(),
+            "bottomMenuHairlineColor": UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0),
+            "menuItemFont": UIFont(name: "HelveticaNeue", size: 13.0)!,
+            "menuHeight": 40.0,
+            "menuItemWidth": 90.0,
+            "centerMenuItems": true]
+        
+        // Initialize scroll menu
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), options: parameters)
         
         self.view.addSubview(pageMenu!.view)
     }

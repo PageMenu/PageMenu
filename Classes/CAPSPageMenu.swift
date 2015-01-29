@@ -108,40 +108,70 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     Initialize PageMenu with view controllers
     
     :param: viewControllers List of view controllers that must be subclasses of UIViewController
+    :param: frame Frame for page menu view
+    :param: options Dictionary holding any customization options user might want to set
     */
-    init(viewControllers: [AnyObject]) {
+    init(viewControllers: [AnyObject], frame: CGRect, options: [String: AnyObject]?) {
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+        
+        self.view.frame = frame
+        
+        if options != nil {
+            for key : String in options!.keys {
+                if key == "selectionIndicatorHeight" {
+                    selectionIndicatorHeight = options![key] as CGFloat
+                } else if key == "menuItemSeparatorWidth" {
+                    menuItemSeparatorWidth = options![key] as CGFloat
+                } else if key == "scrollMenuBackgroundColor" {
+                    scrollMenuBackgroundColor = options![key] as UIColor
+                } else if key == "viewBackgroundColor" {
+                    viewBackgroundColor = options![key] as UIColor
+                } else if key == "bottomMenuHairlineColor" {
+                    bottomMenuHairlineColor = options![key] as UIColor
+                } else if key == "selectionIndicatorColor" {
+                    selectionIndicatorColor = options![key] as UIColor
+                } else if key == "menuMargin" {
+                    menuMargin = options![key] as CGFloat
+                } else if key == "menuHeight" {
+                    menuHeight = options![key] as CGFloat
+                } else if key == "selectedMenuItemLabelColor" {
+                    selectedMenuItemLabelColor = options![key] as UIColor
+                } else if key == "unselectedMenuItemLabelColor" {
+                    unselectedMenuItemLabelColor = options![key] as UIColor
+                } else if key == "useMenuLikeSegmentedControl" {
+                    useMenuLikeSegmentedControl = options![key] as Bool
+                } else if key == "menuItemSeparatorRoundEdges" {
+                    menuItemSeparatorRoundEdges = options![key] as Bool
+                } else if key == "menuItemFont" {
+                    menuItemFont = options![key] as UIFont
+                } else if key == "menuItemSeparatorPercentageHeight" {
+                    menuItemSeparatorPercentageHeight = options![key] as CGFloat
+                } else if key == "menuItemWidth" {
+                    menuItemWidth = options![key] as CGFloat
+                } else if key == "addBottomMenuHairline" {
+                    addBottomMenuHairline = options![key] as Bool
+                } else if key == "menuItemWidthBasedOnTitleTextWidth" {
+                    menuItemWidthBasedOnTitleTextWidth = options![key] as Bool
+                } else if key == "scrollAnimationDurationOnMenuItemTap" {
+                    scrollAnimationDurationOnMenuItemTap = options![key] as Int
+                } else if key == "centerMenuItems" {
+                    centerMenuItems = options![key] as Bool
+                }
+            }
+        }
         
         setUpUserInterface()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         
         if menuScrollView.subviews.count == 0 {
             configureUserInterface()
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
-    
     
     // MARK: - UI Setup
     
@@ -151,6 +181,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         // Set up controller scroll view
         controllerScrollView.pagingEnabled = true
         controllerScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        controllerScrollView.frame = CGRectMake(0.0, menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
         
         self.view.addSubview(controllerScrollView)
         
@@ -162,6 +194,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         
         // Set up menu scroll view
         menuScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        menuScrollView.frame = CGRectMake(0.0, 0.0, self.view.frame.width, menuHeight)
         
         self.view.addSubview(menuScrollView)
         
@@ -220,7 +254,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         }
         
         // Configure controller scroll view content size
-        controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), self.view.frame.height - menuHeight)
+        controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), 0.0)
         
         var index : CGFloat = 0.0
         
@@ -583,9 +617,6 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     }
                 }
             } else {
-                println(tappedPoint.x)
-                println(startingMenuMargin)
-                
                 var rawItemIndex : CGFloat = ((tappedPoint.x - startingMenuMargin) - menuMargin / 2) / (menuMargin + menuItemWidth)
                 
                 // Prevent moving to first item when tapping left to first item
@@ -594,8 +625,6 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 } else {
                     itemIndex = Int(rawItemIndex)
                 }
-                
-                println(itemIndex)
             }
             
             if itemIndex >= 0 && itemIndex < controllerArray.count {

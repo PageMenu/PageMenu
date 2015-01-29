@@ -18,10 +18,6 @@ class PageMenuOneViewController: UIViewController {
         super.viewDidLoad()
         
         userPhotoImageView.layer.cornerRadius = 8
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         
         // MARK: - Scroll menu setup
         
@@ -41,28 +37,25 @@ class PageMenuOneViewController: UIViewController {
         for i in 0...10 {
             var controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
             controller3.title = "contr\(i)"
-//            controller3.view.backgroundColor = getRandomColor()
+            //            controller3.view.backgroundColor = getRandomColor()
             controllerArray.append(controller3)
         }
         
-        // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray)
-        
-        // Set frame for scroll menu (set y origin to height of navbar if navbar is used and is transparent)
-        pageMenu!.view.frame = CGRectMake(0.0, 60.0, self.view.frame.width, self.view.frame.height - 60.0)
-        
         // Customize menu (Optional)
-        pageMenu!.scrollMenuBackgroundColor = UIColor.orangeColor()
-        pageMenu!.viewBackgroundColor = UIColor.whiteColor()
-        pageMenu!.bottomMenuHairlineColor = UIColor.orangeColor()
-        pageMenu!.selectionIndicatorColor = UIColor.whiteColor()
-        pageMenu!.menuMargin = 20.0
-        pageMenu!.menuItemFont = UIFont(name: "HelveticaNeue", size: 35.0)!
-        pageMenu!.menuHeight = 44.0
-        pageMenu!.selectionIndicatorHeight = 0.0
-        pageMenu!.menuItemWidthBasedOnTitleTextWidth = true
-        pageMenu!.selectedMenuItemLabelColor = UIColor.whiteColor()
-        pageMenu!.unselectedMenuItemLabelColor = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4)
+        var parameters: [String: AnyObject] = ["scrollMenuBackgroundColor": UIColor.orangeColor(),
+                                                     "viewBackgroundColor": UIColor.whiteColor(),
+                                                 "selectionIndicatorColor": UIColor.whiteColor(),
+                                            "unselectedMenuItemLabelColor": UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4),
+                                                            "menuItemFont": UIFont(name: "HelveticaNeue", size: 35.0)!,
+                                                              "menuHeight": 44.0,
+                                                              "menuMargin": 20.0,
+                                                "selectionIndicatorHeight": 0.0,
+                                                 "bottomMenuHairlineColor": UIColor.orangeColor(),
+                                      "menuItemWidthBasedOnTitleTextWidth": true,
+                                              "selectedMenuItemLabelColor": UIColor.whiteColor()]
+        
+        // Initialize scroll menu
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 60.0, self.view.frame.width, self.view.frame.height - 60.0), options: parameters)
         
         self.view.addSubview(pageMenu!.view)
     }
