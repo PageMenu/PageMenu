@@ -19,6 +19,11 @@
 
 import UIKit
 
+@objc protocol CAPSPageMenuDelegate {
+    optional func willMoveToPage(controller: UIViewController, index: Int)
+    optional func didMoveToPage(controller: UIViewController, index: Int)
+}
+
 class MenuItemView: UIView {
     
     var titleLabel : UILabel?
@@ -101,6 +106,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var didTapMenuItemToScroll : Bool = false
     
     var pagesAddedDictionary : [Int : Int] = [:]
+    
+    var delegate : CAPSPageMenuDelegate?
     
     // MARK: - View life cycle
     
@@ -515,6 +522,10 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         if scrollView.isEqual(controllerScrollView) {
+            // Call didMoveToPage delegate function
+            var currentController : UIViewController = controllerArray[currentPageIndex] as UIViewController
+            delegate?.didMoveToPage?(currentController, index: currentPageIndex)
+            
             // Remove all but current page after decelerating
             for key in pagesAddedDictionary.keys {
                 if key != currentPageIndex {
@@ -532,6 +543,10 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     }
     
     func scrollViewDidEndTapScrollingAnimation() {
+        // Call didMoveToPage delegate function
+        var currentController : UIViewController = controllerArray[currentPageIndex] as UIViewController
+        delegate?.didMoveToPage?(currentController, index: currentPageIndex)
+        
         // Remove all but current page after decelerating
         for key in pagesAddedDictionary.keys {
             if key != currentPageIndex {
@@ -668,6 +683,10 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     
     // MARK: - Remove/Add Page
     func addPageAtIndex(index : Int) {
+        // Call didMoveToPage delegate function
+        var currentController : UIViewController = controllerArray[index] as UIViewController
+        delegate?.willMoveToPage?(currentController, index: index)
+        
         var newVC : UIViewController = controllerArray[index] as UIViewController
         
         newVC.willMoveToParentViewController(self)
