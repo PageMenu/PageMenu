@@ -67,7 +67,9 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
 
     // Uncomment below for some navbar color animation fun using the new delegate functions
     
-//    func didMoveToPage(controller: UIViewController, index: Int) {
+    func didMoveToPage(controller: UIViewController, index: Int) {
+        println("did move to page")
+        
 //        var color : UIColor = UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)
 //        var navColor : UIColor = UIColor(red: 17.0/255.0, green: 64.0/255.0, blue: 107.0/255.0, alpha: 1.0)
 //        
@@ -87,9 +89,11 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
 //        }) { (completed) -> Void in
 //            println("did fade")
 //        }
-//    }
-//    
-//    func willMoveToPage(controller: UIViewController, index: Int) {
+    }
+    
+    func willMoveToPage(controller: UIViewController, index: Int) {
+        println("will move to page")
+        
 //        var color : UIColor = UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)
 //        var navColor : UIColor = UIColor(red: 17.0/255.0, green: 64.0/255.0, blue: 107.0/255.0, alpha: 1.0)
 //        
@@ -109,5 +113,5 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
 //        }) { (completed) -> Void in
 //            println("did fade")
 //        }
-//    }
+    }
 }

@@ -20,11 +20,14 @@
 import UIKit
 
 @objc protocol CAPSPageMenuDelegate {
+    // MARK: - Delegate functions
+    
     optional func willMoveToPage(controller: UIViewController, index: Int)
     optional func didMoveToPage(controller: UIViewController, index: Int)
 }
 
 class MenuItemView: UIView {
+    // MARK: - Menu item view
     
     var titleLabel : UILabel?
     var menuItemSeparator : UIView?
@@ -108,6 +111,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var pagesAddedDictionary : [Int : Int] = [:]
     
     var delegate : CAPSPageMenuDelegate?
+    
+    var tapTimer : NSTimer?
     
     // MARK: - View life cycle
     
@@ -269,10 +274,9 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
             if controller.isKindOfClass(UIViewController) {
                 if index == 0.0 {
                     // Add first two controllers to scrollview and as child view controller
-                    self.addChildViewController(controller as UIViewController)
-                    (controller as UIViewController).view.frame = CGRectMake(self.view.frame.width * index, menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
-                    controllerScrollView.addSubview((controller as UIViewController).view)
-                    self.didMoveToParentViewController(self)
+                    (controller as UIViewController).viewWillAppear(true)
+                    addPageAtIndex(0)
+                    (controller as UIViewController).viewDidAppear(true)
                 }
                 
                 // Set up menu item for menu scroll view
@@ -503,14 +507,6 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                         menuScrollView.setContentOffset(offset, animated: false)
                     }
                 }
-                
-                // If user tapped item everything but current page need to be removed
-                if didTapMenuItemToScroll {
-                    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(scrollAnimationDurationOnMenuItemTap) * Int64(NSEC_PER_MSEC))
-                    dispatch_after(time, dispatch_get_main_queue(), {
-                        self.scrollViewDidEndTapScrollingAnimation()
-                    })
-                }
             }
         } else {
             didLayoutSubviewsAfterRotation = false
@@ -676,6 +672,13 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     var xOffset : CGFloat = CGFloat(itemIndex) * self.controllerScrollView.frame.width
                     self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
                 })
+                
+                if tapTimer != nil {
+                    tapTimer!.invalidate()
+                }
+                
+                var timerInterval : NSTimeInterval = Double(scrollAnimationDurationOnMenuItemTap) * 0.001
+                tapTimer = NSTimer.scheduledTimerWithTimeInterval(timerInterval, target: self, selector: "scrollViewDidEndTapScrollingAnimation", userInfo: nil, repeats: false)
             }
         }
     }

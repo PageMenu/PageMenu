@@ -32,7 +32,7 @@ class TestTableViewController: UITableViewController {
         super.viewDidAppear(animated)
         self.tableView.showsVerticalScrollIndicator = true
         
-//        println("favorites page: viewDidAppear")
+        println("favorites page: viewDidAppear")
     }
 
     override func didReceiveMemoryWarning() {
