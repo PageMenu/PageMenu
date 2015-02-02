@@ -40,15 +40,15 @@ The class file required for PageMenu is located in the Classes folder in the roo
 
 First you will have to create a view controller that is supposed to serve as the base of the page menu. This can be a view controller with its xib file as a separate file as well as having its xib file in storyboard. Following this you will have to go through a few simple steps outlined below in order to get everything up and running.
 
-1)  Add the files listed in the installation section to your project
+**1)  Add the files listed in the installation section to your project**
 
-2)  Add a property for CAPSPageMenu in your base view controller
+**2)  Add a property for CAPSPageMenu in your base view controller**
 
 ```swift
 var pageMenu : CAPSPageMenu?
 ```
 
-3)  Add the following code in the viewDidLoad function in your view controller
+**3)  Add the following code in the viewDidLoad function in your view controller**
 
 ```swift
 // Array to keep track of controllers in page menu
@@ -77,7 +77,7 @@ pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0,
 self.view.addSubview(pageMenu!.view)
 ```
 
-4)  Optional - Delegate Methods
+**4)  Optional - Delegate Methods**
 
 In order to use the delegate methods first set the delegate of page menu to the parent view controller when setting it up
 
@@ -94,13 +94,13 @@ func willMoveToPage(controller: UIViewController, index: Int){}
 func didMoveToPage(controller: UIViewController, index: Int){}
 ```
 
-5)  You should now be ready to use PageMenu!! 🎉
+**5)  You should now be ready to use PageMenu!! 🎉**
 
 ## Customization
 
 There are many ways you are able to customize page menu for your needs and there will be more customizations coming in the future to make sure page menu conforms to your app design. These will all be properties in CAPSPageMenu that can be changed from your base view controller. (Property names given with each item below)
 
-1)  Colors
+**1)  Colors**
 
   * Background color behind the page menu scroll view to blend in view controller backgrounds 
 
@@ -132,7 +132,7 @@ There are many ways you are able to customize page menu for your needs and there
 
 
 
-2)  Dimensions
+**2)  Dimensions**
 
   * Scroll menu height
 
@@ -155,7 +155,7 @@ There are many ways you are able to customize page menu for your needs and there
 
 
 
-3)  Others
+**3)  Others**
   * Menu item title label font
 
         menuItemFont (UIFont)
