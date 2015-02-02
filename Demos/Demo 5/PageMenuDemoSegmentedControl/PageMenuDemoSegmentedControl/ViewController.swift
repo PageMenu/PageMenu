@@ -27,14 +27,17 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
         controller1.parentNavigationController = self.navigationController
         controller1.title = "FAVORITES"
         controllerArray.append(controller1)
+        
         var controller2 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller2.title = "RECENTS"
         controller2.parentNavigationController = self.navigationController
         controllerArray.append(controller2)
+        
         var controller3 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller3.title = "FRIENDS"
         controller3.parentNavigationController = self.navigationController
         controllerArray.append(controller3)
+        
         var controller4 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller4.title = "OTHERS"
         controller4.parentNavigationController = self.navigationController
