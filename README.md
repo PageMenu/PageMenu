@@ -1,24 +1,32 @@
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader3.png" alt="PageMenuHeader">
 ========
 
-## Updates
+## Latest Update
 
-**1.1.1 Release (01/16/2015)**
-* Fixed bug that prevented user from tapping anything within a controller
-* Menu now fully scrollable
+**1.2.0 Release (01/26/2015)**
+* Added ability to center menu items if they don't span over entire width of the PageMenu view (currently only supported for fixed menu item width)
+* Added ability to use PageMenu in a similar way as segmented control
+* Added function to move to any page index in PageMenu
 
-**1.1.0 Release (01/15/2015)**
-* Major performance improvements
-* Auto-rotation bug fixed
-* Customization option added for scroll animation duration on menu item tap
 
 ## Description
 
-A fully customizable and flexible paging menu controller built from other view controllers allowing the user to switch between any kind of view controller with an easy tap or swipe gesture similar to what Spotify uses
+A fully customizable and flexible paging menu controller built from other view controllers placed inside a scroll view allowing the user to switch between any kind of view controller with an easy tap or swipe gesture similar to what Spotify, Windows Phone, and Instagram use
+
+**Similar to Spotify**
 
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemo.gif" alt="PageMenuDemo">
+<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen8.png" alt="PageMenuScreen2">
+
+**Similar to Windows Phone**
+
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemo2.gif" alt="PageMenuDemo2">
-<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen5.png" alt="PageMenuScreen2">
+<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuScreen7.png" alt="PageMenuScreen2">
+
+**Similar to Instagram segmented control**
+
+<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemoSegmentedControlGif.gif" alt="PageMenuDemoSegmentedControlGif">
+<img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemoScreen6.png" alt="PageMenuDemoScreen6">
 
 ## Installation
 
