@@ -97,6 +97,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var menuItemWidthBasedOnTitleTextWidth : Bool = false
     var useMenuLikeSegmentedControl : Bool = false
     var centerMenuItems : Bool = false
+    var enableHorizontalBounce : Bool = true
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -165,6 +166,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     menuItemSeparatorPercentageHeight = options![key] as CGFloat
                 } else if key == "menuItemWidth" {
                     menuItemWidth = options![key] as CGFloat
+                } else if key == "enableHorizontalBounce" {
+                    enableHorizontalBounce = options![key] as Bool
                 } else if key == "addBottomMenuHairline" {
                     addBottomMenuHairline = options![key] as Bool
                 } else if key == "menuItemWidthBasedOnTitleTextWidth" {
@@ -196,6 +199,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
         // Set up controller scroll view
         controllerScrollView.pagingEnabled = true
         controllerScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        controllerScrollView.alwaysBounceHorizontal = enableHorizontalBounce
+        controllerScrollView.bounces = enableHorizontalBounce
         
         controllerScrollView.frame = CGRectMake(0.0, menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
         
