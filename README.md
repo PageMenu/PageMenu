@@ -178,7 +178,7 @@ There are many ways you are able to customize page menu for your needs and there
 
 Please let me know if your app in the AppStore uses this library so I can add your app to this list.
 
-[Alabama MVD](http://bit.ly/AlabamaMVD) by CAPS
+* [Alabama MVD](http://bit.ly/AlabamaMVD) by CAPS
 
 ## Future Work
 
