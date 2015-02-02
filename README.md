@@ -134,6 +134,11 @@ There are many ways you are able to customize page menu for your needs and there
         unselectedMenuItemLabelColor (UIColor)
 
 
+  * Menu item separator color (Used for segmented control style)
+
+        menuItemSeparatorColor (UIColor)
+
+
   * Bottom menu hairline color
 
         bottomMenuHairlineColor (UIColor)
@@ -182,6 +187,11 @@ There are many ways you are able to customize page menu for your needs and there
   * Disable/Enable horizontal bounce for controller scroll view
 
         enableHorizontalBounce (Bool)
+
+
+  * Hide/Unhide top menu bar
+
+        hideTopMenuBar (Bool)
 
 
   * Scroll animation duration on menu item tap in milliseconds
