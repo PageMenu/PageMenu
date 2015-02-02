@@ -13,8 +13,8 @@ class TestViewController: UIViewController {
     var pageMenu : CAPSPageMenu?
     var pageMenu1 : CAPSPageMenu?
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         // Initialize view controllers to display and place in array
         var controllerArray : [UIViewController] = []
@@ -39,9 +39,10 @@ class TestViewController: UIViewController {
         controller4.title = "BROWN"
         controllerArray.append(controller4)
         
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray)
+        // Initialize scroll menu
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 50.0, self.view.frame.width, 100), options: nil)
         
-        pageMenu!.view.frame = CGRectMake(0.0, 50.0, self.view.frame.width, 300.0)
+        println(self.view.frame.height)
         
         self.view.addSubview(pageMenu!.view)
         
@@ -68,9 +69,8 @@ class TestViewController: UIViewController {
         controller4_1.title = "PURPLE"
         controllerArray_1.append(controller4_1)
         
-        pageMenu1 = CAPSPageMenu(viewControllers: controllerArray_1)
-        
-        pageMenu1!.view.frame = CGRectMake(0.0, 400.0, self.view.frame.width, 210.0)
+        // Initialize scroll menu
+        pageMenu1 = CAPSPageMenu(viewControllers: controllerArray_1, frame: CGRectMake(0.0, 400.0, self.view.frame.width, 100.0), options: nil)
         
         self.view.addSubview(pageMenu1!.view)
     }

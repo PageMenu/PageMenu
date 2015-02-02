@@ -3,10 +3,12 @@
 
 ## Latest Update
 
-**1.2.0 Release (01/26/2015)**
-* Added ability to center menu items if they don't span over entire width of the PageMenu view (currently only supported for fixed menu item width)
-* Added ability to use PageMenu in a similar way as segmented control
-* Added function to move to any page index in PageMenu
+**1.2.1 Release (02/02/2015)**
+* Added delegate methods to know when page menu will move and did move to a certain page index
+* Fixed bug where pages would disappear when tapping around on menu items
+* Added a few more customization options (enableHorizontalBounce, hideTopMenuBar, menuItemSeparatorColor)
+* Edited Demo 5 to show how to set up view controllers and page menu in order to be able to push from cells, etc.
+* **Changed setup of PageMenu to eliminate some common issues (Please be aware that you will need to make a few changes in your project if you're already using PageMenu)**
 
 
 ## Description
@@ -48,15 +50,15 @@ The class file required for PageMenu is located in the Classes folder in the roo
 
 First you will have to create a view controller that is supposed to serve as the base of the page menu. This can be a view controller with its xib file as a separate file as well as having its xib file in storyboard. Following this you will have to go through a few simple steps outlined below in order to get everything up and running.
 
-1)  Add the files listed in the installation section to your project
+**1)  Add the files listed in the installation section to your project**
 
-2)  Add a property for CAPSPageMenu in your base view controller
+**2)  Add a property for CAPSPageMenu in your base view controller**
 
 ```swift
 var pageMenu : CAPSPageMenu?
 ```
 
-3)  Add the following code in the viewDidAppear function in your view controller
+**3)  Add the following code in the viewDidLoad function in your view controller**
 
 ```swift
 // Array to keep track of controllers in page menu
@@ -71,34 +73,44 @@ var controller : UIViewController = UIViewController(nibName: "controllerNibName
 controller.title = "SAMPLE TITLE"
 controllerArray.append(controller)
 
-// Initialize page menu with the controllers
-pageMenu = CAPSPageMenu(viewControllers: controllerArray)
-
-// Set frame for page menu
+// Customize page menu to your liking (optional) or use default settings by sending nil for 'options' in the init
 // Example:
-pageMenu!.view.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
+var parameters: [String: AnyObject] = ["menuItemSeparatorWidth": 4.3,
+                                  "useMenuLikeSegmentedControl": true,
+                            "menuItemSeparatorPercentageHeight": 0.1]
 
-// Customize page menu to your liking (optional) or use default settings
-// Example:
-pageMenu!.scrollMenuBackgroundColor = UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0)
-pageMenu!.viewBackgroundColor = UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)
-pageMenu!.selectionIndicatorColor = UIColor.orangeColor()
-pageMenu!.bottomMenuHairlineColor = UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-pageMenu!.menuItemFont = UIFont(name: "HelveticaNeue", size: 13.0)
-pageMenu!.menuHeight = 40.0
+// Initialize page menu with controller array, frame, and optional parameters
+pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), options: parameters)
 
 // Lastly add page menu as subview of base view controller view
 // or use pageMenu controller in you view hierachy as desired
 self.view.addSubview(pageMenu!.view)
 ```
 
-4)  You should now be ready to use PageMenu!! 🎉
+**4)  Optional - Delegate Methods**
+
+In order to use the delegate methods first set the delegate of page menu to the parent view controller when setting it up
+
+```swift
+// Optional delegate 
+pageMenu!.delegate = self
+```
+
+After that you will be able to set up the following delegate methods inside of your parent view controller
+
+```swift
+func willMoveToPage(controller: UIViewController, index: Int){}
+
+func didMoveToPage(controller: UIViewController, index: Int){}
+```
+
+**5)  You should now be ready to use PageMenu!! 🎉**
 
 ## Customization
 
 There are many ways you are able to customize page menu for your needs and there will be more customizations coming in the future to make sure page menu conforms to your app design. These will all be properties in CAPSPageMenu that can be changed from your base view controller. (Property names given with each item below)
 
-1)  Colors
+**1)  Colors**
 
   * Background color behind the page menu scroll view to blend in view controller backgrounds 
 
@@ -124,13 +136,18 @@ There are many ways you are able to customize page menu for your needs and there
         unselectedMenuItemLabelColor (UIColor)
 
 
+  * Menu item separator color (Used for segmented control style)
+
+        menuItemSeparatorColor (UIColor)
+
+
   * Bottom menu hairline color
 
         bottomMenuHairlineColor (UIColor)
 
 
 
-2)  Dimensions
+**2)  Dimensions**
 
   * Scroll menu height
 
@@ -152,8 +169,7 @@ There are many ways you are able to customize page menu for your needs and there
         selectionIndicatorHeight (CGFloat)
 
 
-
-3)  Segmented Control
+**3)  Segmented Control**
 
   * Use PageMenu as segmented control
 
@@ -175,8 +191,7 @@ There are many ways you are able to customize page menu for your needs and there
         menuItemSeparatorRoundEdges (Bool)
 
 
-
-4)  Others
+**4)  Others**
   * Menu item title label font
 
         menuItemFont (UIFont)
@@ -192,9 +207,14 @@ There are many ways you are able to customize page menu for your needs and there
         menuItemWidthBasedOnTitleTextWidth (Bool)
 
 
-  * Scroll animation duration on menu item tap in milliseconds
+  * Disable/Enable horizontal bounce for controller scroll view
 
-        scrollAnimationDurationOnMenuItemTap (Int)
+        enableHorizontalBounce (Bool)
+
+
+  * Hide/Unhide top menu bar
+
+        hideTopMenuBar (Bool)
 
 
   * Center menu items in menu if they don't span entire width (Not currently supported for menu item width based on title)
@@ -202,18 +222,26 @@ There are many ways you are able to customize page menu for your needs and there
         centerMenuItems (Bool)
 
 
+  * Scroll animation duration on menu item tap in milliseconds
+
+        scrollAnimationDurationOnMenuItemTap (Int)
 
 ## Apps using PageMenu
 
 Please let me know if your app in the AppStore uses this library so I can add your app to this list.
 
+* [Alabama MVD](http://bit.ly/AlabamaMVD) by CAPS
+
 ## Future Work
 
+- [x] Screen rotation support
 - [ ] Objective-C version
 - [ ] Infinite scroll option
 - [ ] More customization options
-- [x] Screen rotation support
 
+## Credits ##
+
+* <a href="https://github.com/fahlout">Niklas Fahl</a> - iOS Developer
 
 ## Update Log
 
@@ -230,10 +258,6 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 * Major performance improvements
 * Auto-rotation bug fixed
 * Customization option added for scroll animation duration on menu item tap
-
-## Credits ##
-
-* <a href="https://github.com/fahlout">Niklas Fahl</a> - iOS Developer
 
 ## License ##
 

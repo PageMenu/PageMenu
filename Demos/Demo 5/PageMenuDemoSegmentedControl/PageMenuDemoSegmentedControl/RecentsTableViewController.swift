@@ -9,6 +9,8 @@
 import UIKit
 
 class RecentsTableViewController: UITableViewController {
+    
+    var parentNavigationController : UINavigationController?
         
     var namesArray : [String] = ["Kim White", "Kim White", "David Fletcher", "Anna Hunt", "Timothy Jones", "Timothy Jones", "Timothy Jones", "Lauren Richard", "Lauren Richard", "Juan Rodriguez"]
     var photoNameArray : [String] = ["woman1.jpg", "woman1.jpg", "man8.jpg", "woman3.jpg", "man3.jpg", "man3.jpg", "man3.jpg", "woman5.jpg", "woman5.jpg", "man5.jpg"]
@@ -31,8 +33,6 @@ class RecentsTableViewController: UITableViewController {
         self.tableView.showsVerticalScrollIndicator = false
         super.viewDidAppear(animated)
         self.tableView.showsVerticalScrollIndicator = true
-        
-//        println("recents page: viewDidAppear")
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,6 +81,14 @@ class RecentsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.001
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var newVC : UIViewController = UIViewController()
+        newVC.view.backgroundColor = UIColor.whiteColor()
+        newVC.title = "Favorites"
+        
+        parentNavigationController!.pushViewController(newVC, animated: true)
     }
     
 }

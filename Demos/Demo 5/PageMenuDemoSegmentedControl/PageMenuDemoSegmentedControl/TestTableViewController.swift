@@ -10,6 +10,8 @@ import UIKit
 
 class TestTableViewController: UITableViewController {
     
+    var parentNavigationController : UINavigationController?
+    
     var namesArray : [String] = ["David Fletcher", "Charles Gray", "Timothy Jones", "Marie Turner", "Kim White"]
     var photoNameArray : [String] = ["man8.jpg", "man2.jpg", "man3.jpg", "woman4.jpg", "woman1.jpg"]
     
@@ -30,7 +32,7 @@ class TestTableViewController: UITableViewController {
         super.viewDidAppear(animated)
         self.tableView.showsVerticalScrollIndicator = true
         
-//        println("favorites page: viewDidAppear")
+        println("favorites page: viewDidAppear")
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,6 +70,14 @@ class TestTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.001
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var newVC : UIViewController = UIViewController()
+        newVC.view.backgroundColor = UIColor.purpleColor()
+        newVC.title = "Favorites"
+        
+        parentNavigationController!.pushViewController(newVC, animated: true)
     }
 
 }
