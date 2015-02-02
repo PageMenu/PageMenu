@@ -178,6 +178,12 @@ There are many ways you are able to customize page menu for your needs and there
 
         menuItemWidthBasedOnTitleTextWidth (Bool)
 
+
+  * Disable/Enable horizontal bounce for controller scroll view
+
+        enableHorizontalBounce (Bool)
+
+
   * Scroll animation duration on menu item tap in milliseconds
 
         scrollAnimationDurationOnMenuItemTap (Int)
