@@ -689,40 +689,6 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     
     // MARK: - Remove/Add Page
     func addPageAtIndex(index : Int) {
-        // Add views left and right of desired view if page not added already
-//        if index >= 0 || index < controllerArray.count {
-//            var indexBefore : Int = index - 1
-//            var indexAfter : Int = index + 1
-//            if index ==  0 {
-//                if pagesAddedDictionary[indexAfter] != indexAfter {
-//                    var vc : UIViewController = controllerArray[indexAfter] as UIViewController
-//                    vc.view.frame = CGRectMake(self.view.frame.width * CGFloat(indexAfter), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
-//                    self.controllerScrollView.addSubview(vc.view)
-//                    pagesAddedDictionary[indexAfter] = indexAfter
-//                }
-//            } else if index == controllerArray.count - 1 {
-//                if pagesAddedDictionary[indexBefore] != indexBefore {
-//                    var vc : UIViewController = controllerArray[indexBefore] as UIViewController
-//                    vc.view.frame = CGRectMake(self.view.frame.width * CGFloat(indexBefore), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
-//                    self.controllerScrollView.addSubview(vc.view)
-//                    pagesAddedDictionary[indexBefore] = indexBefore
-//                }
-//            } else {
-//                if pagesAddedDictionary[indexBefore] != indexBefore {
-//                    var vc : UIViewController = controllerArray[indexBefore] as UIViewController
-//                    vc.view.frame = CGRectMake(self.view.frame.width * CGFloat(indexBefore), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
-//                    self.controllerScrollView.addSubview(vc.view)
-//                    pagesAddedDictionary[indexBefore] = indexBefore
-//                }
-//                if pagesAddedDictionary[indexAfter] != indexAfter {
-//                    var vc : UIViewController = controllerArray[indexAfter] as UIViewController
-//                    vc.view.frame = CGRectMake(self.view.frame.width * CGFloat(indexAfter), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
-//                    self.controllerScrollView.addSubview(vc.view)
-//                    pagesAddedDictionary[indexAfter] = indexAfter
-//                }
-//            }
-//        }
-        
         // Call didMoveToPage delegate function
         var currentController : UIViewController = controllerArray[index] as UIViewController
         delegate?.willMoveToPage?(currentController, index: index)
