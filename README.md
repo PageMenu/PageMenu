@@ -63,7 +63,7 @@ var controller : UIViewController = UIViewController(nibName: "controllerNibName
 controller.title = "SAMPLE TITLE"
 controllerArray.append(controller)
 
-// Customize page menu to your liking (optional) or use default settings
+// Customize page menu to your liking (optional) or use default settings by sending nil for 'options' in the init
 // Example:
 var parameters: [String: AnyObject] = ["menuItemSeparatorWidth": 4.3,
                                   "useMenuLikeSegmentedControl": true,
