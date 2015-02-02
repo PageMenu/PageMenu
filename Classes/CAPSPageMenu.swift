@@ -145,6 +145,8 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     bottomMenuHairlineColor = options![key] as UIColor
                 } else if key == "selectionIndicatorColor" {
                     selectionIndicatorColor = options![key] as UIColor
+                } else if key == "menuItemSeparatorColor" {
+                    menuItemSeparatorColor = options![key] as UIColor
                 } else if key == "menuMargin" {
                     menuMargin = options![key] as CGFloat
                 } else if key == "menuHeight" {
