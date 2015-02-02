@@ -7,6 +7,7 @@
 * Added delegate methods to know when page menu will move and did move to a certain page index
 * Fixed bug where pages would disappear when tapping around on menu items
 * Added a few more customization options (enableHorizontalBounce, hideTopMenuBar, menuItemSeparatorColor)
+* Edited Demo 5 to show how to set up view controllers and page menu in order to be able to push from cells, etc.
 
 
 ## Description
