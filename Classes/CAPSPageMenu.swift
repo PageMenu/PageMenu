@@ -98,6 +98,7 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
     var useMenuLikeSegmentedControl : Bool = false
     var centerMenuItems : Bool = false
     var enableHorizontalBounce : Bool = true
+    var hideTopMenuBar : Bool = false
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -176,6 +177,12 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                     scrollAnimationDurationOnMenuItemTap = options![key] as Int
                 } else if key == "centerMenuItems" {
                     centerMenuItems = options![key] as Bool
+                } else if key == "hideTopMenuBar" {
+                    var hide = options![key] as Bool
+                    if hide {
+                        addBottomMenuHairline = false
+                        menuHeight = 0.0
+                    }
                 }
             }
         }
