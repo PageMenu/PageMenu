@@ -8,7 +8,7 @@
 * Fixed bug where pages would disappear when tapping around on menu items
 * Added a few more customization options (enableHorizontalBounce, hideTopMenuBar, menuItemSeparatorColor)
 * Edited Demo 5 to show how to set up view controllers and page menu in order to be able to push from cells, etc.
-* **Changed setup of PageMenu to eliminate some common issues (Please be aware that you will need to make a few changes in your project if youre already using PageMenu)**
+* **Changed setup of PageMenu to eliminate some common issues (Please be aware that you will need to make a few changes in your project if you're already using PageMenu)**
 
 
 ## Description
