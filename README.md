@@ -71,16 +71,30 @@ var parameters: [String: AnyObject] = ["menuItemSeparatorWidth": 4.3,
 
 // Initialize page menu with controller array, frame, and optional parameters
 pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), options: parameters)
-        
-// Optional delegate
-pageMenu!.delegate = self
 
 // Lastly add page menu as subview of base view controller view
 // or use pageMenu controller in you view hierachy as desired
 self.view.addSubview(pageMenu!.view)
 ```
 
-4)  You should now be ready to use PageMenu!! 🎉
+4)  Optional - Delegate Methods
+
+In order to use the delegate methods first set the delegate of page menu to the parent view controller when setting it up
+
+```swift
+// Optional delegate 
+pageMenu!.delegate = self
+```
+
+After that you will be able to set up the following delegate methods inside of your parent view controller
+
+```swift
+func willMoveToPage(controller: UIViewController, index: Int){}
+
+func didMoveToPage(controller: UIViewController, index: Int){}
+```
+
+5)  You should now be ready to use PageMenu!! 🎉
 
 ## Customization
 
