@@ -178,12 +178,13 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 } else if key == "centerMenuItems" {
                     centerMenuItems = options![key] as Bool
                 } else if key == "hideTopMenuBar" {
-                    var hide = options![key] as Bool
-                    if hide {
-                        addBottomMenuHairline = false
-                        menuHeight = 0.0
-                    }
+                    hideTopMenuBar = options![key] as Bool
                 }
+            }
+            
+            if hideTopMenuBar {
+                addBottomMenuHairline = false
+                menuHeight = 0.0
             }
         }
         
