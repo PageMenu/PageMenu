@@ -799,6 +799,15 @@ class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerD
                 menuScrollView.setContentOffset(offset, animated: false)
             }
         }
+        
+        // Hsoi 2015-02-05 - Running on iOS 7.1 complained: "'NSInternalInconsistencyException', reason: 'Auto Layout 
+        // still required after sending -viewDidLayoutSubviews to the view controller. ViewController's implementation 
+        // needs to send -layoutSubviews to the view to invoke auto layout.'"
+        //
+        // http://stackoverflow.com/questions/15490140/auto-layout-error
+        //
+        // Given the SO answer and caveats presented there, we'll call layoutIfNeeded() instead.
+        self.view.layoutIfNeeded()
     }
     
     
