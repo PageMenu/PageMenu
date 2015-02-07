@@ -126,7 +126,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     :param: frame Frame for page menu view
     :param: options Dictionary holding any customization options user might want to set
     */
-    init(viewControllers: [AnyObject], frame: CGRect, options: [String: AnyObject]?) {
+    public init(viewControllers: [AnyObject], frame: CGRect, options: [String: AnyObject]?) {
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
