@@ -3,7 +3,7 @@
 //  Niklas Fahl
 //
 //  Copyright (c) 2014 The Board of Trustees of The University of Alabama All rights reserved.
-//    
+//
 //  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 //
 //  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
@@ -195,7 +195,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -333,7 +333,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 } else {
                     menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
                 }
-                    
+                
                 // Configure menu item label font if font is set by user
                 menuItemView.titleLabel!.font = menuItemFont
                 
@@ -361,7 +361,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 index++
             }
         }
-
+        
         // Set new content size for menu scroll view if needed
         if menuItemWidthBasedOnTitleTextWidth {
             menuScrollView.contentSize = CGSizeMake((totalMenuItemWidthIfDifferentWidths + menuMargin) + CGFloat(controllerArray.count) * menuMargin, menuHeight)
@@ -397,7 +397,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     // MARK: - Scroll view delegate
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
         if !didLayoutSubviewsAfterRotation {
             if scrollView.isEqual(controllerScrollView) {
                 if scrollView.contentOffset.x >= 0.0 && scrollView.contentOffset.x <= (CGFloat(controllerArray.count - 1) * self.view.frame.width) {
@@ -462,7 +462,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                             
                             lastControllerScrollViewContentOffset = scrollView.contentOffset.x
                         }
-                    
+                        
                         var ratio : CGFloat = 1.0
                         
                         
@@ -532,7 +532,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         if scrollView.isEqual(controllerScrollView) {
             // Call didMoveToPage delegate function
             var currentController : UIViewController = controllerArray[currentPageIndex] as UIViewController
@@ -665,7 +665,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     // Add pages in between current and tapped page if necessary
                     var smallerIndex : Int = lastPageIndex < currentPageIndex ? lastPageIndex : currentPageIndex
                     var largerIndex : Int = lastPageIndex > currentPageIndex ? lastPageIndex : currentPageIndex
-                   
+                    
                     if smallerIndex + 1 != largerIndex {
                         for index in (smallerIndex + 1)...(largerIndex - 1) {
                             if pagesAddedDictionary[index] != index {
@@ -731,7 +731,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     // MARK: - Orientation Change
     
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         var oldCurrentOrientationIsPortrait : Bool = currentOrientationIsPortrait
         currentOrientationIsPortrait = self.interfaceOrientation.isPortrait
         
