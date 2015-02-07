@@ -67,12 +67,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var menuItems : [MenuItemView] = []
     var menuItemWidths : [CGFloat] = []
     
-    var menuHeight : CGFloat = 34.0
-    var menuMargin : CGFloat = 15.0
-    var menuItemWidth : CGFloat = 111.0
-    var selectionIndicatorHeight : CGFloat = 3.0
+    public var menuHeight : CGFloat = 34.0
+    public var menuMargin : CGFloat = 15.0
+    public var menuItemWidth : CGFloat = 111.0
+    public var selectionIndicatorHeight : CGFloat = 3.0
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
-    var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
+    public var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     var startingMenuMargin : CGFloat = 0.0
     
     var selectionIndicatorView : UIView = UIView()
@@ -80,25 +80,25 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var currentPageIndex : Int = 0
     var lastPageIndex : Int = 0
     
-    var selectionIndicatorColor : UIColor = UIColor.whiteColor()
-    var selectedMenuItemLabelColor : UIColor = UIColor.whiteColor()
-    var unselectedMenuItemLabelColor : UIColor = UIColor.lightGrayColor()
-    var scrollMenuBackgroundColor : UIColor = UIColor.blackColor()
-    var viewBackgroundColor : UIColor = UIColor.whiteColor()
-    var bottomMenuHairlineColor : UIColor = UIColor.whiteColor()
-    var menuItemSeparatorColor : UIColor = UIColor.lightGrayColor()
+    public var selectionIndicatorColor : UIColor = UIColor.whiteColor()
+    public var selectedMenuItemLabelColor : UIColor = UIColor.whiteColor()
+    public var unselectedMenuItemLabelColor : UIColor = UIColor.lightGrayColor()
+    public var scrollMenuBackgroundColor : UIColor = UIColor.blackColor()
+    public var viewBackgroundColor : UIColor = UIColor.whiteColor()
+    public var bottomMenuHairlineColor : UIColor = UIColor.whiteColor()
+    public var menuItemSeparatorColor : UIColor = UIColor.lightGrayColor()
     
-    var menuItemFont : UIFont = UIFont(name: "HelveticaNeue", size: 15.0)!
-    var menuItemSeparatorPercentageHeight : CGFloat = 0.2
-    var menuItemSeparatorWidth : CGFloat = 0.5
-    var menuItemSeparatorRoundEdges : Bool = false
+    public var menuItemFont : UIFont = UIFont(name: "HelveticaNeue", size: 15.0)!
+    public var menuItemSeparatorPercentageHeight : CGFloat = 0.2
+    public var menuItemSeparatorWidth : CGFloat = 0.5
+    public var menuItemSeparatorRoundEdges : Bool = false
     
-    var addBottomMenuHairline : Bool = true
-    var menuItemWidthBasedOnTitleTextWidth : Bool = false
-    var useMenuLikeSegmentedControl : Bool = false
-    var centerMenuItems : Bool = false
-    var enableHorizontalBounce : Bool = true
-    var hideTopMenuBar : Bool = false
+    public var addBottomMenuHairline : Bool = true
+    public var menuItemWidthBasedOnTitleTextWidth : Bool = false
+    public var useMenuLikeSegmentedControl : Bool = false
+    public var centerMenuItems : Bool = false
+    public var enableHorizontalBounce : Bool = true
+    public var hideTopMenuBar : Bool = false
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -113,7 +113,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     var pagesAddedDictionary : [Int : Int] = [:]
     
-    var delegate : CAPSPageMenuDelegate?
+    public var delegate : CAPSPageMenuDelegate?
     
     var tapTimer : NSTimer?
     
