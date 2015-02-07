@@ -19,7 +19,7 @@
 
 import UIKit
 
-@objc protocol CAPSPageMenuDelegate {
+@objc public protocol CAPSPageMenuDelegate {
     // MARK: - Delegate functions
     
     optional func willMoveToPage(controller: UIViewController, index: Int)
@@ -57,7 +57,7 @@ class MenuItemView: UIView {
     }
 }
 
-class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
