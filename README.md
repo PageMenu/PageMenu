@@ -4,9 +4,9 @@
 ## Latest Update
 
 **1.2.3 Release (02/09/2015)**
-* iOS 7.1 errors resolved by hsoi
-* Scroll to top now working for each page when tapping status bar thanks to Gurpartap
-* Now fully working with CocoaPods thanks to Gurpartap
+* iOS 7.1 errors resolved - hsoi
+* Scroll to top now working for each page when tapping status bar - Gurpartap
+* Now fully working with CocoaPods - Gurpartap
 
 
 ## Description
