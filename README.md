@@ -237,11 +237,11 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 - [ ] Infinite scroll option
 - [ ] More customization options
 
-## Credits ##
+## Credits
 
 **[Niklas Fahl (fahlout)](http://bit.ly/fahlout) - iOS Developer**
 
-Thanks for your contributions:
+### Thank you for your contributions
 
 [John C. Daub (hsoi)](https://github.com/hsoi)
 * iOS 7.1 fixes
