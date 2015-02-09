@@ -3,7 +3,9 @@
 
 ## Latest Update
 
-**1.2.2 Release (02/09/2015)**
+**1.2.3 Release (02/09/2015)**
+* iOS 7.1 errors resolved by hsoi
+* Scroll to top now working for each page when tapping status bar thanks to Gurpartap
 * Now fully working with CocoaPods thanks to Gurpartap
 
 
@@ -235,11 +237,24 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 - [ ] Infinite scroll option
 - [ ] More customization options
 
-## Credits ##
+## Credits
 
-* <a href="https://github.com/fahlout">Niklas Fahl</a> - iOS Developer
+[Niklas Fahl (fahlout)](http://bit.ly/fahlout) - iOS Developer
+
+**Thank you for your contributions:**
+
+[John C. Daub (hsoi)](https://github.com/hsoi)
+* iOS 7.1 fixes
+* Content size fixes on viewDidLayoutSubviews()
+
+[Gurpartap Singh (Gurpartap)](https://github.com/gurpartap)
+* CocoaPods fixes
+* ScrollToTop fixes
 
 ## Update Log
+
+**1.2.2 Release (02/09/2015)**
+* Now fully working with CocoaPods thanks to Gurpartap
 
 **1.2.1 Release (02/02/2015)**
 * Added delegate methods to know when page menu will move and did move to a certain page index
