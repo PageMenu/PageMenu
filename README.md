@@ -3,12 +3,8 @@
 
 ## Latest Update
 
-**1.2.1 Release (02/02/2015)**
-* Added delegate methods to know when page menu will move and did move to a certain page index
-* Fixed bug where pages would disappear when tapping around on menu items
-* Added a few more customization options (enableHorizontalBounce, hideTopMenuBar, menuItemSeparatorColor)
-* Edited Demo 5 to show how to set up view controllers and page menu in order to be able to push from cells, etc.
-* **Changed setup of PageMenu to eliminate some common issues (Please be aware that you will need to make a few changes in your project if you're already using PageMenu)**
+**1.2.2 Release (02/09/2015)**
+* Now fully working with CocoaPods thanks to Gurpartap
 
 
 ## Description
@@ -244,6 +240,13 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 * <a href="https://github.com/fahlout">Niklas Fahl</a> - iOS Developer
 
 ## Update Log
+
+**1.2.1 Release (02/02/2015)**
+* Added delegate methods to know when page menu will move and did move to a certain page index
+* Fixed bug where pages would disappear when tapping around on menu items
+* Added a few more customization options (enableHorizontalBounce, hideTopMenuBar, menuItemSeparatorColor)
+* Edited Demo 5 to show how to set up view controllers and page menu in order to be able to push from cells, etc.
+* **Changed setup of PageMenu to eliminate some common issues (Please be aware that you will need to make a few changes in your project if you're already using PageMenu)**
 
 **1.2.0 Release (01/26/2015)**
 * Added ability to center menu items if they don't span over entire width of the PageMenu view (currently only supported for fixed menu item width)
