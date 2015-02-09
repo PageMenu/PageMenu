@@ -239,13 +239,15 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 
 ## Credits ##
 
-* [Niklas Fahl (fahlout)](http://bit.ly/fahlout) - iOS Developer
+**[Niklas Fahl (fahlout)](http://bit.ly/fahlout) - iOS Developer**
 
 Thanks for your contributions:
-* [John C. Daub (hsoi)](https://github.com/hsoi)
-    * test 
-* [Gurpartap Singh](https://github.com/gurpartap)
-    * test
+[John C. Daub (hsoi)](https://github.com/hsoi)
+* iOS 7.1 fixes
+* Content size fixes on viewDidLayoutSubviews()
+[Gurpartap Singh](https://github.com/gurpartap)
+* CocoaPods fixes
+* ScrollToTop fixes
 
 ## Update Log
 
