@@ -239,7 +239,13 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 
 ## Credits ##
 
-* <a href="https://github.com/fahlout">Niklas Fahl</a> - iOS Developer
+* [Niklas Fahl (fahlout)](http://bit.ly/fahlout) - iOS Developer
+
+Thanks for your contributions:
+* [John C. Daub (hsoi)](https://github.com/hsoi)
+    * test 
+* [Gurpartap Singh](https://github.com/gurpartap)
+    * test
 
 ## Update Log
 
