@@ -57,6 +57,7 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
                                           "useMenuLikeSegmentedControl": true,
                                           "menuItemSeparatorRoundEdges": true,
                                              "selectionIndicatorHeight": 2.0,
+                                                    "startingPageIndex": 1,
                                     "menuItemSeparatorPercentageHeight": 0.1]
         
         // Initialize scroll menu
