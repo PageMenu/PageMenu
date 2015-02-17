@@ -74,7 +74,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
     public var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     var startingMenuMargin : CGFloat = 0.0
-    var startingPageIndex : Int = 0
+    public var startingPageIndex : Int = 0
     
     var selectionIndicatorView : UIView = UIView()
     
@@ -136,52 +136,55 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         
         if options != nil {
             for key : String in options!.keys {
-                if key == "selectionIndicatorHeight" {
+                switch key {
+                case "selectionIndicatorHeight":
                     selectionIndicatorHeight = options![key] as CGFloat
-                } else if key == "menuItemSeparatorWidth" {
+                case "menuItemSeparatorWidth":
                     menuItemSeparatorWidth = options![key] as CGFloat
-                } else if key == "scrollMenuBackgroundColor" {
+                case "scrollMenuBackgroundColor":
                     scrollMenuBackgroundColor = options![key] as UIColor
-                } else if key == "viewBackgroundColor" {
+                case "viewBackgroundColor":
                     viewBackgroundColor = options![key] as UIColor
-                } else if key == "bottomMenuHairlineColor" {
+                case "bottomMenuHairlineColor":
                     bottomMenuHairlineColor = options![key] as UIColor
-                } else if key == "selectionIndicatorColor" {
+                case "selectionIndicatorColor":
                     selectionIndicatorColor = options![key] as UIColor
-                } else if key == "menuItemSeparatorColor" {
+                case "menuItemSeparatorColor":
                     menuItemSeparatorColor = options![key] as UIColor
-                } else if key == "menuMargin" {
+                case "menuMargin":
                     menuMargin = options![key] as CGFloat
-                } else if key == "menuHeight" {
+                case "menuHeight":
                     menuHeight = options![key] as CGFloat
-                } else if key == "selectedMenuItemLabelColor" {
+                case "selectedMenuItemLabelColor":
                     selectedMenuItemLabelColor = options![key] as UIColor
-                } else if key == "unselectedMenuItemLabelColor" {
+                case "unselectedMenuItemLabelColor":
                     unselectedMenuItemLabelColor = options![key] as UIColor
-                } else if key == "useMenuLikeSegmentedControl" {
+                case "useMenuLikeSegmentedControl":
                     useMenuLikeSegmentedControl = options![key] as Bool
-                } else if key == "menuItemSeparatorRoundEdges" {
+                case "menuItemSeparatorRoundEdges":
                     menuItemSeparatorRoundEdges = options![key] as Bool
-                } else if key == "menuItemFont" {
+                case "menuItemFont":
                     menuItemFont = options![key] as UIFont
-                } else if key == "menuItemSeparatorPercentageHeight" {
+                case "menuItemSeparatorPercentageHeight":
                     menuItemSeparatorPercentageHeight = options![key] as CGFloat
-                } else if key == "menuItemWidth" {
+                case "menuItemWidth":
                     menuItemWidth = options![key] as CGFloat
-                } else if key == "enableHorizontalBounce" {
+                case "enableHorizontalBounce":
                     enableHorizontalBounce = options![key] as Bool
-                } else if key == "addBottomMenuHairline" {
+                case "addBottomMenuHairline":
                     addBottomMenuHairline = options![key] as Bool
-                } else if key == "menuItemWidthBasedOnTitleTextWidth" {
+                case "menuItemWidthBasedOnTitleTextWidth":
                     menuItemWidthBasedOnTitleTextWidth = options![key] as Bool
-                } else if key == "scrollAnimationDurationOnMenuItemTap" {
+                case "scrollAnimationDurationOnMenuItemTap":
                     scrollAnimationDurationOnMenuItemTap = options![key] as Int
-                } else if key == "centerMenuItems" {
+                case "centerMenuItems":
                     centerMenuItems = options![key] as Bool
-                } else if key == "hideTopMenuBar" {
+                case "hideTopMenuBar":
                     hideTopMenuBar = options![key] as Bool
-                } else if key == "startingPageIndex" {
-                    startingPageIndex = options![key] as Int
+                case "hideTopMenuBar":
+                    hideTopMenuBar = options![key] as Bool
+                default:
+                    println("default case")
                 }
             }
             
