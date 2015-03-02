@@ -113,7 +113,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     var pagesAddedDictionary : [Int : Int] = [:]
     
-    public var delegate : CAPSPageMenuDelegate?
+    public weak var delegate : CAPSPageMenuDelegate?
     
     var tapTimer : NSTimer?
     
