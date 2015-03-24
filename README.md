@@ -4,7 +4,7 @@
 ## Latest Update
 
 **1.2.4 Release (03/24/2015)**
-* Small fixes thanks to hsoi and kitasuke
+* Small improvements thanks to hsoi and kitasuke
 
 
 ## Description
