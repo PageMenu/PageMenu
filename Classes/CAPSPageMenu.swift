@@ -107,7 +107,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     var lastControllerScrollViewContentOffset : CGFloat = 0.0
     
-    var lastScrollDirection : String = ""
+    var lastScrollDirection : CAPSPageMenuScrollDirection = .Other
     var startingPageForScroll : Int = 0
     var didTapMenuItemToScroll : Bool = false
     
@@ -116,6 +116,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var delegate : CAPSPageMenuDelegate?
     
     var tapTimer : NSTimer?
+    
+    enum CAPSPageMenuScrollDirection : Int {
+        case Left
+        case Right
+        case Other
+    }
     
     // MARK: - View life cycle
     
@@ -412,17 +418,17 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                         // Check if scroll direction changed
                         if !didTapMenuItemToScroll {
                             if didScrollAlready {
-                                var newScrollDirection : String  = ""
+                                var newScrollDirection : CAPSPageMenuScrollDirection = .Other
                                 
                                 if (CGFloat(startingPageForScroll) * scrollView.frame.width > scrollView.contentOffset.x) {
-                                    newScrollDirection = "right"
+                                    newScrollDirection = .Right
                                 } else if (CGFloat(startingPageForScroll) * scrollView.frame.width < scrollView.contentOffset.x) {
-                                    newScrollDirection = "left"
+                                    newScrollDirection = .Left
                                 }
                                 
-                                if newScrollDirection != "" {
-                                    if !lastScrollDirection.isEqual(newScrollDirection) {
-                                        var index : Int = newScrollDirection == "left" ? currentPageIndex + 1 : currentPageIndex - 1
+                                if newScrollDirection != .Other {
+                                    if lastScrollDirection != newScrollDirection {
+                                        var index : Int = newScrollDirection == .Left ? currentPageIndex + 1 : currentPageIndex - 1
                                         
                                         if index >= 0 && index < controllerArray.count {
                                             // Check dictionary if page was already added
@@ -448,7 +454,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                                             pagesAddedDictionary[index] = index
                                         }
                                         
-                                        lastScrollDirection = "right"
+                                        lastScrollDirection = .Right
                                     }
                                 } else if (lastControllerScrollViewContentOffset < scrollView.contentOffset.x) {
                                     if currentPageIndex != 0 {
@@ -460,7 +466,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                                             pagesAddedDictionary[index] = index
                                         }
                                         
-                                        lastScrollDirection = "left"
+                                        lastScrollDirection = .Left
                                     }
                                 }
                                 
