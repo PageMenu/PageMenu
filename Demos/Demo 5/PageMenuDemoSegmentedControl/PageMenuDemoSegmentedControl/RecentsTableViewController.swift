@@ -55,17 +55,17 @@ class RecentsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : RecentsTableViewCell = tableView.dequeueReusableCellWithIdentifier("RecentsTableViewCell") as RecentsTableViewCell
+        let cell : RecentsTableViewCell = tableView.dequeueReusableCellWithIdentifier("RecentsTableViewCell") as! RecentsTableViewCell
         
         // Configure the cell...
         cell.nameLabel.text = namesArray[indexPath.row]
         cell.photoImageView.image = UIImage(named: photoNameArray[indexPath.row])
-        cell.dateLabel.text = dateArray[indexPath.row] as NSString
+        cell.dateLabel.text = dateArray[indexPath.row] as! NSString as String
         cell.nameLabel.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         
-        if activityTypeArray[indexPath.row] as Int == 0 {
+        if activityTypeArray[indexPath.row] as! Int == 0 {
             cell.activityImageView.image = UIImage(named: "phone_send")
-        } else if activityTypeArray[indexPath.row] as Int == 1 {
+        } else if activityTypeArray[indexPath.row] as! Int == 1 {
             cell.activityImageView.image = UIImage(named: "phone_receive")
         } else {
             cell.activityImageView.image = UIImage(named: "phone_down")

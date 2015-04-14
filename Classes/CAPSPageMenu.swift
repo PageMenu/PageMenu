@@ -50,7 +50,7 @@ class MenuItemView: UIView {
     
     func setTitleText(text: NSString) {
         if titleLabel != nil {
-            titleLabel!.text = text
+            titleLabel!.text = text as String
             titleLabel!.numberOfLines = 0
             titleLabel!.sizeToFit()
         }
@@ -142,49 +142,49 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if options != nil {
             for key : String in options!.keys {
                 if key == "selectionIndicatorHeight" {
-                    selectionIndicatorHeight = options![key] as CGFloat
+                    selectionIndicatorHeight = options![key] as! CGFloat
                 } else if key == "menuItemSeparatorWidth" {
-                    menuItemSeparatorWidth = options![key] as CGFloat
+                    menuItemSeparatorWidth = options![key] as! CGFloat
                 } else if key == "scrollMenuBackgroundColor" {
-                    scrollMenuBackgroundColor = options![key] as UIColor
+                    scrollMenuBackgroundColor = options![key] as! UIColor
                 } else if key == "viewBackgroundColor" {
-                    viewBackgroundColor = options![key] as UIColor
+                    viewBackgroundColor = options![key] as! UIColor
                 } else if key == "bottomMenuHairlineColor" {
-                    bottomMenuHairlineColor = options![key] as UIColor
+                    bottomMenuHairlineColor = options![key] as! UIColor
                 } else if key == "selectionIndicatorColor" {
-                    selectionIndicatorColor = options![key] as UIColor
+                    selectionIndicatorColor = options![key] as! UIColor
                 } else if key == "menuItemSeparatorColor" {
-                    menuItemSeparatorColor = options![key] as UIColor
+                    menuItemSeparatorColor = options![key] as! UIColor
                 } else if key == "menuMargin" {
-                    menuMargin = options![key] as CGFloat
+                    menuMargin = options![key] as! CGFloat
                 } else if key == "menuHeight" {
-                    menuHeight = options![key] as CGFloat
+                    menuHeight = options![key] as! CGFloat
                 } else if key == "selectedMenuItemLabelColor" {
-                    selectedMenuItemLabelColor = options![key] as UIColor
+                    selectedMenuItemLabelColor = options![key] as! UIColor
                 } else if key == "unselectedMenuItemLabelColor" {
-                    unselectedMenuItemLabelColor = options![key] as UIColor
+                    unselectedMenuItemLabelColor = options![key] as! UIColor
                 } else if key == "useMenuLikeSegmentedControl" {
-                    useMenuLikeSegmentedControl = options![key] as Bool
+                    useMenuLikeSegmentedControl = options![key] as! Bool
                 } else if key == "menuItemSeparatorRoundEdges" {
-                    menuItemSeparatorRoundEdges = options![key] as Bool
+                    menuItemSeparatorRoundEdges = options![key] as! Bool
                 } else if key == "menuItemFont" {
-                    menuItemFont = options![key] as UIFont
+                    menuItemFont = options![key] as! UIFont
                 } else if key == "menuItemSeparatorPercentageHeight" {
-                    menuItemSeparatorPercentageHeight = options![key] as CGFloat
+                    menuItemSeparatorPercentageHeight = options![key] as! CGFloat
                 } else if key == "menuItemWidth" {
-                    menuItemWidth = options![key] as CGFloat
+                    menuItemWidth = options![key] as! CGFloat
                 } else if key == "enableHorizontalBounce" {
-                    enableHorizontalBounce = options![key] as Bool
+                    enableHorizontalBounce = options![key] as! Bool
                 } else if key == "addBottomMenuHairline" {
-                    addBottomMenuHairline = options![key] as Bool
+                    addBottomMenuHairline = options![key] as! Bool
                 } else if key == "menuItemWidthBasedOnTitleTextWidth" {
-                    menuItemWidthBasedOnTitleTextWidth = options![key] as Bool
+                    menuItemWidthBasedOnTitleTextWidth = options![key] as! Bool
                 } else if key == "scrollAnimationDurationOnMenuItemTap" {
-                    scrollAnimationDurationOnMenuItemTap = options![key] as Int
+                    scrollAnimationDurationOnMenuItemTap = options![key] as! Int
                 } else if key == "centerMenuItems" {
-                    centerMenuItems = options![key] as Bool
+                    centerMenuItems = options![key] as! Bool
                 } else if key == "hideTopMenuBar" {
-                    hideTopMenuBar = options![key] as Bool
+                    hideTopMenuBar = options![key] as! Bool
                 }
             }
             
@@ -303,9 +303,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             if controller.isKindOfClass(UIViewController) {
                 if index == 0.0 {
                     // Add first two controllers to scrollview and as child view controller
-                    (controller as UIViewController).viewWillAppear(true)
+                    (controller as! UIViewController).viewWillAppear(true)
                     addPageAtIndex(0)
-                    (controller as UIViewController).viewDidAppear(true)
+                    (controller as! UIViewController).viewDidAppear(true)
                 }
                 
                 // Set up menu item for menu scroll view
@@ -314,7 +314,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 if useMenuLikeSegmentedControl {
                     menuItemFrame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
                 } else if menuItemWidthBasedOnTitleTextWidth {
-                    var controllerTitle : String? = (controller as UIViewController).title
+                    var controllerTitle : String? = (controller as! UIViewController).title
                     
                     var titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
                     
@@ -354,7 +354,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
                 
                 // Set title depending on if controller has a title set
-                if (controller as UIViewController).title != nil {
+                if (controller as! UIViewController).title != nil {
                     menuItemView.titleLabel!.text = controller.title!
                 } else {
                     menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
@@ -548,7 +548,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         if scrollView.isEqual(controllerScrollView) {
             // Call didMoveToPage delegate function
-            var currentController : UIViewController = controllerArray[currentPageIndex] as UIViewController
+            var currentController : UIViewController = controllerArray[currentPageIndex] as! UIViewController
             delegate?.didMoveToPage?(currentController, index: currentPageIndex)
             
             // Remove all but current page after decelerating
@@ -569,7 +569,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     func scrollViewDidEndTapScrollingAnimation() {
         // Call didMoveToPage delegate function
-        var currentController : UIViewController = controllerArray[currentPageIndex] as UIViewController
+        var currentController : UIViewController = controllerArray[currentPageIndex] as! UIViewController
         delegate?.didMoveToPage?(currentController, index: currentPageIndex)
         
         // Remove all but current page after decelerating
@@ -716,10 +716,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     // MARK: - Remove/Add Page
     func addPageAtIndex(index : Int) {
         // Call didMoveToPage delegate function
-        var currentController : UIViewController = controllerArray[index] as UIViewController
+        var currentController : UIViewController = controllerArray[index] as! UIViewController
         delegate?.willMoveToPage?(currentController, index: index)
         
-        var newVC : UIViewController = controllerArray[index] as UIViewController
+        var newVC : UIViewController = controllerArray[index] as! UIViewController
         
         newVC.willMoveToParentViewController(self)
         
@@ -731,7 +731,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     }
     
     func removePageAtIndex(index : Int) {
-        var oldVC : UIViewController = controllerArray[index] as UIViewController
+        var oldVC : UIViewController = controllerArray[index] as! UIViewController
         
         oldVC.willMoveToParentViewController(nil)
         
@@ -797,7 +797,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 }
             }
             
-            for view : UIView in controllerScrollView.subviews as [UIView] {
+            for view : UIView in controllerScrollView.subviews as! [UIView] {
                 view.frame = CGRectMake(self.view.frame.width * CGFloat(currentPageIndex), menuHeight, controllerScrollView.frame.width, self.view.frame.height - menuHeight)
             }
             
