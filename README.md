@@ -4,7 +4,7 @@
 ## Latest Update
 
 **1.2.5 Release (04/14/2015)**
-* Support for Swift 1.2 - Thanks to Chao Ruan (rcgary)
+* Support for Swift 1.2 - Thanks to [Chao Ruan (rcgary)](https://github.com/rcgary)
 * Will be on cocoa pods soon!
 
 
@@ -249,6 +249,9 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 [Gurpartap Singh (Gurpartap)](https://github.com/gurpartap)
 * CocoaPods fixes
 * ScrollToTop fixes
+
+[Chao Ruan (rcgary)](https://github.com/rcgary)
+* Swift 1.2 Support
 
 ## Update Log
 
