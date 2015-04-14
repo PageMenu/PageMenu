@@ -3,8 +3,9 @@
 
 ## Latest Update
 
-**1.2.4 Release (03/24/2015)**
-* Small improvements thanks to hsoi and kitasuke
+**1.2.5 Release (04/14/2015)**
+* Support for Swift 1.2 - Thanks to Chao Ruan (rcgary)
+* Will be on cocoa pods soon!
 
 
 ## Description
@@ -250,6 +251,9 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 * ScrollToTop fixes
 
 ## Update Log
+
+**1.2.4 Release (03/24/2015)**
+* Small improvements thanks to hsoi and kitasuke
 
 **1.2.3 Release (02/09/2015)**
 * iOS 7.1 errors resolved - hsoi
