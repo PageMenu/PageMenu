@@ -56,14 +56,13 @@ class MenuItemView: UIView {
         }
     }
 }
-
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
     let menuScrollView = UIScrollView()
     let controllerScrollView = UIScrollView()
-    var controllerArray : [AnyObject] = []
+    var controllerArray : [UIViewController] = []
     var menuItems : [MenuItemView] = []
     var menuItemWidths : [CGFloat] = []
     
@@ -132,7 +131,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     :param: frame Frame for page menu view
     :param: options Dictionary holding any customization options user might want to set
     */
-    public init(viewControllers: [AnyObject], frame: CGRect, options: [String: AnyObject]?) {
+    public init(viewControllers: [UIViewController], frame: CGRect, options: [String: AnyObject]?) {
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
@@ -300,79 +299,77 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         var index : CGFloat = 0.0
         
         for controller in controllerArray {
-            if controller.isKindOfClass(UIViewController) {
-                if index == 0.0 {
-                    // Add first two controllers to scrollview and as child view controller
-                    (controller as! UIViewController).viewWillAppear(true)
-                    addPageAtIndex(0)
-                    (controller as! UIViewController).viewDidAppear(true)
-                }
-                
-                // Set up menu item for menu scroll view
-                var menuItemFrame : CGRect = CGRect()
-                
-                if useMenuLikeSegmentedControl {
-                    menuItemFrame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
-                } else if menuItemWidthBasedOnTitleTextWidth {
-                    var controllerTitle : String? = (controller as! UIViewController).title
-                    
-                    var titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
-                    
-                    var itemWidthRect : CGRect = (titleText as NSString).boundingRectWithSize(CGSizeMake(1000, 1000), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:menuItemFont], context: nil)
-                    
-                    menuItemWidth = itemWidthRect.width
-                    
-                    menuItemFrame = CGRectMake(totalMenuItemWidthIfDifferentWidths + menuMargin + (menuMargin * index), 0.0, menuItemWidth, menuHeight)
-                    
-                    totalMenuItemWidthIfDifferentWidths += itemWidthRect.width
-                    menuItemWidths.append(itemWidthRect.width)
-                } else {
-                    if centerMenuItems && index == 0.0  {
-                        startingMenuMargin = ((self.view.frame.width - ((CGFloat(controllerArray.count) * menuItemWidth) + (CGFloat(controllerArray.count - 1) * menuMargin))) / 2.0) -  menuMargin
-                        
-                        if startingMenuMargin < 0.0 {
-                            startingMenuMargin = 0.0
-                        }
-                        
-                        menuItemFrame = CGRectMake(startingMenuMargin + menuMargin, 0.0, menuItemWidth, menuHeight)
-                    } else {
-                        menuItemFrame = CGRectMake(menuItemWidth * index + menuMargin * (index + 1) + startingMenuMargin, 0.0, menuItemWidth, menuHeight)
-                    }
-                }
-                
-                var menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
-                if useMenuLikeSegmentedControl {
-                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
-                } else {
-                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
-                }
-                
-                // Configure menu item label font if font is set by user
-                menuItemView.titleLabel!.font = menuItemFont
-                
-                menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
-                menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
-                
-                // Set title depending on if controller has a title set
-                if (controller as! UIViewController).title != nil {
-                    menuItemView.titleLabel!.text = controller.title!
-                } else {
-                    menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
-                }
-                
-                // Add separator between menu items when using as segmented control
-                if useMenuLikeSegmentedControl {
-                    if Int(index) < controllerArray.count - 1 {
-                        menuItemView.menuItemSeparator!.hidden = false
-                    }
-                }
-                
-                // Add menu item view to menu scroll view
-                menuScrollView.addSubview(menuItemView)
-                menuItems.append(menuItemView)
-                
-                index++
+            if index == 0.0 {
+                // Add first two controllers to scrollview and as child view controller
+                controller.viewWillAppear(true)
+                addPageAtIndex(0)
+                controller.viewDidAppear(true)
             }
+            
+            // Set up menu item for menu scroll view
+            var menuItemFrame : CGRect = CGRect()
+            
+            if useMenuLikeSegmentedControl {
+                menuItemFrame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
+            } else if menuItemWidthBasedOnTitleTextWidth {
+                var controllerTitle : String? = controller.title
+                
+                var titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
+                
+                var itemWidthRect : CGRect = (titleText as NSString).boundingRectWithSize(CGSizeMake(1000, 1000), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:menuItemFont], context: nil)
+                
+                menuItemWidth = itemWidthRect.width
+                
+                menuItemFrame = CGRectMake(totalMenuItemWidthIfDifferentWidths + menuMargin + (menuMargin * index), 0.0, menuItemWidth, menuHeight)
+                
+                totalMenuItemWidthIfDifferentWidths += itemWidthRect.width
+                menuItemWidths.append(itemWidthRect.width)
+            } else {
+                if centerMenuItems && index == 0.0  {
+                    startingMenuMargin = ((self.view.frame.width - ((CGFloat(controllerArray.count) * menuItemWidth) + (CGFloat(controllerArray.count - 1) * menuMargin))) / 2.0) -  menuMargin
+                    
+                    if startingMenuMargin < 0.0 {
+                        startingMenuMargin = 0.0
+                    }
+                    
+                    menuItemFrame = CGRectMake(startingMenuMargin + menuMargin, 0.0, menuItemWidth, menuHeight)
+                } else {
+                    menuItemFrame = CGRectMake(menuItemWidth * index + menuMargin * (index + 1) + startingMenuMargin, 0.0, menuItemWidth, menuHeight)
+                }
+            }
+            
+            var menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
+            if useMenuLikeSegmentedControl {
+                menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+            } else {
+                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+            }
+            
+            // Configure menu item label font if font is set by user
+            menuItemView.titleLabel!.font = menuItemFont
+            
+            menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
+            menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
+            
+            // Set title depending on if controller has a title set
+            if controller.title != nil {
+                menuItemView.titleLabel!.text = controller.title!
+            } else {
+                menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
+            }
+            
+            // Add separator between menu items when using as segmented control
+            if useMenuLikeSegmentedControl {
+                if Int(index) < controllerArray.count - 1 {
+                    menuItemView.menuItemSeparator!.hidden = false
+                }
+            }
+            
+            // Add menu item view to menu scroll view
+            menuScrollView.addSubview(menuItemView)
+            menuItems.append(menuItemView)
+            
+            index++
         }
         
         // Set new content size for menu scroll view if needed
@@ -548,7 +545,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         if scrollView.isEqual(controllerScrollView) {
             // Call didMoveToPage delegate function
-            var currentController : UIViewController = controllerArray[currentPageIndex] as! UIViewController
+            var currentController = controllerArray[currentPageIndex]
             delegate?.didMoveToPage?(currentController, index: currentPageIndex)
             
             // Remove all but current page after decelerating
@@ -569,7 +566,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     func scrollViewDidEndTapScrollingAnimation() {
         // Call didMoveToPage delegate function
-        var currentController : UIViewController = controllerArray[currentPageIndex] as! UIViewController
+        var currentController = controllerArray[currentPageIndex]
         delegate?.didMoveToPage?(currentController, index: currentPageIndex)
         
         // Remove all but current page after decelerating
@@ -716,10 +713,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     // MARK: - Remove/Add Page
     func addPageAtIndex(index : Int) {
         // Call didMoveToPage delegate function
-        var currentController : UIViewController = controllerArray[index] as! UIViewController
+        var currentController = controllerArray[index]
         delegate?.willMoveToPage?(currentController, index: index)
         
-        var newVC : UIViewController = controllerArray[index] as! UIViewController
+        var newVC = controllerArray[index]
         
         newVC.willMoveToParentViewController(self)
         
@@ -731,7 +728,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     }
     
     func removePageAtIndex(index : Int) {
-        var oldVC : UIViewController = controllerArray[index] as! UIViewController
+        var oldVC = controllerArray[index]
         
         oldVC.willMoveToParentViewController(nil)
         
