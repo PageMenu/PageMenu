@@ -41,7 +41,7 @@ To install add the following line to your Podfile:
 
 The class file required for PageMenu is located in the Classes folder in the root of this repository as listed below:
 
-* <code>CAPSPageMenu.swift<code>
+* CAPSPageMenu.swift
 
 ## How to use PageMenu
 
