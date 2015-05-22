@@ -56,6 +56,31 @@ class MenuItemView: UIView {
         }
     }
 }
+
+public enum CAPSPageMenuOption {
+    case SelectionIndicatorHeight(CGFloat)
+    case MenuItemSeparatorWidth(CGFloat)
+    case ScrollMenuBackgroundColor(UIColor)
+    case ViewBackgroundColor(UIColor)
+    case SelectionIndicatorColor(UIColor)
+    case MenuItemSeparatorColor(UIColor)
+    case MenuMargin(CGFloat)
+    case MenuHeight(CGFloat)
+    case SelectedMenuItemLabelColor(UIColor)
+    case UnselectedMenuLabelColor(UIColor)
+    case UseMenuLikeSegmentedControl(Bool)
+    case MenuItemSeparatorRoundEdges(Bool)
+    case MenuItemFont(UIFont)
+    case MenuItemSeparatorPercentageHeight(CGFloat)
+    case MenuItemWidth(CGFloat)
+    case EnableHorizontalBounce(Bool)
+    case AddBottomMenuHairline(Bool)
+    case MenuItemWidthBasedOnTitleTextWidth(CGFloat)
+    case ScrollAnimationDurationOnMenuItemTap(Int)
+    case CenterMenuItems(Bool)
+    case HideTopMenuBar(Bool)
+}
+
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
@@ -198,6 +223,57 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuScrollView.subviews.count == 0 {
             configureUserInterface()
         }
+    }
+    public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?) {
+        if let options = options {
+            for option in options {
+                switch (option) {
+                case let .SelectionIndicatorHeight(value):
+                    sectionIndicatorHeight = value
+                case let .MenuItemSeparatorWidth(value):
+                    menuItemSeparatorWidth = value
+                case let .ScrollMenuBackgroundColor(value):
+                    scrollMenuBackgroundColor = value
+                case let .ViewBackgroundColor(value):
+                    viewBackgroundColor = value
+                case let .SelectionIndicatorColor(value):
+                    sectionIndicatorHeight = value
+                case let .MenuItemSeparatorColor(value):
+                    menuItemSeparatorColor = value
+                case let .MenuMargin(value):
+                    menuMargin = value
+                case let .MenuHeight(value):
+                    menuHeight = value
+                case let .SelectedMenuItemLabelColor(value):
+                    selectedMenuItemLabelColor = value
+                case let .UnselectedMenuLabelColor(value):
+                    unselectedMenuItemLabelColor = value
+                case let .UseMenuLikeSegmentedControl(value):
+                    useMenuLikeSegmentedControl = value
+                case let .MenuItemSeparatorRoundEdges(value):
+                    menuItemSeparatorRoundEdges = value
+                case let .MenuItemFont(value):
+                    menuItemFont = value
+                case let .MenuItemSeparatorPercentageHeight(value):
+                    menuItemSeparatorPercentageHeight = value
+                case let .MenuItemWidth(value):
+                    menuItemWidth = value
+                case let .EnableHorizontalBounce(value):
+                    enableHorizontalBounce = value
+                case let .AddBottomMenuHairline(value):
+                    addBottomMenuHairline = value
+                case let .MenuItemWidthBasedOnTitleTextWidth(value):
+                    menuItemWidthBasedOnTitleTextWidth = value
+                case let .ScrollAnimationDurationOnMenuItemTap(value):
+                    scrollAnimationDurationOnMenuItemTap = value
+                case let .CenterMenuItems(value):
+                    centerMenuItems = value
+                case let .HideTopMenuBar(value):
+                    hideTopMenuBar = value
+                }
+            }
+        }
+        self.init(viewControllers:viewControllers, frame:frame, options:nil)
     }
     
     required public init(coder aDecoder: NSCoder) {
