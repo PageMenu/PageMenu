@@ -3,9 +3,8 @@
 
 ## Latest Update
 
-**1.2.5 Release (04/14/2015)**
-* Support for Swift 1.2 - Thanks to [Chao Ruan (rcgary)](https://github.com/rcgary)
-* Will be on cocoa pods soon!
+**1.2.6 Release (05/26/2015)**
+* Options are now type-safe - Thanks to [masarusanjp](https://github.com/masarusanjp)
 
 
 ## Description
@@ -31,7 +30,7 @@ A fully customizable and flexible paging menu controller built from other view c
 
 **Cocoa Pods**
 
-PageMenu is available through [CocoaPods](http://cocoapods.org).
+PageMenu is available through [CocoaPods](http://cocoapods.org). !! Not currently on latest version!!
 
 To install add the following line to your Podfile:
 
@@ -242,6 +241,9 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 
 **Thank you for your contributions:**
 
+[masarusanjp](https://github.com/masarusanjp)
+* Type-safe options
+
 [John C. Daub (hsoi)](https://github.com/hsoi)
 * iOS 7.1 fixes
 * Content size fixes on viewDidLayoutSubviews()
@@ -254,6 +256,10 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 * Swift 1.2 Support
 
 ## Update Log
+
+**1.2.5 Release (04/14/2015)**
+* Support for Swift 1.2 - Thanks to [Chao Ruan (rcgary)](https://github.com/rcgary)
+* Will be on cocoa pods soon!
 
 **1.2.4 Release (03/24/2015)**
 * Small improvements thanks to hsoi and kitasuke
