@@ -62,6 +62,7 @@ public enum CAPSPageMenuOption {
     case MenuItemSeparatorWidth(CGFloat)
     case ScrollMenuBackgroundColor(UIColor)
     case ViewBackgroundColor(UIColor)
+    case BottomMenuHairlineColor(UIColor)
     case SelectionIndicatorColor(UIColor)
     case MenuItemSeparatorColor(UIColor)
     case MenuMargin(CGFloat)
@@ -75,7 +76,7 @@ public enum CAPSPageMenuOption {
     case MenuItemWidth(CGFloat)
     case EnableHorizontalBounce(Bool)
     case AddBottomMenuHairline(Bool)
-    case MenuItemWidthBasedOnTitleTextWidth(CGFloat)
+    case MenuItemWidthBasedOnTitleTextWidth(Bool)
     case ScrollAnimationDurationOnMenuItemTap(Int)
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
@@ -218,26 +219,31 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             }
         }
         
-        setUpUserInterface()
-        
-        if menuScrollView.subviews.count == 0 {
-            configureUserInterface()
-        }
+//        setUpUserInterface()
+//        
+//        if menuScrollView.subviews.count == 0 {
+//            configureUserInterface()
+//        }
     }
+    
     public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?) {
+        self.init(viewControllers:viewControllers, frame:frame, options:nil)
+        
         if let options = pageMenuOptions {
             for option in options {
                 switch (option) {
                 case let .SelectionIndicatorHeight(value):
-                    sectionIndicatorHeight = value
+                    selectionIndicatorHeight = value
                 case let .MenuItemSeparatorWidth(value):
                     menuItemSeparatorWidth = value
                 case let .ScrollMenuBackgroundColor(value):
                     scrollMenuBackgroundColor = value
                 case let .ViewBackgroundColor(value):
                     viewBackgroundColor = value
+                case let .BottomMenuHairlineColor(value):
+                    bottomMenuHairlineColor = value
                 case let .SelectionIndicatorColor(value):
-                    sectionIndicatorHeight = value
+                    selectionIndicatorColor = value
                 case let .MenuItemSeparatorColor(value):
                     menuItemSeparatorColor = value
                 case let .MenuMargin(value):
@@ -272,8 +278,18 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     hideTopMenuBar = value
                 }
             }
+            
+            if hideTopMenuBar {
+                addBottomMenuHairline = false
+                menuHeight = 0.0
+            }
         }
-        self.init(viewControllers:viewControllers, frame:frame, options:nil)
+        
+        setUpUserInterface()
+        
+        if menuScrollView.subviews.count == 0 {
+            configureUserInterface()
+        }
     }
     
     required public init(coder aDecoder: NSCoder) {
