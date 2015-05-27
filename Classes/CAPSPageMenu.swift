@@ -225,7 +225,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
     }
     public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?) {
-        if let options = options {
+        if let options = pageMenuOptions {
             for option in options {
                 switch (option) {
                 case let .SelectionIndicatorHeight(value):
