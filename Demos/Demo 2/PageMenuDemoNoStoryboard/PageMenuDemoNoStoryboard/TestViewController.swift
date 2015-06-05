@@ -40,7 +40,7 @@ class TestViewController: UIViewController {
         controllerArray.append(controller4)
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 50.0, self.view.frame.width, 100), options: nil)
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 50.0, self.view.frame.width, 100), pageMenuOptions: nil)
         
         println(self.view.frame.height)
         
@@ -70,7 +70,7 @@ class TestViewController: UIViewController {
         controllerArray_1.append(controller4_1)
         
         // Initialize scroll menu
-        pageMenu1 = CAPSPageMenu(viewControllers: controllerArray_1, frame: CGRectMake(0.0, 400.0, self.view.frame.width, 100.0), options: nil)
+        pageMenu1 = CAPSPageMenu(viewControllers: controllerArray_1, frame: CGRectMake(0.0, 400.0, self.view.frame.width, 100.0), pageMenuOptions: nil)
         
         self.view.addSubview(pageMenu1!.view)
     }
