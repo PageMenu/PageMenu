@@ -13,6 +13,7 @@
 @end
 
 @implementation MenuItemView
+
 - (void)setUpMenuItemView:(CGFloat)menuItemWidth menuScrollViewHeight:(CGFloat)menuScrollViewHeight indicatorHeight:(CGFloat)indicatorHeight separatorPercentageHeight:(CGFloat)separatorPercentageHeight separatorWidth:(CGFloat)separatorWidth separatorRoundEdges:(BOOL)separatorRoundEdges menuItemSeparatorColor:(UIColor *)menuItemSeparatorColor
 {
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight)];
@@ -38,15 +39,20 @@
 
 @end
 
+typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
+    CAPSPageMenuScrollDirectionLeft,
+    CAPSPageMenuScrollDirectionRight,
+    CAPSPageMenuScrollDirectionOther
+};
+
 @interface CAPSPageMenu ()
+
 @property (nonatomic) NSMutableArray *mutableMenuItems;
 @property (nonatomic) NSMutableArray *mutableMenuItemWidths;
 @property (nonatomic) CGFloat totalMenuItemWidthIfDifferentWidths;
 @property (nonatomic) CGFloat startingMenuMargin;
 
 @property (nonatomic) UIView *selectionIndicatorView;
-@property (nonatomic) NSInteger currentPageIndex;
-@property (nonatomic) NSInteger lastPageIndex;
 
 @property (nonatomic) BOOL currentOrientationIsPortrait;
 @property (nonatomic) NSInteger pageIndexForOrientationChange;
@@ -162,7 +168,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
 }
 
 
-- (void)initValues {
+- (void)initValues
+{
     _menuScrollView       = [UIScrollView new];
     _controllerScrollView = [UIScrollView new];
     _mutableMenuItems       = [NSMutableArray array];
@@ -263,7 +270,6 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         [self.view addConstraints:menuBottomHairline_constraint_V];
         
         menuBottomHairline.backgroundColor = _bottomMenuHairlineColor;
-        
     }
     
     // Disable scroll bars
@@ -419,7 +425,6 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
 #pragma mark - Scroll view delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     if (!_didLayoutSubviewsAfterRotation) {
         if ([scrollView isEqual:_controllerScrollView]) {
             if (scrollView.contentOffset.x >= 0.0 && scrollView.contentOffset.x <= ((CGFloat)(_controllerArray.count - 1) * self.view.frame.size.width)) {
@@ -492,7 +497,6 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                     }
                     
                     CGFloat ratio = 1.0;
-                    
                     
                     // Calculate ratio between scroll views
                     ratio = (_menuScrollView.contentSize.width - self.view.frame.size.width) / (_controllerScrollView.contentSize.width - self.view.frame.size.width);
@@ -585,11 +589,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         _didScrollAlready = NO;
         _startingPageForScroll = _currentPageIndex;
         
-        
         // Empty out pages in dictionary
         [_pagesAddedDictionary removeAllObjects];
-
-        
     }
 }
 
@@ -614,7 +615,6 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     
     // Empty out pages in dictionary
     [_pagesAddedDictionary removeAllObjects];
-
 }
 
 
@@ -657,7 +657,6 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 }
             }
         }];
-        
     }
 }
 
@@ -746,7 +745,6 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         }
     }
 }
-
 
 // MARK: - Remove/Add Page
 - (void)addPageAtIndex:(NSInteger)index

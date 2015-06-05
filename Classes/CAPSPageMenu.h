@@ -26,13 +26,8 @@
 - (void)setUpMenuItemView:(CGFloat)menuItemWidth menuScrollViewHeight:(CGFloat)menuScrollViewHeight indicatorHeight:(CGFloat)indicatorHeight separatorPercentageHeight:(CGFloat)separatorPercentageHeight separatorWidth:(CGFloat)separatorWidth separatorRoundEdges:(BOOL)separatorRoundEdges menuItemSeparatorColor:(UIColor *)menuItemSeparatorColor;
 
 - (void)setTitleText:(NSString *)text;
-@end
 
-typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
-    CAPSPageMenuScrollDirectionLeft,
-    CAPSPageMenuScrollDirectionRight,
-    CAPSPageMenuScrollDirectionOther
-};
+@end
 
 @interface CAPSPageMenu : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
@@ -42,6 +37,9 @@ typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
 @property (nonatomic, readonly) NSArray *controllerArray;
 @property (nonatomic, readonly) NSArray *menuItems;
 @property (nonatomic, readonly) NSArray *menuItemWidths;
+
+@property (nonatomic) NSInteger currentPageIndex;
+@property (nonatomic) NSInteger lastPageIndex;
 
 @property (nonatomic) CGFloat menuHeight;
 @property (nonatomic) CGFloat menuMargin;
@@ -73,6 +71,7 @@ typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
 
 - (void)addPageAtIndex:(NSInteger)index;
 - (void)moveToPage:(NSInteger)index;
+
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers frame:(CGRect)frame options:(NSDictionary *)options;
 
 extern NSString * const CAPSPageMenuOptionSelectionIndicatorHeight;
