@@ -219,11 +219,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             }
         }
         
-//        setUpUserInterface()
-//        
-//        if menuScrollView.subviews.count == 0 {
-//            configureUserInterface()
-//        }
+        setUpUserInterface()
+        
+        if menuScrollView.subviews.count == 0 {
+            configureUserInterface()
+        }
     }
     
     public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?) {
