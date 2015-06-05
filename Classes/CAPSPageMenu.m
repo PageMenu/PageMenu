@@ -192,7 +192,6 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _didTapMenuItemToScroll = NO;
     
     _pagesAddedDictionary = @{};
-    
 }
 
 - (void)setUpUserInterface
@@ -207,18 +206,12 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _controllerScrollView.alwaysBounceHorizontal = _enableHorizontalBounce;
     _controllerScrollView.bounces                = _enableHorizontalBounce;
 
-    // TODO: test
-    _controllerScrollView.backgroundColor = [UIColor greenColor];
-    self.view.backgroundColor = [UIColor blueColor];
-
     _controllerScrollView.frame = CGRectMake(0.0, _menuHeight, self.view.frame.size.width, self.view.frame.size.height - _menuHeight);
     
     [self.view addSubview:_controllerScrollView];
     
     NSArray *controllerScrollView_constraint_H = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controllerScrollView]|" options:0 metrics:nil views:viewsDictionary];
     NSString *controllerScrollView_constraint_V_Format = [NSString stringWithFormat:@"V:|-[controllerScrollView]|"];
-
-    //@"V:|[controllerScrollView(500)]|"
     NSArray *controllerScrollView_constraint_V = [NSLayoutConstraint constraintsWithVisualFormat:controllerScrollView_constraint_V_Format options:0 metrics:nil views:viewsDictionary];
     
     [self.view addConstraints:controllerScrollView_constraint_H];
@@ -792,7 +785,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _controllerScrollView.contentSize = CGSizeMake(self.view.frame.size.width * (CGFloat)_controllerArray.count, self.view.frame.size.height - _menuHeight);
     
     BOOL oldCurrentOrientationIsPortrait = _currentOrientationIsPortrait;
-    // TODO:sss
+
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     _currentOrientationIsPortrait = UIInterfaceOrientationIsPortrait(orientation);
     
