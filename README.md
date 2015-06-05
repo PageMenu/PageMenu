@@ -1,6 +1,8 @@
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader3.png" alt="PageMenuHeader">
 ========
 
+**Objective-C version in Beta**
+
 ## Latest Update
 
 **1.2.6 Release (05/26/2015)**
