@@ -24,14 +24,17 @@
     
     _menuItemSeparator.hidden = YES;
     [self addSubview:_menuItemSeparator];
+    [self addSubview:_titleLabel];
 }
 - (void)setTitleText:(NSString *)text
 {
-    if (!_titleLabel) {
+    if (_titleLabel) {
         _titleLabel.text = text;
         _titleLabel.numberOfLines = 0;
-        [_titleLabel sizeToFit];
-    }        
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
+//        [_titleLabel sizeToFit];
+    }
 }
 
 @end
@@ -41,6 +44,29 @@
 @end
 
 @implementation CAPSPageMenu
+
+NSString * const CAPSPageMenuOptionSelectionIndicatorHeight             = @"selectionIndicatorHeight";
+NSString * const CAPSPageMenuOptionMenuItemSeparatorWidth               = @"menuItemSeparatorWidth";
+NSString * const CAPSPageMenuOptionScrollMenuBackgroundColor            = @"scrollMenuBackgroundColor";
+NSString * const CAPSPageMenuOptionViewBackgroundColor                  = @"viewBackgroundColor";
+NSString * const CAPSPageMenuOptionBottomMenuHairlineColor              = @"bottomMenuHairlineColor";
+NSString * const CAPSPageMenuOptionSelectionIndicatorColor              = @"selectionIndicatorColor";
+NSString * const CAPSPageMenuOptionMenuItemSeparatorColor               = @"menuItemSeparatorColor";
+NSString * const CAPSPageMenuOptionMenuMargin                           = @"menuMargin";
+NSString * const CAPSPageMenuOptionMenuHeight                           = @"menuHeight";
+NSString * const CAPSPageMenuOptionSelectedMenuItemLabelColor           = @"selectedMenuItemLabelColor";
+NSString * const CAPSPageMenuOptionUnselectedMenuItemLabelColor         = @"unselectedMenuItemLabelColor";
+NSString * const CAPSPageMenuOptionUseMenuLikeSegmentedControl          = @"useMenuLikeSegmentedControl";
+NSString * const CAPSPageMenuOptionMenuItemSeparatorRoundEdges          = @"menuItemSeparatorRoundEdges";
+NSString * const CAPSPageMenuOptionMenuItemFont                         = @"menuItemFont";
+NSString * const CAPSPageMenuOptionMenuItemSeparatorPercentageHeight    = @"menuItemSeparatorPercentageHeight";
+NSString * const CAPSPageMenuOptionMenuItemWidth                        = @"menuItemWidth";
+NSString * const CAPSPageMenuOptionEnableHorizontalBounce               = @"enableHorizontalBounce";
+NSString * const CAPSPageMenuOptionAddBottomMenuHairline                = @"addBottomMenuHairline";
+NSString * const CAPSPageMenuOptionMenuItemWidthBasedOnTitleTextWidth   = @"menuItemWidthBasedOnTitleTextWidth";
+NSString * const CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap = @"scrollAnimationDurationOnMenuItemTap";
+NSString * const CAPSPageMenuOptionCenterMenuItems                      = @"centerMenuItems";
+NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hideTopMenuBar";
 
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers frame:(CGRect)frame options:(NSDictionary *)options
 {
@@ -55,49 +81,49 @@
     
     if (options) {
         for (NSString *key in options) {
-            if ([key isEqualToString:@"selectionIndicatorHeight"]) {
+            if ([key isEqualToString:CAPSPageMenuOptionSelectionIndicatorHeight]) {
                 _selectionIndicatorHeight = [options[key] floatValue];
-            } else if ([key isEqualToString:@"menuItemSeparatorWidth"]) {
+            } else if ([key isEqualToString: CAPSPageMenuOptionMenuItemSeparatorWidth]) {
                 _menuItemSeparatorWidth = [options[key] floatValue];
-            } else if ([key isEqualToString:@"scrollMenuBackgroundColor"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionScrollMenuBackgroundColor]) {
                 _scrollMenuBackgroundColor = (UIColor *)options[key];
-            } else if ([key isEqualToString:@"viewBackgroundColor"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionViewBackgroundColor]) {
                 _viewBackgroundColor = options[key];
-            } else if ([key isEqualToString:@"bottomMenuHairlineColor"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionBottomMenuHairlineColor]) {
                 _bottomMenuHairlineColor = options[key];
-            } else if ([key isEqualToString:@"selectionIndicatorColor"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionSelectionIndicatorColor]) {
                 _selectionIndicatorColor = options[key];
-            } else if ([key isEqualToString:@"menuItemSeparatorColor"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemSeparatorColor]) {
                 _menuItemSeparatorColor = options[key];
-            } else if ([key isEqualToString:@"menuMargin"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuMargin]) {
                 _menuMargin = [options[key] floatValue];
-            } else if ([key isEqualToString:@"menuHeight"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuHeight]) {
                 _menuHeight = [options[key] floatValue];
-            } else if ([key isEqualToString:@"selectedMenuItemLabelColor"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionSelectedMenuItemLabelColor]) {
                 _selectedMenuItemLabelColor = options[key];
-            } else if ([key isEqualToString:@"unselectedMenuItemLabelColor"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionUnselectedMenuItemLabelColor]) {
                 _unselectedMenuItemLabelColor = options[key];
-            } else if ([key isEqualToString:@"useMenuLikeSegmentedControl"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionUseMenuLikeSegmentedControl]) {
                 _useMenuLikeSegmentedControl = [options[key] boolValue];
-            } else if ([key isEqualToString:@"menuItemSeparatorRoundEdges"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemSeparatorRoundEdges]) {
                 _menuItemSeparatorRoundEdges = [options[key] boolValue];
-            } else if ([key isEqualToString:@"menuItemFont"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemFont]) {
                 _menuItemFont = options[key];
-            } else if ([key isEqualToString:@"menuItemSeparatorPercentageHeight"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemSeparatorPercentageHeight]) {
                 _menuItemSeparatorPercentageHeight = [options[key] floatValue];
-            } else if ([key isEqualToString:@"menuItemWidth"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemWidth]) {
                 _menuItemWidth = [options[key] floatValue];
-            } else if ([key isEqualToString:@"enableHorizontalBounce"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionEnableHorizontalBounce]) {
                 _enableHorizontalBounce = [options[key] boolValue];
-            } else if ([key isEqualToString:@"addBottomMenuHairline"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionAddBottomMenuHairline]) {
                 _addBottomMenuHairline = [options[key] boolValue];
-            } else if ([key isEqualToString:@"menuItemWidthBasedOnTitleTextWidth"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemWidthBasedOnTitleTextWidth]) {
                 _menuItemWidthBasedOnTitleTextWidth = [options[key] boolValue];
-            } else if ([key isEqualToString:@"scrollAnimationDurationOnMenuItemTap"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap]) {
                 _scrollAnimationDurationOnMenuItemTap = [options[key] integerValue];
-            } else if ([key isEqualToString:@"centerMenuItems"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionCenterMenuItems]) {
                 _centerMenuItems = [options[key] boolValue];
-            } else if ([key isEqualToString:@"hideTopMenuBar"]) {
+            } else if ([key isEqualToString:CAPSPageMenuOptionHideTopMenuBar]) {
                 _hideTopMenuBar = [options[key] boolValue];
             }
         }
@@ -106,64 +132,60 @@
             _addBottomMenuHairline = NO;
             _menuHeight = 0.0;
         }
-        
     }
     
     [self setUpUserInterface];
     if (_menuScrollView.subviews.count == 0) {
         [self configureUserInterface];
     }
-    
-    
-    
     return self;
 }
 
 
 - (void)initValues {
-    _menuScrollView = [UIScrollView new];
+    _menuScrollView       = [UIScrollView new];
     _controllerScrollView = [UIScrollView new];
     _controllerArray = @[];
-    _menuItems = @[];
-    _menuItemWidths = @[];
+    _menuItems       = @[];
+    _menuItemWidths  = @[];
     
-    _menuHeight = 34.0;
-    _menuMargin = 15.0;
-    _menuItemWidth = 111.0;
-    _selectionIndicatorHeight = 3.0;
-    _totalMenuItemWidthIfDifferentWidths = 0.0;
+    _menuHeight                           = 34.0;
+    _menuMargin                           = 15.0;
+    _menuItemWidth                        = 111.0;
+    _selectionIndicatorHeight             = 3.0;
+    _totalMenuItemWidthIfDifferentWidths  = 0.0;
     _scrollAnimationDurationOnMenuItemTap = 500;
-    _startingMenuMargin = 0.0;
+    _startingMenuMargin                   = 0.0;
     
     _selectionIndicatorView = [UIView new];
     
     _currentPageIndex = 0;
-    _lastPageIndex = 0;
+    _lastPageIndex    = 0;
     
-    _selectionIndicatorColor = [UIColor whiteColor];
-    _selectedMenuItemLabelColor = [UIColor whiteColor];
+    _selectionIndicatorColor      = [UIColor whiteColor];
+    _selectedMenuItemLabelColor   = [UIColor whiteColor];
     _unselectedMenuItemLabelColor = [UIColor lightGrayColor];
-    _scrollMenuBackgroundColor = [UIColor blackColor];
-    _viewBackgroundColor = [UIColor whiteColor];
-    _bottomMenuHairlineColor = [UIColor whiteColor];
-    _menuItemSeparatorColor = [UIColor lightGrayColor];
+    _scrollMenuBackgroundColor    = [UIColor blackColor];
+    _viewBackgroundColor          = [UIColor whiteColor];
+    _bottomMenuHairlineColor      = [UIColor whiteColor];
+    _menuItemSeparatorColor       = [UIColor lightGrayColor];
     
     _menuItemFont = [UIFont fontWithName:@"HelveticaNeue" size:15.0];
     _menuItemSeparatorPercentageHeight = 0.2;
-    _menuItemSeparatorWidth = 0.5;
-    _menuItemSeparatorRoundEdges = NO;
+    _menuItemSeparatorWidth            = 0.5;
+    _menuItemSeparatorRoundEdges       = NO;
     
-    _addBottomMenuHairline = YES;
+    _addBottomMenuHairline              = YES;
     _menuItemWidthBasedOnTitleTextWidth = NO;
-    _useMenuLikeSegmentedControl = NO;
-    _centerMenuItems = NO;
-    _enableHorizontalBounce = YES;
-    _hideTopMenuBar = NO;
-    
-    _currentOrientationIsPortrait = YES;
-    _pageIndexForOrientationChange = 0;
+    _useMenuLikeSegmentedControl        = NO;
+    _centerMenuItems                    = NO;
+    _enableHorizontalBounce             = YES;
+    _hideTopMenuBar                     = NO;
+
+    _currentOrientationIsPortrait   = YES;
+    _pageIndexForOrientationChange  = 0;
     _didLayoutSubviewsAfterRotation = YES;
-    _didScrollAlready = NO;
+    _didScrollAlready               = NO;
     
     _lastControllerScrollViewContentOffset = 0.0;
     _startingPageForScroll = 0;
@@ -180,11 +202,11 @@
                                       @"controllerScrollView":_controllerScrollView
                                       };
     
-    _controllerScrollView.pagingEnabled = YES;
+    _controllerScrollView.pagingEnabled                             = YES;
     _controllerScrollView.translatesAutoresizingMaskIntoConstraints = NO;
     _controllerScrollView.alwaysBounceHorizontal = _enableHorizontalBounce;
-    _controllerScrollView.bounces = _enableHorizontalBounce;
-    
+    _controllerScrollView.bounces                = _enableHorizontalBounce;
+
     // TODO: test
     _controllerScrollView.backgroundColor = [UIColor greenColor];
     self.view.backgroundColor = [UIColor blueColor];
@@ -194,7 +216,10 @@
     [self.view addSubview:_controllerScrollView];
     
     NSArray *controllerScrollView_constraint_H = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controllerScrollView]|" options:0 metrics:nil views:viewsDictionary];
-    NSArray *controllerScrollView_constraint_V = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[controllerScrollView(500)]|" options:0 metrics:nil views:viewsDictionary];
+    NSString *controllerScrollView_constraint_V_Format = [NSString stringWithFormat:@"V:|-[controllerScrollView]|"];
+
+    //@"V:|[controllerScrollView(500)]|"
+    NSArray *controllerScrollView_constraint_V = [NSLayoutConstraint constraintsWithVisualFormat:controllerScrollView_constraint_V_Format options:0 metrics:nil views:viewsDictionary];
     
     [self.view addConstraints:controllerScrollView_constraint_H];
     [self.view addConstraints:controllerScrollView_constraint_V];
@@ -243,9 +268,9 @@
 - (void)configureUserInterface
 {
     UITapGestureRecognizer *menuItemTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleMenuItemTap:)];
-    menuItemTapGestureRecognizer.numberOfTapsRequired = 1;
+    menuItemTapGestureRecognizer.numberOfTapsRequired    = 1;
     menuItemTapGestureRecognizer.numberOfTouchesRequired = 1;
-    menuItemTapGestureRecognizer.delegate = self;
+    menuItemTapGestureRecognizer.delegate                = self;
     [_menuScrollView addGestureRecognizer:menuItemTapGestureRecognizer];
     
     // Set delegate for controller scroll view
@@ -255,7 +280,7 @@
     // but only if its `scrollsToTop` property is YES, its delegate does not return NO from `shouldScrollViewScrollToTop`, and it is not already at the top.
     // If more than one scroll view is found, none will be scrolled.
     // Disable scrollsToTop for menu and controller scroll views so that iOS finds scroll views within our pages on status bar tap gesture.
-    _menuScrollView.scrollsToTop = NO;;
+    _menuScrollView.scrollsToTop       = NO;;
     _controllerScrollView.scrollsToTop = NO;;
     
     // Configure menu scroll view
@@ -329,9 +354,9 @@
         
         // Set title depending on if controller has a title set
         if (controller.title != nil) {
-            menuItemView.titleLabel.text = controller.title;
+            [menuItemView setTitleText:controller.title];
         } else {
-            menuItemView.titleLabel.text = [NSString stringWithFormat:@"Menu %.0f",index + 1];
+            [menuItemView setTitleText:[NSString stringWithFormat:@"Menu %.0f",index + 1]];
         }
         
         // Add separator between menu items when using as segmented control
@@ -388,7 +413,7 @@
     
     if (!_didLayoutSubviewsAfterRotation) {
         if ([scrollView isEqual:_controllerScrollView]) {
-            if (scrollView.contentOffset.x >= 0.0 && scrollView.contentOffset.x <= ((CGFloat)_controllerArray.count - 1 * self.view.frame.size.width)) {
+            if (scrollView.contentOffset.x >= 0.0 && scrollView.contentOffset.x <= ((CGFloat)(_controllerArray.count - 1) * self.view.frame.size.width)) {
                 UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
                 if ((_currentOrientationIsPortrait && UIInterfaceOrientationIsPortrait(orientation)) || (!_currentOrientationIsPortrait && UIInterfaceOrientationIsLandscape(orientation))){
                     // Check if scroll direction changed
@@ -798,7 +823,7 @@
                 index++;
             }
         } else if (_centerMenuItems) {
-            _startingMenuMargin = ((self.view.frame.size.width - (((CGFloat)_controllerArray.count * _menuItemWidth) + ((CGFloat)_controllerArray.count - 1 * _menuMargin))) / 2.0) -  _menuMargin;
+            _startingMenuMargin = ((self.view.frame.size.width - (((CGFloat)_controllerArray.count * _menuItemWidth) + ((CGFloat)(_controllerArray.count - 1) * _menuMargin))) / 2.0) -  _menuMargin;
             
             if (_startingMenuMargin < 0.0) {
                 _startingMenuMargin = 0.0;
@@ -896,6 +921,17 @@
             [self.controllerScrollView setContentOffset:CGPointMake(xOffset, self.controllerScrollView.contentOffset.y) animated:NO];
         }];
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    return YES;
 }
 
 @end

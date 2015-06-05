@@ -90,4 +90,28 @@ typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
 - (void)addPageAtIndex:(NSInteger)index;
 - (void)moveToPage:(NSInteger)index;
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers frame:(CGRect)frame options:(NSDictionary *)options;
+
+extern NSString * const CAPSPageMenuOptionSelectionIndicatorHeight;
+extern NSString * const CAPSPageMenuOptionMenuItemSeparatorWidth;
+extern NSString * const CAPSPageMenuOptionScrollMenuBackgroundColor;
+extern NSString * const CAPSPageMenuOptionViewBackgroundColor;
+extern NSString * const CAPSPageMenuOptionBottomMenuHairlineColor;
+extern NSString * const CAPSPageMenuOptionSelectionIndicatorColor;
+extern NSString * const CAPSPageMenuOptionMenuItemSeparatorColor;
+extern NSString * const CAPSPageMenuOptionMenuMargin;
+extern NSString * const CAPSPageMenuOptionMenuHeight;
+extern NSString * const CAPSPageMenuOptionSelectedMenuItemLabelColor;
+extern NSString * const CAPSPageMenuOptionUnselectedMenuItemLabelColor;
+extern NSString * const CAPSPageMenuOptionUseMenuLikeSegmentedControl;
+extern NSString * const CAPSPageMenuOptionMenuItemSeparatorRoundEdges;
+extern NSString * const CAPSPageMenuOptionMenuItemFont;
+extern NSString * const CAPSPageMenuOptionMenuItemSeparatorPercentageHeight;
+extern NSString * const CAPSPageMenuOptionMenuItemWidth;
+extern NSString * const CAPSPageMenuOptionEnableHorizontalBounce;
+extern NSString * const CAPSPageMenuOptionAddBottomMenuHairline;
+extern NSString * const CAPSPageMenuOptionMenuItemWidthBasedOnTitleTextWidth;
+extern NSString * const CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap;
+extern NSString * const CAPSPageMenuOptionCenterMenuItems;
+extern NSString * const CAPSPageMenuOptionHideTopMenuBar;
+
 @end
