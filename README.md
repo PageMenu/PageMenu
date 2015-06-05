@@ -140,7 +140,7 @@ Objective-C
 
 ```objectivec
 // Optional delegate 
-pageMenu.delegate = self;
+_pageMenu.delegate = self;
 ```
 
 
