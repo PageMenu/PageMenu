@@ -33,13 +33,33 @@
         _titleLabel.numberOfLines = 0;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-//        [_titleLabel sizeToFit];
     }
 }
 
 @end
 
 @interface CAPSPageMenu ()
+@property (nonatomic) NSMutableArray *mutableMenuItems;
+@property (nonatomic) NSMutableArray *mutableMenuItemWidths;
+@property (nonatomic) CGFloat totalMenuItemWidthIfDifferentWidths;
+@property (nonatomic) CGFloat startingMenuMargin;
+
+@property (nonatomic) UIView *selectionIndicatorView;
+@property (nonatomic) NSInteger currentPageIndex;
+@property (nonatomic) NSInteger lastPageIndex;
+
+@property (nonatomic) BOOL currentOrientationIsPortrait;
+@property (nonatomic) NSInteger pageIndexForOrientationChange;
+@property (nonatomic) BOOL didLayoutSubviewsAfterRotation;
+@property (nonatomic) BOOL didScrollAlready;
+
+@property (nonatomic) CGFloat lastControllerScrollViewContentOffset;
+@property (nonatomic) CAPSPageMenuScrollDirection lastScrollDirection;
+@property (nonatomic) NSInteger startingPageForScroll;
+@property (nonatomic) BOOL didTapMenuItemToScroll;
+@property (nonatomic) NSMutableDictionary *pagesAddedDictionary;
+
+@property (nonatomic) NSTimer *tapTimer;
 
 @end
 
@@ -145,9 +165,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
 - (void)initValues {
     _menuScrollView       = [UIScrollView new];
     _controllerScrollView = [UIScrollView new];
-    _controllerArray = @[];
-    _menuItems       = @[];
-    _menuItemWidths  = @[];
+    _mutableMenuItems       = [NSMutableArray array];
+    _mutableMenuItemWidths  = [NSMutableArray array];
     
     _menuHeight                           = 34.0;
     _menuMargin                           = 15.0;
@@ -181,7 +200,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _centerMenuItems                    = NO;
     _enableHorizontalBounce             = YES;
     _hideTopMenuBar                     = NO;
-
+    
     _currentOrientationIsPortrait   = YES;
     _pageIndexForOrientationChange  = 0;
     _didLayoutSubviewsAfterRotation = YES;
@@ -191,7 +210,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _startingPageForScroll = 0;
     _didTapMenuItemToScroll = NO;
     
-    _pagesAddedDictionary = @{};
+    _pagesAddedDictionary = [NSMutableDictionary dictionary];
 }
 
 - (void)setUpUserInterface
@@ -205,7 +224,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _controllerScrollView.translatesAutoresizingMaskIntoConstraints = NO;
     _controllerScrollView.alwaysBounceHorizontal = _enableHorizontalBounce;
     _controllerScrollView.bounces                = _enableHorizontalBounce;
-
+    
     _controllerScrollView.frame = CGRectMake(0.0, _menuHeight, self.view.frame.size.width, self.view.frame.size.height - _menuHeight);
     
     [self.view addSubview:_controllerScrollView];
@@ -223,7 +242,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     [self.view addSubview:_menuScrollView];
     
     NSArray *menuScrollView_constraint_H = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuScrollView]|" options:0 metrics:nil views:viewsDictionary];
-    NSString *menuScrollView_constrant_V_Format = [NSString stringWithFormat:@"V:|[menuScrollView(%.f)]|",_menuHeight];
+    NSString *menuScrollView_constrant_V_Format = [NSString stringWithFormat:@"V:|[menuScrollView(%.f)]",_menuHeight];
     NSArray *menuScrollView_constraint_V = [NSLayoutConstraint constraintsWithVisualFormat:menuScrollView_constrant_V_Format options:0 metrics:nil views:viewsDictionary];
     
     [self.view addConstraints:menuScrollView_constraint_H];
@@ -237,7 +256,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         [self.view addSubview:menuBottomHairline];
         
         NSArray *menuBottomHairline_constraint_H = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuBottomHairline]|" options:0 metrics:nil views:@{@"menuBottomHairline":menuBottomHairline}];
-        NSString *menuBottomHairline_constraint_V_Format = [NSString stringWithFormat:@"V:|-%f-[menuBottomHairline(0.5)]|",_menuHeight];
+        NSString *menuBottomHairline_constraint_V_Format = [NSString stringWithFormat:@"V:|-%f-[menuBottomHairline(0.5)]",_menuHeight];
         NSArray *menuBottomHairline_constraint_V = [NSLayoutConstraint constraintsWithVisualFormat:menuBottomHairline_constraint_V_Format options:0 metrics:nil views:@{@"menuBottomHairline":menuBottomHairline}];
         
         [self.view addConstraints:menuBottomHairline_constraint_H];
@@ -314,9 +333,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             menuItemFrame = CGRectMake(_totalMenuItemWidthIfDifferentWidths + _menuMargin + (_menuMargin * index), 0.0, _menuItemWidth, _menuHeight);
             
             _totalMenuItemWidthIfDifferentWidths += itemWidthRect.size.width;
-            NSMutableArray *mMenuItemWidths = _menuItemWidths.mutableCopy;
-            [mMenuItemWidths addObject:@(itemWidthRect.size.width)];
-            _menuItemWidths = mMenuItemWidths;
+            [_mutableMenuItemWidths addObject:@(itemWidthRect.size.width)];
         } else {
             if (_centerMenuItems && index == 0.0) {
                 _startingMenuMargin = ((self.view.frame.size.width - ((CGFloat)_controllerArray.count * _menuItemWidth) + ((CGFloat)_controllerArray.count - 1) * _menuMargin) / 2.0) -  _menuMargin;
@@ -361,9 +378,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         
         // Add menu item view to menu scroll view
         [_menuScrollView addSubview:menuItemView];
-        NSMutableArray *mMenuItems = _menuItems.mutableCopy;
-        [mMenuItems addObject:menuItemView];
-        _menuItems = mMenuItems;
+        
+        [_mutableMenuItems addObject:menuItemView];
         
         index++;
     }
@@ -374,9 +390,9 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     }
     
     // Set selected color for title label of selected menu item
-    if (_menuItems.count > 0) {
-        if ([_menuItems[_currentPageIndex] titleLabel] != nil) {
-            [_menuItems[_currentPageIndex] titleLabel].textColor = _selectedMenuItemLabelColor;
+    if (_mutableMenuItems.count > 0) {
+        if ([_mutableMenuItems[_currentPageIndex] titleLabel] != nil) {
+            [_mutableMenuItems[_currentPageIndex] titleLabel].textColor = _selectedMenuItemLabelColor;
         }
     }
     
@@ -386,7 +402,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     if (_useMenuLikeSegmentedControl) {
         selectionIndicatorFrame = CGRectMake(0.0, _menuHeight - _selectionIndicatorHeight, self.view.frame.size.width / (CGFloat)_controllerArray.count, _selectionIndicatorHeight);
     } else if (_menuItemWidthBasedOnTitleTextWidth) {
-        selectionIndicatorFrame = CGRectMake(_menuMargin, _menuHeight - _selectionIndicatorHeight, [_menuItemWidths[0] floatValue], _selectionIndicatorHeight);
+        selectionIndicatorFrame = CGRectMake(_menuMargin, _menuHeight - _selectionIndicatorHeight, [_mutableMenuItemWidths[0] floatValue], _selectionIndicatorHeight);
     } else {
         if (_centerMenuItems) {
             selectionIndicatorFrame = CGRectMake(_startingMenuMargin + _menuMargin, _menuHeight - _selectionIndicatorHeight, _menuItemWidth, _selectionIndicatorHeight);
@@ -429,9 +445,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                                         if ([_pagesAddedDictionary[@(index).stringValue] integerValue] != index) {
                                             [self addPageAtIndex:index];
                                             
-                                            NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                                            mPageAddedDictionary[@(index).stringValue] = @(index);
-                                            _pagesAddedDictionary = mPageAddedDictionary;
+                                            _pagesAddedDictionary[@(index).stringValue] = @(index);
+                                            
                                         }
                                     }
                                 }
@@ -445,12 +460,12 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                                 if (_currentPageIndex != _controllerArray.count - 1 ){
                                     // Add page to the left of current page
                                     NSInteger index = _currentPageIndex - 1;
+
                                     
-                                    if ([_pagesAddedDictionary[@(index).stringValue] integerValue] != index && index < _controllerArray.count && index >= 0) {
+                                    if (index == 0 || ([_pagesAddedDictionary[@(index).stringValue] integerValue] != index && index < _controllerArray.count && index >= 0)) {
                                         [self addPageAtIndex:index];
-                                        NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                                        mPageAddedDictionary[@(index).stringValue] = @(index);
-                                        _pagesAddedDictionary = mPageAddedDictionary;
+
+                                        _pagesAddedDictionary[@(index).stringValue] = @(index);
                                     }
                                     
                                     _lastScrollDirection = CAPSPageMenuScrollDirectionRight;
@@ -462,9 +477,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                                     
                                     if ([_pagesAddedDictionary[@(index).stringValue] integerValue] != index && index < _controllerArray.count && index >= 0) {
                                         [self addPageAtIndex:index];
-                                        NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                                        mPageAddedDictionary[@(index).stringValue] = @(index);
-                                        _pagesAddedDictionary = mPageAddedDictionary;
+                                        
+                                        _pagesAddedDictionary[@(index).stringValue] = @(index);
                                     }
                                     
                                     _lastScrollDirection = CAPSPageMenuScrollDirectionLeft;
@@ -500,36 +514,30 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                         
                         if ([_pagesAddedDictionary[@(page).stringValue] integerValue] != page && page < _controllerArray.count && page >= 0 ){
                             [self addPageAtIndex:page];
-                            NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                            mPageAddedDictionary[@(page).stringValue] = @(page);
-                            _pagesAddedDictionary = mPageAddedDictionary;
+                            _pagesAddedDictionary[@(page).stringValue] = @(page);
                             
                         }
                         
                         if (!_didTapMenuItemToScroll) {
                             // Add last page to pages dictionary to make sure it gets removed after scrolling
                             if ([_pagesAddedDictionary[@(_lastPageIndex).stringValue] integerValue] != _lastPageIndex) {
-                                NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                                mPageAddedDictionary[@(_lastPageIndex).stringValue] = @(_lastPageIndex);
-                                _pagesAddedDictionary = mPageAddedDictionary;
+                                _pagesAddedDictionary[@(_lastPageIndex).stringValue] = @(_lastPageIndex);
+
                             }
                             
                             // Make sure only up to 3 page views are in memory when fast scrolling, otherwise there should only be one in memory
                             NSInteger indexLeftTwo = page - 2;
                             if ([_pagesAddedDictionary[@(indexLeftTwo).stringValue] integerValue] == indexLeftTwo) {
                                 
-                                NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                                [mPageAddedDictionary removeObjectForKey:@(page).stringValue];
-                                _pagesAddedDictionary = mPageAddedDictionary;
+                                [_pagesAddedDictionary removeObjectForKey:@(page)];
                                 
                                 [self removePageAtIndex:indexLeftTwo];
                             }
                             NSInteger indexRightTwo = page + 2;
                             if ([_pagesAddedDictionary[@(indexRightTwo).stringValue] integerValue] == indexRightTwo) {
-                                NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                                [mPageAddedDictionary removeObjectForKey:@(indexRightTwo).stringValue];
-                                _pagesAddedDictionary = mPageAddedDictionary;
-                                
+
+                                [_pagesAddedDictionary removeObjectForKey:@(indexRightTwo)];
+
                                 [self removePageAtIndex:indexRightTwo];
                             }
                         }
@@ -579,9 +587,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         
         
         // Empty out pages in dictionary
-        NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-        [mPageAddedDictionary removeAllObjects];
-        _pagesAddedDictionary = mPageAddedDictionary;
+        [_pagesAddedDictionary removeAllObjects];
+
         
     }
 }
@@ -606,9 +613,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _didTapMenuItemToScroll = NO;
     
     // Empty out pages in dictionary
-    NSMutableDictionary *mPageAddedDictionary = _pagesAddedDictionary.mutableCopy;
-    [mPageAddedDictionary removeAllObjects];
-    _pagesAddedDictionary = mPageAddedDictionary;
+    [_pagesAddedDictionary removeAllObjects];
+
 }
 
 
@@ -671,12 +677,12 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         } else if (_menuItemWidthBasedOnTitleTextWidth) {
             // Base case being first item
             CGFloat menuItemLeftBound = 0.0;
-            CGFloat menuItemRightBound = [_menuItemWidths[0] floatValue] + _menuMargin + (_menuMargin / 2);
+            CGFloat menuItemRightBound = [_mutableMenuItemWidths[0] floatValue] + _menuMargin + (_menuMargin / 2);
             
             if (!(tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound)) {
                 for (NSInteger i = 1; i<_controllerArray.count - 1; i++) {
                     menuItemLeftBound = menuItemRightBound + 1.0;
-                    menuItemRightBound = menuItemLeftBound + [_menuItemWidths[i] floatValue] + _menuMargin;
+                    menuItemRightBound = menuItemLeftBound + [_mutableMenuItemWidths[i] floatValue] + _menuMargin;
                     
                     if (tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound) {
                         itemIndex = i;
@@ -711,9 +717,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                     for (NSInteger i=smallerIndex + 1; i< largerIndex; i++) {
                         if ([_pagesAddedDictionary[@(i).stringValue] integerValue] != i) {
                             [self addPageAtIndex:i];
-                            NSMutableDictionary *mPagesAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                            mPagesAddedDictionary[@(i).stringValue] = @(i);
-                            _pagesAddedDictionary = mPagesAddedDictionary;
+                            _pagesAddedDictionary[@(i).stringValue] = @(i);
                         }
                     }
                 }
@@ -721,9 +725,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 [self addPageAtIndex:itemIndex];
                 
                 // Add page from which tap is initiated so it can be removed after tap is done
-                NSMutableDictionary *mPagesAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                mPagesAddedDictionary[@(_lastPageIndex).stringValue] = @(_lastPageIndex);
-                _pagesAddedDictionary = mPagesAddedDictionary;
+                _pagesAddedDictionary[@(_lastPageIndex).stringValue] = @(_lastPageIndex);
+                
             }
             
             // Move controller scroll view when tapping menu item
@@ -785,7 +788,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _controllerScrollView.contentSize = CGSizeMake(self.view.frame.size.width * (CGFloat)_controllerArray.count, self.view.frame.size.height - _menuHeight);
     
     BOOL oldCurrentOrientationIsPortrait = _currentOrientationIsPortrait;
-
+    
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     _currentOrientationIsPortrait = UIInterfaceOrientationIsPortrait(orientation);
     
@@ -804,7 +807,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             // Resize menu items
             NSInteger index = 0;
             
-            for (MenuItemView *item in _menuItems) {
+            for (MenuItemView *item in _mutableMenuItems) {
                 item.frame = CGRectMake(self.view.frame.size.width / (CGFloat)_controllerArray.count * (CGFloat)index, 0.0, self.view.frame.size.width / (CGFloat)_controllerArray.count, _menuHeight);
                 if (item.titleLabel) {
                     item.titleLabel.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width / (CGFloat)_controllerArray.count, _menuHeight);
@@ -828,7 +831,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             // Recalculate frame for menu items if centered
             NSInteger index = 0;
             
-            for (MenuItemView *item in _menuItems) {
+            for (MenuItemView *item in _mutableMenuItems) {
                 if (index == 0) {
                     item.frame = CGRectMake(_startingMenuMargin + _menuMargin, 0.0, _menuItemWidth, _menuHeight);
                 } else {
@@ -891,19 +894,15 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 for (NSInteger i=smallerIndex + 1; i<largerIndex; i++) {
                     if ([_pagesAddedDictionary[@(i).stringValue] integerValue] != i) {
                         [self addPageAtIndex:i];
-                        NSMutableDictionary *mPagesAddedDictionary = _pagesAddedDictionary.mutableCopy;
-                        mPagesAddedDictionary[@(i).stringValue] = @(i);
-                        _pagesAddedDictionary = mPagesAddedDictionary;
+                        _pagesAddedDictionary[@(i).stringValue] = @(i);
                     }
                 }
             }
-        [self addPageAtIndex:index];
+            [self addPageAtIndex:index];
             
             // Add page from which tap is initiated so it can be removed after tap is done
-            NSMutableDictionary *mPagesAddedDictionary = _pagesAddedDictionary.mutableCopy;
-            mPagesAddedDictionary[@(_lastPageIndex).stringValue] = @(_lastPageIndex);
-            _pagesAddedDictionary = mPagesAddedDictionary;
-
+            _pagesAddedDictionary[@(_lastPageIndex).stringValue] = @(_lastPageIndex);
+            
         }
         
         // Move controller scroll view when tapping menu item
@@ -925,6 +924,18 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     return YES;
+}
+
+
+// MARK: Getter 
+- (NSArray *)menuItems
+{
+    return _mutableMenuItems;
+}
+
+- (NSArray *)menuItemWidths
+{
+    return _mutableMenuItemWidths;
 }
 
 @end
