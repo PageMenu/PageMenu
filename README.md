@@ -50,11 +50,21 @@ First you will have to create a view controller that is supposed to serve as the
 
 **2)  Add a property for CAPSPageMenu in your base view controller**
 
+Swift
+
 ```swift
 var pageMenu : CAPSPageMenu?
 ```
 
+Objective-C
+
+```objectivec
+@property (nonatomic) CAPSPageMenu *pagemenu;
+```
+
 **3)  Add the following code in the viewDidLoad function in your view controller**
+
+Swift
 
 ```swift
 // Array to keep track of controllers in page menu
@@ -84,6 +94,8 @@ pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0,
 // or use pageMenu controller in you view hierachy as desired
 self.view.addSubview(pageMenu!.view)
 ```
+
+Objective-C
 
 ```objectivec
 // Array to keep track of controllers in page menu
@@ -117,17 +129,38 @@ _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:
 
 In order to use the delegate methods first set the delegate of page menu to the parent view controller when setting it up
 
+Swift
+
 ```swift
 // Optional delegate 
 pageMenu!.delegate = self
 ```
 
+Objective-C
+
+```objectivec
+// Optional delegate 
+pageMenu.delegate = self;
+```
+
+
 After that you will be able to set up the following delegate methods inside of your parent view controller
+
+Swift
 
 ```swift
 func willMoveToPage(controller: UIViewController, index: Int){}
 
 func didMoveToPage(controller: UIViewController, index: Int){}
+```
+
+Objective-C
+
+```objectivec
+// Optional delegate 
+- (void)willMoveToPage:(UIViewController *)controller index:(NSInteger)index {}
+
+- (void)didMoveToPage:(UIViewController *)controller index:(NSInteger)index {}
 ```
 
 **5)  You should now be ready to use PageMenu!! 🎉**
@@ -261,7 +294,7 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 ## Future Work
 
 - [x] Screen rotation support
-- [ ] Objective-C version
+- [x] Objective-C version
 - [ ] Infinite scroll option
 - [ ] More customization options
 
