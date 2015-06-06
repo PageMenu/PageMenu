@@ -1,10 +1,18 @@
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuHeader3.png" alt="PageMenuHeader">
 ========
 
+[![Version](https://img.shields.io/cocoapods/v/PageMenu.svg?style=flat)](http://cocoapods.org/pods/PageMenu)
+[![License](https://img.shields.io/cocoapods/l/PageMenu.svg?style=flat)](http://cocoapods.org/pods/PageMenu)
+[![Platform](https://img.shields.io/cocoapods/p/PageMenu.svg?style=flat)](http://cocoapods.org/pods/PageMenu)
+
+**Objective-C version in Beta**
+
 ## Latest Update
 
-**1.2.6 Release (05/26/2015)**
-* Options are now type-safe - Thanks to [masarusanjp](https://github.com/masarusanjp)
+**1.2.7 Release (06/05/2015)**
+* CocoaPods now has current version
+* Objective-C version in Beta
+* Demos updated
 
 
 ## Description
@@ -30,7 +38,7 @@ A fully customizable and flexible paging menu controller built from other view c
 
 **Cocoa Pods**
 
-PageMenu is available through [CocoaPods](http://cocoapods.org). !! Not currently on latest version!!
+PageMenu is available through [CocoaPods](http://cocoapods.org). !! Swift only !!
 
 To install add the following line to your Podfile:
 
@@ -88,7 +96,7 @@ var parameters: [CAPSPageMenuOption] = [
 ]
 
 // Initialize page menu with controller array, frame, and optional parameters
-pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), options: parameters)
+pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
 
 // Lastly add page menu as subview of base view controller view
 // or use pageMenu controller in you view hierachy as desired
@@ -319,6 +327,9 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 * Swift 1.2 Support
 
 ## Update Log
+
+**1.2.6 Release (05/26/2015)**
+* Options are now type-safe - Thanks to [masarusanjp](https://github.com/masarusanjp)
 
 **1.2.5 Release (04/14/2015)**
 * Support for Swift 1.2 - Thanks to [Chao Ruan (rcgary)](https://github.com/rcgary)
