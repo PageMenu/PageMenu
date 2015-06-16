@@ -113,7 +113,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var bottomMenuHairlineColor : UIColor = UIColor.whiteColor()
     public var menuItemSeparatorColor : UIColor = UIColor.lightGrayColor()
     
-    public var menuItemFont : UIFont = UIFont(name: "HelveticaNeue", size: 15.0)!
+    public var menuItemFont : UIFont = UIFont.systemFontOfSize(15.0)!
     public var menuItemSeparatorPercentageHeight : CGFloat = 0.2
     public var menuItemSeparatorWidth : CGFloat = 0.5
     public var menuItemSeparatorRoundEdges : Bool = false

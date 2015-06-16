@@ -196,7 +196,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _bottomMenuHairlineColor      = [UIColor whiteColor];
     _menuItemSeparatorColor       = [UIColor lightGrayColor];
     
-    _menuItemFont = [UIFont fontWithName:@"HelveticaNeue" size:15.0];
+    _menuItemFont = [UIFont systemFontOfSize:15.0];
     _menuItemSeparatorPercentageHeight = 0.2;
     _menuItemSeparatorWidth            = 0.5;
     _menuItemSeparatorRoundEdges       = NO;
