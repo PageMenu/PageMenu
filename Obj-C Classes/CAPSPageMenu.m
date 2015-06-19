@@ -516,7 +516,9 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                         _lastPageIndex = _currentPageIndex;
                         _currentPageIndex = page;
                         
-                        if ([_pagesAddedDictionary[@(page).stringValue] integerValue] != page && page < _controllerArray.count && page >= 0 ){
+                        
+                        NSNumber *addedPageNumber = _pagesAddedDictionary[@(page).stringValue];
+                        if (![addedPageNumber.stringValue isEqualToString: @(page).stringValue] && page < _controllerArray.count && page >= 0 ){
                             [self addPageAtIndex:page];
                             _pagesAddedDictionary[@(page).stringValue] = @(page);
                             
