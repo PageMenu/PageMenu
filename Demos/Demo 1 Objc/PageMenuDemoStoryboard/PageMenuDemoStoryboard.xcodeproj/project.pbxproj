@@ -78,8 +78,8 @@
 		9347A8461B21869700C9766A /* PageMenuDemoStoryboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PageMenuDemoStoryboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9347A84B1B21869700C9766A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9347A84C1B21869700C9766A /* PageMenuDemoStoryboardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageMenuDemoStoryboardTests.m; sourceTree = "<group>"; };
-		9347A85A1B21872300C9766A /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAPSPageMenu.h; path = ../../../../Classes/CAPSPageMenu.h; sourceTree = "<group>"; };
-		9347A85B1B21872300C9766A /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CAPSPageMenu.m; path = ../../../../Classes/CAPSPageMenu.m; sourceTree = "<group>"; };
+		9347A85A1B21872300C9766A /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAPSPageMenu.h; path = "../../../../Obj-C Classes/CAPSPageMenu.h"; sourceTree = "<group>"; };
+		9347A85B1B21872300C9766A /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CAPSPageMenu.m; path = "../../../../Obj-C Classes/CAPSPageMenu.m"; sourceTree = "<group>"; };
 		9347A85E1B2189DC00C9766A /* FriendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendTableViewCell.xib; sourceTree = "<group>"; };
 		9347A85F1B2189DC00C9766A /* happy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = happy.png; sourceTree = "<group>"; };
 		9347A8601B2189DC00C9766A /* hungry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hungry.png; sourceTree = "<group>"; };
@@ -543,6 +543,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
 				INFOPLIST_FILE = PageMenuDemoStoryboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -553,6 +554,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
 				INFOPLIST_FILE = PageMenuDemoStoryboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -612,6 +614,7 @@
 				9347A8521B21869700C9766A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9347A8531B21869700C9766A /* Build configuration list for PBXNativeTarget "PageMenuDemoStoryboardTests" */ = {
 			isa = XCConfigurationList;
@@ -620,6 +623,7 @@
 				9347A8551B21869700C9766A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
