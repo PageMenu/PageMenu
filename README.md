@@ -9,10 +9,9 @@
 
 ## Latest Update
 
-**1.2.7 Release (06/05/2015)**
-* CocoaPods now has current version
-* Objective-C version in Beta
-* Demos updated
+**1.2.8 Release (06/22/2015)**
+* Bug fixes
+* Obj-c more stable
 
 
 ## Description
@@ -327,6 +326,11 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 * Swift 1.2 Support
 
 ## Update Log
+
+**1.2.7 Release (06/05/2015)**
+* CocoaPods now has current version
+* Objective-C version in Beta
+* Demos updated
 
 **1.2.6 Release (05/26/2015)**
 * Options are now type-safe - Thanks to [masarusanjp](https://github.com/masarusanjp)
