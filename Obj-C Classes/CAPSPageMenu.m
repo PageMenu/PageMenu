@@ -237,7 +237,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     [self.view addSubview:_controllerScrollView];
     
     NSArray *controllerScrollView_constraint_H = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controllerScrollView]|" options:0 metrics:nil views:viewsDictionary];
-    NSString *controllerScrollView_constraint_V_Format = [NSString stringWithFormat:@"V:|-[controllerScrollView]|"];
+    NSString *controllerScrollView_constraint_V_Format = [NSString stringWithFormat:@"V:|-0-[controllerScrollView]|"];
     NSArray *controllerScrollView_constraint_V = [NSLayoutConstraint constraintsWithVisualFormat:controllerScrollView_constraint_V_Format options:0 metrics:nil views:viewsDictionary];
     
     [self.view addConstraints:controllerScrollView_constraint_H];
