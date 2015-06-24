@@ -302,7 +302,8 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 
 - [x] Screen rotation support
 - [x] Objective-C version
-- [ ] Infinite scroll option
+- [ ] Infinite scroll option / Wrap items
+- [ ] Carthage support
 - [ ] More customization options
 
 ## Credits
