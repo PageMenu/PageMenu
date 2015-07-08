@@ -507,10 +507,14 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                             if didScrollAlready {
                                 var newScrollDirection : CAPSPageMenuScrollDirection = .Other
                                 
-                                if (CGFloat(startingPageForScroll) * scrollView.frame.width > scrollView.contentOffset.x) {
-                                    newScrollDirection = .Right
-                                } else if (CGFloat(startingPageForScroll) * scrollView.frame.width < scrollView.contentOffset.x) {
-                                    newScrollDirection = .Left
+                                if (lastControllerScrollViewContentOffset > scrollView.contentOffset.x) {
+                                    if currentPageIndex != controllerArray.count - 1 {
+                                        newScrollDirection = .Right
+                                    }
+                                } else if (lastControllerScrollViewContentOffset < scrollView.contentOffset.x) {
+                                    if currentPageIndex != 0 {
+                                        newScrollDirection = .Left
+                                    }
                                 }
                                 
                                 if newScrollDirection != .Other {
@@ -579,34 +583,42 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                         var width : CGFloat = controllerScrollView.frame.size.width;
                         var page : Int = Int((controllerScrollView.contentOffset.x + (0.5 * width)) / width)
                         
-                        // Update page if changed
-                        if page != currentPageIndex {
-                            lastPageIndex = currentPageIndex
-                            currentPageIndex = page
-                            
-                            if pagesAddedDictionary[page] != page && page < controllerArray.count && page >= 0 {
-                                addPageAtIndex(page)
-                                pagesAddedDictionary[page] = page
+                        var pageWillAppear : Int = Int((controllerScrollView.contentOffset.x + (1 * width)) / width)
+                        if lastScrollDirection == .Right {
+                            pageWillAppear = Int((controllerScrollView.contentOffset.x + (0.0 * width)) / width)
+                        }
+                        
+                        // Add/Remove page if pageview will appear
+                        if pageWillAppear != currentPageIndex {
+                            if pagesAddedDictionary[pageWillAppear] != pageWillAppear && pageWillAppear < controllerArray.count && pageWillAppear >= 0 {
+                                addPageAtIndex(pageWillAppear)
+                                pagesAddedDictionary[pageWillAppear] = pageWillAppear
                             }
                             
                             if !didTapMenuItemToScroll {
                                 // Add last page to pages dictionary to make sure it gets removed after scrolling
-                                if pagesAddedDictionary[lastPageIndex] != lastPageIndex {
-                                    pagesAddedDictionary[lastPageIndex] = lastPageIndex
+                                if pagesAddedDictionary[currentPageIndex] != currentPageIndex {
+                                    pagesAddedDictionary[currentPageIndex] = currentPageIndex
                                 }
                                 
                                 // Make sure only up to 3 page views are in memory when fast scrolling, otherwise there should only be one in memory
-                                var indexLeftTwo : Int = page - 2
+                                var indexLeftTwo : Int = pageWillAppear - 2
                                 if pagesAddedDictionary[indexLeftTwo] == indexLeftTwo {
                                     pagesAddedDictionary.removeValueForKey(indexLeftTwo)
                                     removePageAtIndex(indexLeftTwo)
                                 }
-                                var indexRightTwo : Int = page + 2
+                                var indexRightTwo : Int = pageWillAppear + 2
                                 if pagesAddedDictionary[indexRightTwo] == indexRightTwo {
                                     pagesAddedDictionary.removeValueForKey(indexRightTwo)
                                     removePageAtIndex(indexRightTwo)
                                 }
                             }
+                        }
+                        
+                        // Update page if changed
+                        if page != currentPageIndex {
+                            lastPageIndex = currentPageIndex
+                            currentPageIndex = page
                         }
                         
                         // Move selection indicator view when swiping
@@ -632,25 +644,56 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
     }
     
+    private func handleScrollViewDidEndScroll(){
+        // Call didMoveToPage delegate function
+        var currentController = controllerArray[currentPageIndex]
+        delegate?.didMoveToPage?(currentController, index: currentPageIndex)
+        
+        // Remove all but current page after decelerating
+        for key in pagesAddedDictionary.keys {
+            if key != currentPageIndex {
+                removePageAtIndex(key)
+            }
+        }
+        
+        didScrollAlready = false
+        startingPageForScroll = currentPageIndex
+        
+        
+        // Empty out pages in dictionary
+        pagesAddedDictionary.removeAll(keepCapacity: false)
+        
+        // Load current page if not loaded(just in case)
+        if (pagesAddedDictionary[currentPageIndex] == nil) {
+            addPageAtIndex(currentPageIndex)
+            pagesAddedDictionary[currentPageIndex] = currentPageIndex
+        }
+        
+        // Load right page
+        if currentPageIndex != controllerArray.count - 1 {
+            addPageAtIndex(currentPageIndex+1)
+            pagesAddedDictionary[currentPageIndex+1] = currentPageIndex+1
+        }
+        
+        // Load left page
+        if currentPageIndex != 0 {
+            addPageAtIndex(currentPageIndex-1)
+            pagesAddedDictionary[currentPageIndex-1] = currentPageIndex-1
+        }
+        
+    }
+    
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         if scrollView.isEqual(controllerScrollView) {
-            // Call didMoveToPage delegate function
-            var currentController = controllerArray[currentPageIndex]
-            delegate?.didMoveToPage?(currentController, index: currentPageIndex)
-            
-            // Remove all but current page after decelerating
-            for key in pagesAddedDictionary.keys {
-                if key != currentPageIndex {
-                    removePageAtIndex(key)
-                }
+            self.handleScrollViewDidEndScroll()
+        }
+    }
+    
+    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool){
+        if !decelerate {
+            if scrollView.isEqual(controllerScrollView) {
+                self.handleScrollViewDidEndScroll()
             }
-            
-            didScrollAlready = false
-            startingPageForScroll = currentPageIndex
-            
-            
-            // Empty out pages in dictionary
-            pagesAddedDictionary.removeAll(keepCapacity: false)
         }
     }
     
