@@ -234,7 +234,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+	
+	// MARK: - Container View Controller
+	public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+		return true
+	}
+	
+	public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
+		return true
+	}
+	
     // MARK: - UI Setup
     
     func setUpUserInterface() {
