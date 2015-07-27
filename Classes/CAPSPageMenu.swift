@@ -821,7 +821,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         delegate?.willMoveToPage?(currentController, index: index)
         
         var newVC = controllerArray[index]
-                
+		
         newVC.view.frame = CGRectMake(self.view.frame.width * CGFloat(index), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
         
         self.addChildViewController(newVC)
@@ -835,9 +835,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         oldVC.willMoveToParentViewController(nil)
         
         oldVC.view.removeFromSuperview()
-        oldVC.removeFromParentViewController()
-        
-        oldVC.didMoveToParentViewController(nil)
+        oldVC.removeFromParentViewController()        
     }
     
     
