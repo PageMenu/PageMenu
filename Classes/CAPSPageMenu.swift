@@ -821,9 +821,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         delegate?.willMoveToPage?(currentController, index: index)
         
         var newVC = controllerArray[index]
-        
-        newVC.willMoveToParentViewController(self)
-        
+                
         newVC.view.frame = CGRectMake(self.view.frame.width * CGFloat(index), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
         
         self.addChildViewController(newVC)
