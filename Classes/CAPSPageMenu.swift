@@ -332,9 +332,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         for controller in controllerArray {
             if index == 0.0 {
                 // Add first two controllers to scrollview and as child view controller
-                controller.viewWillAppear(true)
                 addPageAtIndex(0)
-                controller.viewDidAppear(true)
             }
             
             // Set up menu item for menu scroll view
@@ -835,7 +833,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         oldVC.willMoveToParentViewController(nil)
         
         oldVC.view.removeFromSuperview()
-        oldVC.removeFromParentViewController()        
+        oldVC.removeFromParentViewController()
     }
     
     
