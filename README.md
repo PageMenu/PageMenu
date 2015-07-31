@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/PageMenu.svg?style=flat)](http://cocoapods.org/pods/PageMenu)
 [![License](https://img.shields.io/cocoapods/l/PageMenu.svg?style=flat)](http://cocoapods.org/pods/PageMenu)
 [![Platform](https://img.shields.io/cocoapods/p/PageMenu.svg?style=flat)](http://cocoapods.org/pods/PageMenu)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 **Objective-C version in Beta**
 
@@ -35,13 +36,19 @@ A fully customizable and flexible paging menu controller built from other view c
 
 ## Installation
 
-**Cocoa Pods**
+**CocoaPods**
 
 PageMenu is available through [CocoaPods](http://cocoapods.org). !! Swift only !!
 
 To install add the following line to your Podfile:
 
     pod 'PageMenu'
+
+**Carthage**
+
+PageMenu is also available through [Carthage](https://github.com/carthage/carthage).  Append this line to Cartfile and follow [this instruction](https://github.com/carthage/carthage#adding-frameworks-to-an-application).
+
+````github "uacaps/PageMenu"```
 
 **Manual Installation**
 
