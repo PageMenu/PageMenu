@@ -678,7 +678,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             CGFloat menuItemRightBound = [_mutableMenuItemWidths[0] floatValue] + _menuMargin + (_menuMargin / 2);
             
             if (!(tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound)) {
-                for (NSInteger i = 1; i<_controllerArray.count - 1; i++) {
+                for (NSInteger i = 1; i<=_controllerArray.count - 1; i++) {
                     menuItemLeftBound = menuItemRightBound + 1.0;
                     menuItemRightBound = menuItemLeftBound + [_mutableMenuItemWidths[i] floatValue] + _menuMargin;
                     
