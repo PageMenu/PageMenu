@@ -246,7 +246,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         controllerScrollView.alwaysBounceHorizontal = enableHorizontalBounce
         controllerScrollView.bounces = enableHorizontalBounce
         
-        controllerScrollView.frame = CGRectMake(0.0, menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
+        controllerScrollView.frame = CGRectMake(0.0, menuHeight, self.view.frame.width, self.view.frame.height)
         
         self.view.addSubview(controllerScrollView)
         
