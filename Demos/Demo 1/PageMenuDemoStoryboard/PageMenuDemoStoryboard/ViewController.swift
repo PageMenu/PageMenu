@@ -60,8 +60,11 @@ class ViewController: UIViewController {
         
         // Initialize scroll menu
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
-        
+
+		self.addChildViewController(pageMenu!)
         self.view.addSubview(pageMenu!.view)
+		
+		pageMenu!.didMoveToParentViewController(self)
     }
     
     func didTapGoToLeft() {
@@ -79,6 +82,15 @@ class ViewController: UIViewController {
             pageMenu!.moveToPage(currentIndex + 1)
         }
     }
+	
+	// MARK: - Container View Controller
+	override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+		return true
+	}
+	
+	override func shouldAutomaticallyForwardRotationMethods() -> Bool {
+		return true
+	}
 }
 
 
