@@ -46,7 +46,8 @@ class ViewController: UIViewController {
         // Customize menu (Optional)
         var parameters: [CAPSPageMenuOption] = [
             .ScrollMenuBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
-            .ViewBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
+//            .ViewBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
+            .ViewBackgroundColor(UIColor.redColor()),
             .SelectionIndicatorColor(UIColor.orangeColor()),
             .AddBottomMenuHairline(false),
             .MenuItemFont(UIFont(name: "HelveticaNeue", size: 35.0)!),
