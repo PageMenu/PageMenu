@@ -48,7 +48,9 @@ To install add the following line to your Podfile:
 
 PageMenu is also available through [Carthage](https://github.com/carthage/carthage).  Append this line to Cartfile and follow [this instruction](https://github.com/carthage/carthage#adding-frameworks-to-an-application).
 
-````github "uacaps/PageMenu"```
+```
+github "uacaps/PageMenu"
+```
 
 **Manual Installation**
 
