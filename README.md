@@ -309,7 +309,7 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 
 ## Credits
 
-[Niklas Fahl (fahlout)](http://bit.ly/fahlout) - iOS Developer
+[Niklas Fahl (fahlout)](http://bit.ly/fahlout) - iOS Developer ([LinkedIn](http://bit.ly/linked-in-niklas-fahl))
 
 **Thank you for your contributions:**
 
