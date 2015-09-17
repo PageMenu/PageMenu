@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C797E12D1BAB752600D2808F"
-               BuildableName = "PageMenu.app"
-               BlueprintName = "PageMenu"
+               BlueprintIdentifier = "C797E14A1BAB764400D2808F"
+               BuildableName = "PageMenuFramework.framework"
+               BlueprintName = "PageMenuFramework"
                ReferencedContainer = "container:PageMenu.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C797E12D1BAB752600D2808F"
-            BuildableName = "PageMenu.app"
-            BlueprintName = "PageMenu"
-            ReferencedContainer = "container:PageMenu.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -51,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C797E12D1BAB752600D2808F"
-            BuildableName = "PageMenu.app"
-            BlueprintName = "PageMenu"
+            BlueprintIdentifier = "C797E14A1BAB764400D2808F"
+            BuildableName = "PageMenuFramework.framework"
+            BlueprintName = "PageMenuFramework"
             ReferencedContainer = "container:PageMenu.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C797E12D1BAB752600D2808F"
-            BuildableName = "PageMenu.app"
-            BlueprintName = "PageMenu"
+            BlueprintIdentifier = "C797E14A1BAB764400D2808F"
+            BuildableName = "PageMenuFramework.framework"
+            BlueprintName = "PageMenuFramework"
             ReferencedContainer = "container:PageMenu.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
