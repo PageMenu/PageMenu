@@ -8,6 +8,26 @@
 
 **Objective-C version in Beta**
 
+####Featured In
+<table>
+ <tr>
+  <td align="center">
+  <a href="https://itunes.apple.com/us/app/funny-or-die/id299546679?mt=8"><img src="http://a2.mzstatic.com/us/r30/Purple3/v4/7b/34/8a/7b348a8b-54d9-e1b2-f50b-a447f6dff4be/icon100x100.jpeg" /></a>
+  </td>
+  <td align="center">
+  <a href="https://itunes.apple.com/us/app/alabama-mvd/id399424940?mt=8"><img src="http://a1.mzstatic.com/us/r30/Purple7/v4/e8/f3/df/e8f3df11-5807-9f4c-9725-afb84b461804/icon100x100.png" /></a>
+  </td>
+  <td align="center">
+  <a href="https://itunes.apple.com/gb/app/healthful-work-smart-not-hard!/id970747415?mt="><img src="http://a4.mzstatic.com/eu/r30/Purple7/v4/e9/d5/53/e9d5538d-056a-2a69-f655-f55e44066a02/icon100x100.jpeg" /></a>
+  </td>
+  <tr>
+   <td align="center">Funny Or Die</td>
+   <td align="center">Alabama MVD</td>
+   <td align="center">HEALTHFUL</td>
+  </tr>
+ </tr>
+</table>
+
 ## Latest Update
 
 **1.2.8 Release (06/22/2015)**
