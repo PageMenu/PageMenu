@@ -21,9 +21,14 @@
   <a href="https://itunes.apple.com/gb/app/healthful-work-smart-not-hard!/id970747415?mt="><img src="http://a4.mzstatic.com/eu/r30/Purple7/v4/e9/d5/53/e9d5538d-056a-2a69-f655-f55e44066a02/icon100x100.jpeg" /></a>
   </td>
   <tr>
-   <td align="center">Funny Or Die</td>
-   <td align="center">Alabama MVD</td>
-   <td align="center">HEALTHFUL</td>
+   <td align="center"><b>Funny Or Die</b></td>
+   <td align="center"><b>Alabama MVD</b></td>
+   <td align="center"><b>HEALTHFUL</b></td>
+  </tr>
+  <tr>
+   <td align="center">Funny Or Die, Inc.</td>
+   <td align="center">CAPS</td>
+   <td align="center">Junaid Younus</td>
   </tr>
  </tr>
 </table>
@@ -323,10 +328,7 @@ There are many ways you are able to customize page menu for your needs and there
 
 ## Apps using PageMenu
 
-Please let me know if your app in the AppStore uses this library so I can add your app to this list.
-
-* [Alabama MVD](http://bit.ly/AlabamaMVD) by CAPS
-* [HEALTHFUL](https://itunes.apple.com/gb/app/healthful-work-smart-not-hard!/id970747415?mt=8) by Junaid Younus
+Please let me know if your app in the AppStore uses this library so I can add your app to the list of apps featuring PageMenu.
 
 ## Future Work
 
