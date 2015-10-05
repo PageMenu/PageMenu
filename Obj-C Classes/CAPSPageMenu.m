@@ -23,7 +23,8 @@
         _menuItemSeparator.layer.cornerRadius = _menuItemSeparator.frame.size.width / 2;
     }
     
-    _menuItemSeparator.hidden = YES;
+    _menuItemSeparator.hidden = NO;
+    _menuItemSeparator.backgroundColor = menuItemSeparatorColor;
     [self addSubview:_menuItemSeparator];
     [self addSubview:_titleLabel];
 }
