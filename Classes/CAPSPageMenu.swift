@@ -777,9 +777,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), self.view.frame.height - menuHeight)
 
         let oldCurrentOrientationIsPortrait : Bool = currentOrientationIsPortrait
-        currentOrientationIsPortrait = UIDevice.currentDevice().orientation.isPortrait
+        currentOrientationIsPortrait = UIApplication.sharedApplication().statusBarOrientation.isPortrait
         
-        if (oldCurrentOrientationIsPortrait && UIDevice.currentDevice().orientation.isLandscape) || (!oldCurrentOrientationIsPortrait && UIDevice.currentDevice().orientation.isPortrait) {
+        if (oldCurrentOrientationIsPortrait && UIApplication.sharedApplication().statusBarOrientation.isLandscape) || (!oldCurrentOrientationIsPortrait && UIApplication.sharedApplication().statusBarOrientation.isPortrait) {
             didLayoutSubviewsAfterRotation = true
             
             //Resize menu items if using as segmented control
