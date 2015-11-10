@@ -33,21 +33,21 @@ class ViewController: UIViewController {
         // Initialize view controllers to display and place in array
         var controllerArray : [UIViewController] = []
         
-        var controller1 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
+        let controller1 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
         controller1.title = "FRIENDS"
         controllerArray.append(controller1)
-        var controller2 : TestCollectionViewController = TestCollectionViewController(nibName: "TestCollectionViewController", bundle: nil)
+        let controller2 : TestCollectionViewController = TestCollectionViewController(nibName: "TestCollectionViewController", bundle: nil)
         controller2.title = "MOOD"
         controllerArray.append(controller2)
-        var controller3 : TestViewController = TestViewController(nibName: "TestViewController", bundle: nil)
+        let controller3 : TestViewController = TestViewController(nibName: "TestViewController", bundle: nil)
         controller3.title = "MUSIC"
         controllerArray.append(controller3)
-        var controller4 : TestViewController = TestViewController(nibName: "TestViewController", bundle: nil)
+        let controller4 : TestViewController = TestViewController(nibName: "TestViewController", bundle: nil)
         controller4.title = "FAVORITES"
         controllerArray.append(controller4)
         
         // Customize menu (Optional)
-        var parameters: [CAPSPageMenuOption] = [
+        let parameters: [CAPSPageMenuOption] = [
             .ScrollMenuBackgroundColor(UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0)),
             .ViewBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
             .SelectionIndicatorColor(UIColor.orangeColor()),
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
     }
     
     func didTapGoToLeft() {
-        var currentIndex = pageMenu!.currentPageIndex
+        let currentIndex = pageMenu!.currentPageIndex
         
         if currentIndex > 0 {
             pageMenu!.moveToPage(currentIndex - 1)
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
     }
     
     func didTapGoToRight() {
-        var currentIndex = pageMenu!.currentPageIndex
+        let currentIndex = pageMenu!.currentPageIndex
         
         if currentIndex < pageMenu!.controllerArray.count {
             pageMenu!.moveToPage(currentIndex + 1)
