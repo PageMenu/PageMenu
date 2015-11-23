@@ -33,7 +33,12 @@
  </tr>
 </table>
 
+
 ## Latest Update
+**1.2.8 Release (09/22/2015)**
+* Swift 2.1 for xcode 7.1
+* fix orientation bug 
+
 
 **1.2.8 Release (06/22/2015)**
 * Bug fixes
