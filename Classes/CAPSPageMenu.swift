@@ -91,7 +91,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var controllerArray : [UIViewController] = []
     var menuItems : [MenuItemView] = []
     var menuItemWidths : [CGFloat] = []
-    
+
+    public var menuScrollViewTopConstraint: NSLayoutConstraint!
     public var menuHeight : CGFloat = 34.0
     public var menuMargin : CGFloat = 15.0
     public var menuItemWidth : CGFloat = 111.0
@@ -273,10 +274,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         self.view.addSubview(menuScrollView)
         
         let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[menuScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuScrollView(\(menuHeight))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let menuScrollViewHeightConstraint = NSLayoutConstraint(item: menuScrollView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: menuHeight)
+        menuScrollViewTopConstraint = NSLayoutConstraint(item: menuScrollView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0)
         
         self.view.addConstraints(menuScrollView_constraint_H)
-        self.view.addConstraints(menuScrollView_constraint_V)
+        self.view.addConstraints([menuScrollViewHeightConstraint, menuScrollViewTopConstraint])
         
         // Add hairline to menu scroll view
         if addBottomMenuHairline {
