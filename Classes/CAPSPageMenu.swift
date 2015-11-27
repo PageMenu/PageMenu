@@ -80,6 +80,7 @@ public enum CAPSPageMenuOption {
     case ScrollAnimationDurationOnMenuItemTap(Int)
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
+    case MenuScrollViewScrollEnabled(Bool)
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -91,7 +92,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var controllerArray : [UIViewController] = []
     var menuItems : [MenuItemView] = []
     var menuItemWidths : [CGFloat] = []
-
+    
     public var menuScrollViewTopConstraint: NSLayoutConstraint!
     public var menuHeight : CGFloat = 34.0
     public var menuMargin : CGFloat = 15.0
@@ -125,6 +126,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var centerMenuItems : Bool = false
     public var enableHorizontalBounce : Bool = true
     public var hideTopMenuBar : Bool = false
+    public var menuScrollViewScrollEnabled : Bool = true
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -216,6 +218,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     centerMenuItems = value
                 case let .HideTopMenuBar(value):
                     hideTopMenuBar = value
+                case let .MenuScrollViewScrollEnabled(value):
+                    menuScrollViewScrollEnabled = value
                 }
             }
             
@@ -235,16 +239,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-	
-	// MARK: - Container View Controller
-	public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
-		return true
-	}
-	
-	public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
-		return true
-	}
-	
+    
+    // MARK: - Container View Controller
+    public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+        return true
+    }
+    
+    public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
+        return true
+    }
+    
     // MARK: - UI Setup
     
     func setUpUserInterface() {
@@ -270,6 +274,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         menuScrollView.translatesAutoresizingMaskIntoConstraints = false
         
         menuScrollView.frame = CGRectMake(0.0, 0.0, self.view.frame.width, menuHeight)
+        
+        menuScrollView.scrollEnabled = menuScrollViewScrollEnabled
         
         self.view.addSubview(menuScrollView)
         
