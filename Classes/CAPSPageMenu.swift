@@ -81,6 +81,7 @@ public enum CAPSPageMenuOption {
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
     case MenuScrollViewScrollEnabled(Bool)
+    case StartingPageIndex(Int)
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -101,6 +102,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
     public var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     var startingMenuMargin : CGFloat = 0.0
+    var startingPageIndex : Int = 0
     
     var selectionIndicatorView : UIView = UIView()
     
@@ -218,10 +220,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     centerMenuItems = value
                 case let .HideTopMenuBar(value):
                     hideTopMenuBar = value
+                case let .StartingPageIndex(value):
+                    startingPageIndex = value
                 case let .MenuScrollViewScrollEnabled(value):
                     menuScrollViewScrollEnabled = value
                 }
             }
+            
+            currentPageIndex = startingPageIndex
+            lastPageIndex = startingPageIndex
+            startingPageForScroll = startingPageIndex
             
             if hideTopMenuBar {
                 addBottomMenuHairline = false
@@ -347,9 +355,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         var index : CGFloat = 0.0
         
         for controller in controllerArray {
-            if index == 0.0 {
+            if index == CGFloat(startingPageIndex) {
                 // Add first two controllers to scrollview and as child view controller
-                addPageAtIndex(0)
+                addPageAtIndex(startingPageIndex)
             }
             
             // Set up menu item for menu scroll view
@@ -418,6 +426,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             index++
         }
         
+        if startingPageIndex > 0 && startingPageIndex < controllerArray.count {
+            controllerScrollView.setContentOffset(CGPoint(x: self.view.frame.width * CGFloat(startingPageIndex), y: self.controllerScrollView.contentOffset.y), animated: false)
+        }
+        
         // Set new content size for menu scroll view if needed
         if menuItemWidthBasedOnTitleTextWidth {
             menuScrollView.contentSize = CGSizeMake((totalMenuItemWidthIfDifferentWidths + menuMargin) + CGFloat(controllerArray.count) * menuMargin, menuHeight)
@@ -434,14 +446,19 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         var selectionIndicatorFrame : CGRect = CGRect()
         
         if useMenuLikeSegmentedControl {
-            selectionIndicatorFrame = CGRectMake(0.0, menuHeight - selectionIndicatorHeight, self.view.frame.width / CGFloat(controllerArray.count), selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRectMake(CGFloat(startingPageIndex) * self.view.frame.width / CGFloat(controllerArray.count), menuHeight - selectionIndicatorHeight, self.view.frame.width / CGFloat(controllerArray.count), selectionIndicatorHeight)
         } else if menuItemWidthBasedOnTitleTextWidth {
-            selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
+            var startingPageMenuOffset : CGFloat = 0.0
+            for i in 0...startingPageIndex {
+                startingPageMenuOffset += menuItemWidths[i]
+            }
+            selectionIndicatorFrame = CGRectMake(menuMargin + startingPageMenuOffset, menuHeight - selectionIndicatorHeight, menuItemWidths[startingPageIndex], selectionIndicatorHeight)
         } else {
+            let startingPageMenuOffset : CGFloat = (menuItemWidth + menuMargin) * CGFloat(startingPageIndex)
             if centerMenuItems  {
-                selectionIndicatorFrame = CGRectMake(startingMenuMargin + menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
+                selectionIndicatorFrame = CGRectMake(startingMenuMargin + menuMargin + startingPageMenuOffset, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
             } else {
-                selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
+                selectionIndicatorFrame = CGRectMake(menuMargin + startingPageMenuOffset, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
             }
         }
         
