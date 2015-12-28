@@ -1003,4 +1003,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             })
         }
     }
+    
+    // MARK: - Add gesture recognizer to menu
+    public func addGestureRecognizerToMenu(recognizer: UIGestureRecognizer) {
+        menuScrollView.addGestureRecognizer(recognizer)
+    }
 }
