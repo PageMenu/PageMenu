@@ -18,7 +18,7 @@
   <a href="https://itunes.apple.com/us/app/alabama-mvd/id399424940?mt=8"><img src="http://a1.mzstatic.com/us/r30/Purple7/v4/e8/f3/df/e8f3df11-5807-9f4c-9725-afb84b461804/icon100x100.png" /></a>
   </td>
   <td align="center">
-  <a href="https://itunes.apple.com/gb/app/healthful-work-smart-not-hard!/id970747415?mt="><img src="http://a4.mzstatic.com/eu/r30/Purple7/v4/e9/d5/53/e9d5538d-056a-2a69-f655-f55e44066a02/icon100x100.jpeg" /></a>
+  <a href="https://itunes.apple.com/gb/app/healthful-work-smart-not-hard!/id970747415?mt="><img src="http://a3.mzstatic.com/eu/r30/Purple69/v4/8c/16/a4/8c16a419-8671-0b0d-e951-8e3f4eeea1f9/icon100x100.png" /></a>
   </td>
   <tr>
    <td align="center"><b>Funny Or Die</b></td>
