@@ -314,7 +314,6 @@
 				TargetAttributes = {
 					9EF6E7751A44D77F001622DE = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = H928Z34ENQ;
 					};
 					9EF6E78A1A44D77F001622DE = {
 						CreatedOnToolsVersion = 6.1.1;
