@@ -82,6 +82,8 @@ public enum CAPSPageMenuOption {
     case ScrollAnimationDurationOnMenuItemTap(Int)
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
+    case LeftTitle(String)
+    case RightButton(String)
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -128,6 +130,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var centerMenuItems : Bool = false
     public var enableHorizontalBounce : Bool = true
     public var hideTopMenuBar : Bool = false
+    
+    private(set) public var leftTitle : String = ""
+    private(set) public var rightButtonText : String = ""
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -223,6 +228,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     centerMenuItems = value
                 case let .HideTopMenuBar(value):
                     hideTopMenuBar = value
+                case let .LeftTitle(value):
+                    leftTitle = value
+                case let .RightButton(value):
+                    rightButtonText = value
                 }
             }
             
@@ -242,16 +251,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-	
-	// MARK: - Container View Controller
-	public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
-		return true
-	}
-	
-	public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
-		return true
-	}
-	
+    
+    // MARK: - Container View Controller
+    public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+        return true
+    }
+    
+    public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
+        return true
+    }
+    
     // MARK: - UI Setup
     
     func setUpUserInterface() {
@@ -273,6 +282,42 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         self.view.addConstraints(controllerScrollView_constraint_H)
         self.view.addConstraints(controllerScrollView_constraint_V)
         
+        // Set up left text
+        var leftTitleWidth : Float = 0
+        if leftTitle.characters.count > 0 {
+            let label = UILabel()
+            label.text = leftTitle
+            label.textColor = selectionIndicatorColor
+            label.sizeToFit()
+            leftTitleWidth = Float(CGRectGetWidth(label.bounds))
+            
+            self.view.addSubview(label)
+            
+            let label_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[label]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+            let label_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:|[label]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+            
+            self.view.addConstraints(label_constraint_H)
+            self.view.addConstraints(label_constraint_V)
+        }
+        
+        // Set right button
+        var rightButtonWidth : Float = 0
+        if rightButtonText.characters.count > 0 {
+            let button = UIButton()
+            button.setTitle(rightButtonText, forState: .Normal)
+            button.setTitle(rightButtonText, forState: .Highlighted)
+            button.sizeToFit()
+            rightButtonWidth = Float(CGRectGetWidth(button.bounds))
+            
+            self.view.addSubview(button)
+            
+            let button_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[button]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+            let button_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:|[button]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+            
+            self.view.addConstraints(button_constraint_H)
+            self.view.addConstraints(button_constraint_V)
+        }
+        
         // Set up menu scroll view
         menuScrollView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -280,7 +325,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         
         self.view.addSubview(menuScrollView)
         
-        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[menuScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|-\(leftTitleWidth)-[menuScrollView]-\(rightButtonWidth)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuScrollView(\(menuHeight))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         
         self.view.addConstraints(menuScrollView_constraint_H)
