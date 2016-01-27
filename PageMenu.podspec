@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "PageMenu"
-  s.version      = "1.2.8"
+  s.version      = "1.2.9"
   s.summary      = "A paging menu controller built from other view controllers allowing the user to switch between any kind of view controller."
   s.homepage     = "https://github.com/uacaps/PageMenu"
   s.license      = { :type => 'UA', :file => 'LICENSE' }
