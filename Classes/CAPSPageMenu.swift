@@ -19,11 +19,15 @@
 
 import UIKit
 
-@objc public protocol CAPSPageMenuDelegate {
+public protocol CAPSPageMenuDelegate: class {
     // MARK: - Delegate functions
     
-    optional func willMoveToPage(controller: UIViewController, index: Int)
-    optional func didMoveToPage(controller: UIViewController, index: Int)
+    func willMoveToPage(controller: UIViewController, index: Int) -> Void
+    func didMoveToPage(controller: UIViewController, index: Int) -> Void
+}
+extension CAPSPageMenuDelegate {
+    func willMoveToPage(controller: UIViewController, index: Int) -> Void { return }
+    func didMoveToPage(controller: UIViewController, index: Int) -> Void { return }
 }
 
 class MenuItemView: UIView {
@@ -671,7 +675,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if scrollView.isEqual(controllerScrollView) {
             // Call didMoveToPage delegate function
             let currentController = controllerArray[currentPageIndex]
-            delegate?.didMoveToPage?(currentController, index: currentPageIndex)
+            delegate?.didMoveToPage(currentController, index: currentPageIndex)
             
             // Remove all but current page after decelerating
             for key in pagesAddedDictionary.keys {
@@ -692,7 +696,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     func scrollViewDidEndTapScrollingAnimation() {
         // Call didMoveToPage delegate function
         let currentController = controllerArray[currentPageIndex]
-        delegate?.didMoveToPage?(currentController, index: currentPageIndex)
+        delegate?.didMoveToPage(currentController, index: currentPageIndex)
         
         // Remove all but current page after decelerating
         for key in pagesAddedDictionary.keys {
@@ -853,7 +857,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     func addPageAtIndex(index : Int) {
         // Call didMoveToPage delegate function
         let currentController = controllerArray[index]
-        delegate?.willMoveToPage?(currentController, index: index)
+        delegate?.willMoveToPage(currentController, index: index)
         
         let newVC = controllerArray[index]
         
