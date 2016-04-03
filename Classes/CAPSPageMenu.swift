@@ -316,7 +316,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     func configureUserInterface() {
         // Add tap gesture recognizer to controller scroll view to recognize menu item selection
-        let menuItemTapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleMenuItemTap:"))
+        let menuItemTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CAPSPageMenu.handleMenuItemTap(_:)))
         menuItemTapGestureRecognizer.numberOfTapsRequired = 1
         menuItemTapGestureRecognizer.numberOfTouchesRequired = 1
         menuItemTapGestureRecognizer.delegate = self
@@ -843,7 +843,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 }
                 
                 let timerInterval : NSTimeInterval = Double(scrollAnimationDurationOnMenuItemTap) * 0.001
-                tapTimer = NSTimer.scheduledTimerWithTimeInterval(timerInterval, target: self, selector: "scrollViewDidEndTapScrollingAnimation", userInfo: nil, repeats: false)
+                tapTimer = NSTimer.scheduledTimerWithTimeInterval(timerInterval, target: self, selector: #selector(CAPSPageMenu.scrollViewDidEndTapScrollingAnimation), userInfo: nil, repeats: false)
             }
         }
     }
@@ -905,7 +905,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     item.titleLabel!.frame = CGRectMake(0.0, 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
                     item.menuItemSeparator!.frame = CGRectMake(item.frame.width - (menuItemSeparatorWidth / 2), item.menuItemSeparator!.frame.origin.y, item.menuItemSeparator!.frame.width, item.menuItemSeparator!.frame.height)
                     
-                    index++
+                    index += 1
                 }
             } else if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {
                 self.configureMenuItemWidthBasedOnTitleTextWidthAndCenterMenuItems()
@@ -931,7 +931,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                         item.frame = CGRectMake(menuItemWidth * CGFloat(index) + menuMargin * CGFloat(index + 1) + startingMenuMargin, 0.0, menuItemWidth, menuHeight)
                     }
                     
-                    index++
+                    index += 1
                 }
             }
             
