@@ -47,7 +47,8 @@
                                  CAPSPageMenuOptionMenuItemFont: [UIFont fontWithName:@"HelveticaNeue" size:13.0],
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
                                  CAPSPageMenuOptionMenuItemWidth: @(90.0),
-                                 CAPSPageMenuOptionCenterMenuItems: @(YES)
+                                 CAPSPageMenuOptionCenterMenuItems: @(YES),
+                                 CAPSPageMenuOptionSelectionIndicatorY: @(0)
                                  };
 
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
