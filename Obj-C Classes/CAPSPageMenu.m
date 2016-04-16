@@ -72,6 +72,7 @@ typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
 @implementation CAPSPageMenu
 
 NSString * const CAPSPageMenuOptionSelectionIndicatorHeight             = @"selectionIndicatorHeight";
+NSString * const CAPSPageMenuOptionSelectionIndicatorWidth              = @"selectionIndicatorWidth";
 NSString * const CAPSPageMenuOptionSelectionIndicatorY                  = @"selectionIndicatorY";
 NSString * const CAPSPageMenuOptionMenuItemSeparatorWidth               = @"menuItemSeparatorWidth";
 NSString * const CAPSPageMenuOptionScrollMenuBackgroundColor            = @"scrollMenuBackgroundColor";
@@ -110,6 +111,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         for (NSString *key in options) {
             if ([key isEqualToString:CAPSPageMenuOptionSelectionIndicatorHeight]) {
                 _selectionIndicatorHeight = [options[key] floatValue];
+            } else if ([key isEqualToString: CAPSPageMenuOptionSelectionIndicatorWidth]) {
+                _selectionIndicatorWidth = [options[key] floatValue];
             } else if ([key isEqualToString: CAPSPageMenuOptionSelectionIndicatorY]) {
                 _selectionIndicatorY = [options[key] floatValue];
             } else if ([key isEqualToString: CAPSPageMenuOptionMenuItemSeparatorWidth]) {
@@ -409,22 +412,35 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     // Configure selection indicator view
     CGRect selectionIndicatorFrame;
     
-    CGFloat selectionIndicatorFrameY = _menuHeight - _selectionIndicatorHeight + _selectionIndicatorY;
-    
     if (_useMenuLikeSegmentedControl) {
-        selectionIndicatorFrame = CGRectMake(0.0, selectionIndicatorFrameY, self.view.frame.size.width / (CGFloat)_controllerArray.count, _selectionIndicatorHeight);
+        selectionIndicatorFrame = CGRectMake(0.0, _menuHeight - _selectionIndicatorHeight, self.view.frame.size.width / (CGFloat)_controllerArray.count, _selectionIndicatorHeight);
     } else if (_menuItemWidthBasedOnTitleTextWidth) {
-        selectionIndicatorFrame = CGRectMake(_menuMargin, selectionIndicatorFrameY, [_mutableMenuItemWidths[0] floatValue], _selectionIndicatorHeight);
+        selectionIndicatorFrame = CGRectMake(_menuMargin, _menuHeight - _selectionIndicatorHeight, [_mutableMenuItemWidths[0] floatValue], _selectionIndicatorHeight);
     } else {
         if (_centerMenuItems) {
-            selectionIndicatorFrame = CGRectMake(_startingMenuMargin + _menuMargin, selectionIndicatorFrameY, _menuItemWidth, _selectionIndicatorHeight);
+            selectionIndicatorFrame = CGRectMake(_startingMenuMargin + _menuMargin, _menuHeight - _selectionIndicatorHeight, _menuItemWidth, _selectionIndicatorHeight);
         } else {
-            selectionIndicatorFrame = CGRectMake(_menuMargin, selectionIndicatorFrameY, _menuItemWidth, _selectionIndicatorHeight);
+            selectionIndicatorFrame = CGRectMake(_menuMargin, _menuHeight - _selectionIndicatorHeight, _menuItemWidth, _selectionIndicatorHeight);
         }
     }
     
     _selectionIndicatorView = [[UIView alloc] initWithFrame:selectionIndicatorFrame];
-    _selectionIndicatorView.backgroundColor = _selectionIndicatorColor;
+    
+    CGFloat finalSelectionIndicatorWidth;
+    if (_selectionIndicatorWidth > 0.0)
+    {
+        finalSelectionIndicatorWidth = _selectionIndicatorWidth;
+    }
+    else
+    {
+        finalSelectionIndicatorWidth = _menuItemWidth;
+    }
+    
+    CGFloat indicatorX = (_menuItemWidth - finalSelectionIndicatorWidth)/2;
+    UIView *indicator = [[UIView alloc] initWithFrame:CGRectMake(indicatorX, _selectionIndicatorY, finalSelectionIndicatorWidth, _selectionIndicatorView.frame.size.height)];
+    
+    indicator.backgroundColor = _selectionIndicatorColor;
+    [_selectionIndicatorView addSubview:indicator];
     [_menuScrollView addSubview:_selectionIndicatorView];
 }
 

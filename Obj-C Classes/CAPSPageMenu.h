@@ -45,6 +45,7 @@
 @property (nonatomic) CGFloat menuMargin;
 @property (nonatomic) CGFloat menuItemWidth;
 @property (nonatomic) CGFloat selectionIndicatorHeight;
+@property (nonatomic) CGFloat selectionIndicatorWidth;
 @property (nonatomic) CGFloat selectionIndicatorY;
 @property (nonatomic) NSInteger scrollAnimationDurationOnMenuItemTap;
 
@@ -76,6 +77,7 @@
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers frame:(CGRect)frame options:(NSDictionary *)options;
 
 extern NSString * const CAPSPageMenuOptionSelectionIndicatorHeight;
+extern NSString * const CAPSPageMenuOptionSelectionIndicatorWidth;
 extern NSString * const CAPSPageMenuOptionSelectionIndicatorY;
 extern NSString * const CAPSPageMenuOptionMenuItemSeparatorWidth;
 extern NSString * const CAPSPageMenuOptionScrollMenuBackgroundColor;

@@ -48,6 +48,7 @@
                                  CAPSPageMenuOptionMenuHeight: @(40.0),
                                  CAPSPageMenuOptionMenuItemWidth: @(90.0),
                                  CAPSPageMenuOptionCenterMenuItems: @(YES),
+                                 CAPSPageMenuOptionSelectionIndicatorWidth: @(90),
                                  CAPSPageMenuOptionSelectionIndicatorY: @(0)
                                  };
 
