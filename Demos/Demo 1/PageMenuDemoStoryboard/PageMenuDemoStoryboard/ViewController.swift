@@ -56,7 +56,8 @@ class ViewController: UIViewController {
             .MenuHeight(40.0),
             .MenuItemWidth(90.0),
             .CenterMenuItems(true),
-            .SelectionIndicatorY(0.0)
+            .SelectionIndicatorY(0.0),
+            .SelectionIndicatorWidth(90.0)
         ]
         
         // Initialize scroll menu

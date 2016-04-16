@@ -59,6 +59,7 @@ class MenuItemView: UIView {
 
 public enum CAPSPageMenuOption {
     case SelectionIndicatorHeight(CGFloat)
+    case SelectionIndicatorWidth(CGFloat)
     case SelectionIndicatorY(CGFloat)
     case MenuItemSeparatorWidth(CGFloat)
     case ScrollMenuBackgroundColor(UIColor)
@@ -180,6 +181,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 switch (option) {
                 case let .SelectionIndicatorHeight(value):
                     selectionIndicatorHeight = value
+                case let .SelectionIndicatorWidth(value):
+                    selectionIndicatorWidth = value
                 case let .SelectionIndicatorY(value):
                     selectionIndicatorY = value
                 case let .MenuItemSeparatorWidth(value):
@@ -458,22 +461,32 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         // Configure selection indicator view
         var selectionIndicatorFrame : CGRect = CGRect()
         
-        let selectionIndicatorFrameY : CGFloat = menuHeight - selectionIndicatorHeight + selectionIndicatorY;
-        
         if useMenuLikeSegmentedControl {
-            selectionIndicatorFrame = CGRectMake(0.0, selectionIndicatorFrameY, self.view.frame.width / CGFloat(controllerArray.count), selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRectMake(0.0, menuHeight - selectionIndicatorHeight, self.view.frame.width / CGFloat(controllerArray.count), selectionIndicatorHeight)
         } else if menuItemWidthBasedOnTitleTextWidth {
-            selectionIndicatorFrame = CGRectMake(menuMargin, selectionIndicatorFrameY, menuItemWidths[0], selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
         } else {
             if centerMenuItems  {
-                selectionIndicatorFrame = CGRectMake(startingMenuMargin + menuMargin, selectionIndicatorFrameY, menuItemWidth, selectionIndicatorHeight)
+                selectionIndicatorFrame = CGRectMake(startingMenuMargin + menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
             } else {
-                selectionIndicatorFrame = CGRectMake(menuMargin, selectionIndicatorFrameY, menuItemWidth, selectionIndicatorHeight)
+                selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
             }
         }
         
         selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
-        selectionIndicatorView.backgroundColor = selectionIndicatorColor
+        
+        let finalSelectionIndicatorWidth : CGFloat;
+        if selectionIndicatorWidth > 0.0 {
+            finalSelectionIndicatorWidth = selectionIndicatorWidth
+        } else {
+            finalSelectionIndicatorWidth = menuItemWidth
+        }
+        
+        let indicatorX : CGFloat = (menuItemWidth - finalSelectionIndicatorWidth)/2
+        let indicator : UIView =  UIView(frame: CGRectMake(indicatorX, selectionIndicatorY, finalSelectionIndicatorWidth, selectionIndicatorView.frame.size.height))
+        indicator.backgroundColor = selectionIndicatorColor
+        selectionIndicatorView.addSubview(indicator)
+        
         menuScrollView.addSubview(selectionIndicatorView)
         
         if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {
