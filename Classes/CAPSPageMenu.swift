@@ -28,11 +28,19 @@ import UIKit
 
 public extension UIViewController {
     
-    public func menuBackgroundImage() -> UIImage! {
+    public func selectedMenuItemImage() -> UIImage! {
         return nil
     }
 
-    public func menuBackgroundImageContentMode() -> UIViewContentMode {
+    public func unselectedMenuItemImage() -> UIImage! {
+        return nil
+    }
+    
+    public func menuItemImageRect() -> CGRect {
+        return CGRectZero
+    }
+
+    public func menuItemImageContentMode() -> UIViewContentMode {
         return .Center
     }
 }
@@ -428,6 +436,13 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
             menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
             
+            if controller.menuItemImageRect() != CGRectZero {
+                menuItemView.imageView = UIImageView(frame: controller.menuItemImageRect())
+            }
+            
+            menuItemView.imageView?.image = controller.unselectedMenuItemImage()
+            menuItemView.imageView?.contentMode = controller.menuItemImageContentMode()
+            
             //**************************拡張*************************************
             menuItemView.titleLabel!.adjustsFontSizeToFitWidth = titleTextSizeBasedOnMenuItemWidth
             //**************************拡張ここまで*************************************
@@ -437,14 +452,6 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 menuItemView.titleLabel!.text = controller.title!
             } else {
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
-            }
-            
-            if let image: UIImage = controller.menuBackgroundImage() {
-                menuItemView.imageView?.image = image
-            }
-            
-            if let contentMode: UIViewContentMode = controller.menuBackgroundImageContentMode() {
-                menuItemView.imageView?.contentMode = contentMode
             }
             
             // Add separator between menu items when using as segmented control
@@ -470,6 +477,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuItems.count > 0 {
             if menuItems[currentPageIndex].titleLabel != nil {
                 menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
+                menuItems[currentPageIndex].imageView?.image = controllerArray[currentPageIndex].selectedMenuItemImage()
             }
         }
         
