@@ -26,14 +26,23 @@ import UIKit
     optional func didMoveToPage(controller: UIViewController, index: Int)
 }
 
+extension UIViewController {
+    func menuBackgroundImage() -> UIImage! {
+        return nil
+    }
+}
+
 class MenuItemView: UIView {
     // MARK: - Menu item view
     
     var titleLabel : UILabel?
+    var imageView: UIImageView?
     var menuItemSeparator : UIView?
     
     func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor) {
+        
         titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
+        imageView = UIImageView(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
         
         menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth - (separatorWidth / 2), floor(menuScrollViewHeight * ((1.0 - separatorPercentageHeight) / 2.0)), separatorWidth, floor(menuScrollViewHeight * separatorPercentageHeight)))
         menuItemSeparator!.backgroundColor = menuItemSeparatorColor
@@ -45,6 +54,7 @@ class MenuItemView: UIView {
         menuItemSeparator!.hidden = true
         self.addSubview(menuItemSeparator!)
         
+        self.addSubview(imageView!)
         self.addSubview(titleLabel!)
     }
     
@@ -422,6 +432,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 menuItemView.titleLabel!.text = controller.title!
             } else {
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
+            }
+            
+            if controller.menuBackgroundImage() != nil {
+                menuItemView.imageView?.image = controller.menuBackgroundImage()
             }
             
             // Add separator between menu items when using as segmented control
