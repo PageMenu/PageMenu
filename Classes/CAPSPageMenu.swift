@@ -440,8 +440,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 menuItemView.imageView = UIImageView(frame: controller.menuItemImageRect())
             }
             
-            menuItemView.imageView?.image = controller.unselectedMenuItemImage()
-            menuItemView.imageView?.contentMode = controller.menuItemImageContentMode()
+            menuItemView.imageView!.image = controller.unselectedMenuItemImage()
+            menuItemView.imageView!.contentMode = controller.menuItemImageContentMode()
             
             //**************************拡張*************************************
             menuItemView.titleLabel!.adjustsFontSizeToFitWidth = titleTextSizeBasedOnMenuItemWidth
