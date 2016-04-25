@@ -27,8 +27,8 @@ import UIKit
 }
 
 public extension UIViewController {
-    public func menuBackgroundImage() -> UIImage! {
-        return nil
+    public func menuBackgroundImage() -> (UIImage!, UIViewContentMode) {
+        return (nil, .Center)
     }
 }
 
@@ -434,8 +434,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
             }
             
-            if controller.menuBackgroundImage() != nil {
-                menuItemView.imageView?.image = controller.menuBackgroundImage()
+            let (image, mode) = controller.menuBackgroundImage()
+            if image != nil {
+                menuItemView.imageView?.contentMode = mode
+                menuItemView.imageView?.image = image
+                
             }
             
             // Add separator between menu items when using as segmented control
