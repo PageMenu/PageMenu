@@ -26,8 +26,8 @@ import UIKit
     optional func didMoveToPage(controller: UIViewController, index: Int)
 }
 
-extension UIViewController {
-    func menuBackgroundImage() -> UIImage! {
+public extension UIViewController {
+    public func menuBackgroundImage() -> UIImage! {
         return nil
     }
 }
