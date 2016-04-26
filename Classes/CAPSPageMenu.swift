@@ -480,7 +480,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             }
             
             if menuItems[currentPageIndex].imageView != nil {
-                menuItems[currentPageIndex].imageView!.image = selectedMenuItemImage()
+                menuItems[currentPageIndex].imageView!.image = self.controllerArray[currentPageIndex].selectedMenuItemImage()
             }
         }
         
@@ -774,8 +774,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     }
 
                     if self.menuItems[self.lastPageIndex].imageView != nil && self.menuItems[self.currentPageIndex].imageView != nil {
-                        self.menuItems[self.lastPageIndex].imageView!.image = self.unselectedMenuItemImage()
-                        self.menuItems[self.currentPageIndex].imageView!.image = self.selectedMenuItemImage()
+                        self.menuItems[self.lastPageIndex].imageView!.image = self.controllerArray[self.lastPageIndex].unselectedMenuItemImage()
+                        self.menuItems[self.currentPageIndex].imageView!.image = self.controllerArray[self.currentPageIndex].selectedMenuItemImage()
                     }
                 }
             })
