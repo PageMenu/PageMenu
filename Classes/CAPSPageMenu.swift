@@ -479,7 +479,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
             }
             
-            menuItems[currentPageIndex].imageView!.image = controllerArray[currentPageIndex].selectedMenuItemImage()
+            if menuItems[currentPageIndex].imageView != nil {
+                menuItems[currentPageIndex].imageView!.image = selectedMenuItemImage()
+            }
         }
         
         // Configure selection indicator view
@@ -769,6 +771,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                    }
+
+                    if self.menuItems[self.lastPageIndex].imageView != nil && self.menuItems[self.currentPageIndex].imageView != nil {
+                        self.menuItems[self.lastPageIndex].imageView!.image = self.unselectedMenuItemImage()
+                        self.menuItems[self.currentPageIndex].imageView!.image = self.selectedMenuItemImage()
                     }
                 }
             })
