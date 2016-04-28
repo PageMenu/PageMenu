@@ -437,7 +437,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
             
             if controller.menuItemImageRect() != CGRectZero {
-                menuItemView.imageView!.frame = controller.menuItemImageRect()
+                menuItemView.imageView = UIImageView(frame: controller.menuItemImageRect())
             }
             
             menuItemView.imageView!.image = controller.unselectedMenuItemImage()
