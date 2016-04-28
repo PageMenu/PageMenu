@@ -28,12 +28,12 @@ import UIKit
 
 public extension UIViewController {
     
-    public func selectedMenuItemImage() -> UIImage {
-        return UIImage()
+    public func selectedMenuItemImage() -> UIImage! {
+        return nil
     }
 
-    public func unselectedMenuItemImage() -> UIImage {
-        return UIImage()
+    public func unselectedMenuItemImage() -> UIImage! {
+        return nil
     }
     
     public func menuItemImageRect() -> CGRect {
@@ -479,7 +479,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
             }
             
-            menuItems[currentPageIndex].imageView!.image = controllerArray[currentPageIndex].selectedMenuItemImage()
+            if menuItems[currentPageIndex].imageView != nil {
+                menuItems[currentPageIndex].imageView!.image = controllerArray[currentPageIndex].selectedMenuItemImage()
+            }
         }
         
         // Configure selection indicator view
