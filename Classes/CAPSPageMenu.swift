@@ -477,9 +477,6 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuItems.count > 0 {
             if menuItems[currentPageIndex].titleLabel != nil {
                 menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
-            }
-            
-            if menuItems[currentPageIndex].imageView != nil {
                 menuItems[currentPageIndex].imageView!.image = controllerArray[currentPageIndex].selectedMenuItemImage()
             }
         }
