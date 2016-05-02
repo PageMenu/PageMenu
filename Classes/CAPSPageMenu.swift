@@ -1046,3 +1046,26 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
     }
 }
+
+extension CAPSPageMenu {
+    
+    public func scrollEnabledControllers(scrollEnabled: Bool) {
+        for controller in self.controllerArray {
+            if let tableController: UITableViewController = controller as? UITableViewController {
+                tableController.tableView.scrollEnabled = scrollEnabled
+            } else if let collectionControoler: UICollectionViewController = controller as? UICollectionViewController {
+                collectionControoler.collectionView?.scrollEnabled = scrollEnabled
+            }
+        }
+    }
+    
+    public func scrollToTopControllers() {
+        for controller in self.controllerArray {
+            if let tableController: UITableViewController = controller as? UITableViewController {
+                tableController.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+            } else if let collectionControoler: UICollectionViewController = controller as? UICollectionViewController {
+                collectionControoler.collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+            }
+        }
+    }
+}
