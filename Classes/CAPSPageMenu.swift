@@ -889,20 +889,25 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     
     // MARK: - Remove/Add Page
-    func addPageAtIndex(index : Int) {
+    func addPageAtIndex(index : Int, isMove: Bool = true) {
         // Call didMoveToPage delegate function
         let currentController = controllerArray[index]
         delegate?.willMoveToPage?(currentController, index: index)
         
         let newVC = controllerArray[index]
         
-        newVC.willMoveToParentViewController(self)
+        if isMove {
+            newVC.willMoveToParentViewController(self)
+        }
         
         newVC.view.frame = CGRectMake(self.view.frame.width * CGFloat(index), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
         
         self.addChildViewController(newVC)
         self.controllerScrollView.addSubview(newVC.view)
-        newVC.didMoveToParentViewController(self)
+
+        if isMove {
+            newVC.didMoveToParentViewController(self)
+        }
     }
     
     func removePageAtIndex(index : Int) {
@@ -1008,7 +1013,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     :param: index Index of the page to move to
     */
-    public func moveToPage(index: Int) {
+    public func moveToPage(index: Int, showOthrePage: Bool) {
         if index >= 0 && index < controllerArray.count {
             // Update page if changed
             if index != currentPageIndex {
@@ -1024,7 +1029,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 if smallerIndex + 1 != largerIndex {
                     for i in (smallerIndex + 1)...(largerIndex - 1) {
                         if pagesAddedDictionary[i] != i {
-                            addPageAtIndex(i)
+                            addPageAtIndex(i, isMove: showOthrePage)
                             pagesAddedDictionary[i] = i
                         }
                     }
