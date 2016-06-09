@@ -889,28 +889,20 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     
     // MARK: - Remove/Add Page
-    func addPageAtIndex(index : Int, isMove: Bool = true) {
+    func addPageAtIndex(index : Int) {
         // Call didMoveToPage delegate function
         let currentController = controllerArray[index]
         delegate?.willMoveToPage?(currentController, index: index)
         
         let newVC = controllerArray[index]
         
-        if isMove {
-            newVC.willMoveToParentViewController(self)
-        }
-        
+        newVC.willMoveToParentViewController(self)
         newVC.view.frame = CGRectMake(self.view.frame.width * CGFloat(index), menuHeight, self.view.frame.width, self.view.frame.height - menuHeight)
-
-        if isMove {
-            self.addChildViewController(newVC)
-        }
+        
+        self.addChildViewController(newVC)
         
         self.controllerScrollView.addSubview(newVC.view)
-
-        if isMove {
-            newVC.didMoveToParentViewController(self)
-        }
+        newVC.didMoveToParentViewController(self)
     }
     
     func removePageAtIndex(index : Int) {
@@ -1016,7 +1008,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     :param: index Index of the page to move to
     */
-    public func moveToPage(index: Int, showOthrePage: Bool) {
+    public func moveToPage(index: Int) {
         if index >= 0 && index < controllerArray.count {
             // Update page if changed
             if index != currentPageIndex {
@@ -1032,7 +1024,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 if smallerIndex + 1 != largerIndex {
                     for i in (smallerIndex + 1)...(largerIndex - 1) {
                         if pagesAddedDictionary[i] != i {
-                            addPageAtIndex(i, isMove: showOthrePage)
+                            addPageAtIndex(i)
                             pagesAddedDictionary[i] = i
                         }
                     }
@@ -1048,6 +1040,40 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             let duration : Double = Double(scrollAnimationDurationOnMenuItemTap) / Double(1000)
             
             UIView.animateWithDuration(duration, animations: { () -> Void in
+                let xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
+                self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
+            })
+        }
+    }
+    
+    public func moveToQuickPage(index: Int) {
+        if index >= 0 && index < controllerArray.count {
+            // Update page if changed
+            if index != currentPageIndex {
+                startingPageForScroll = index
+                lastPageIndex = currentPageIndex
+                currentPageIndex = index
+                didTapMenuItemToScroll = true
+                
+                // Add pages in between current and tapped page if necessary
+                let smallerIndex : Int = lastPageIndex < currentPageIndex ? lastPageIndex : currentPageIndex
+                let largerIndex : Int = lastPageIndex > currentPageIndex ? lastPageIndex : currentPageIndex
+                
+                if smallerIndex + 1 != largerIndex {
+                    for i in (smallerIndex + 1)...(largerIndex - 1) {
+                        if pagesAddedDictionary[i] != i {
+                            pagesAddedDictionary[i] = i
+                        }
+                    }
+                }
+                
+                addPageAtIndex(index)
+                
+                // Add page from which tap is initiated so it can be removed after tap is done
+                pagesAddedDictionary[lastPageIndex] = lastPageIndex
+            }
+            
+            UIView.animateWithDuration(0.0, animations: { () -> Void in
                 let xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
                 self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
             })
