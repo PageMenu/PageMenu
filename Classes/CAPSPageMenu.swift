@@ -184,16 +184,17 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     :param: frame Frame for page menu view
     :param: options Dictionary holding any customization options user might want to set
     */
-    public init(viewControllers: [UIViewController], frame: CGRect, options: [String: AnyObject]?) {
+    public init(viewControllers: [UIViewController], frame: CGRect, options: [String: AnyObject]?, currentPageIndex: Int = 0) {
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
+        self.currentPageIndex = currentPageIndex
         
         self.view.frame = frame
     }
     
-    public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?) {
-        self.init(viewControllers:viewControllers, frame:frame, options:nil)
+    public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?, currentPageIndex: Int = 0) {
+        self.init(viewControllers:viewControllers, frame:frame, options:nil, currentPageIndex: currentPageIndex)
         
         if let options = pageMenuOptions {
             for option in options {
@@ -1073,10 +1074,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 pagesAddedDictionary[lastPageIndex] = lastPageIndex
             }
             
-            UIView.animateWithDuration(0.0, animations: { () -> Void in
-                let xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
-                self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
-            })
+            let xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
+            self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
         }
     }
 }
