@@ -189,11 +189,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         
         controllerArray = viewControllers
         
+        self.currentPageIndex = currentPageIndex
+        startingPageForScroll = currentPageIndex
+        lastPageIndex = currentPageIndex
+        
         self.view.frame = frame
-
-        if currentPageIndex != 0 {
-            moveToQuickPage(currentPageIndex)
-        }
     }
     
     public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?, currentPageIndex: Int = 0) {
