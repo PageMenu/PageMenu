@@ -373,10 +373,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         var index : CGFloat = CGFloat(currentPageIndex)
         
         for controller in controllerArray {
-            if index == 0.0 {
-                // Add first two controllers to scrollview and as child view controller
-                addPageAtIndex(0)
-            }
+            // Add first two controllers to scrollview and as child view controller
+            addPageAtIndex(currentPageIndex)
             
             // Set up menu item for menu scroll view
             var menuItemFrame : CGRect = CGRect()
