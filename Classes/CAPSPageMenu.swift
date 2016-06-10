@@ -188,9 +188,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
-        
         self.currentPageIndex = currentPageIndex
-//        moveSelectionIndicator(self.currentPageIndex)
         
         self.view.frame = frame
     }
@@ -263,6 +261,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuScrollView.subviews.count == 0 {
             configureUserInterface()
         }
+        
+        moveSelectionIndicator(self.currentPageIndex)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -370,7 +370,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         // Configure controller scroll view content size
         controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), 0.0)
         
-        var index : CGFloat = CGFloat(currentPageIndex)
+        var index : CGFloat = 0.0
         
         for controller in controllerArray {
             // Add first two controllers to scrollview and as child view controller
