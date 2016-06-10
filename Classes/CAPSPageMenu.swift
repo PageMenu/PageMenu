@@ -192,6 +192,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         self.currentPageIndex = currentPageIndex
         startingPageForScroll = currentPageIndex
         lastPageIndex = currentPageIndex
+        moveSelectionIndicator(currentPageIndex)
         
         self.view.frame = frame
     }
