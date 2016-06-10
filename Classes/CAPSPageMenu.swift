@@ -265,6 +265,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
         
         moveSelectionIndicator(self.currentPageIndex)
+        
+        pagesAddedDictionary[lastPageIndex] = lastPageIndex
+        let xOffset : CGFloat = CGFloat(self.currentPageIndex) * self.controllerScrollView.frame.width
+        self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
     }
     
     required public init?(coder aDecoder: NSCoder) {
