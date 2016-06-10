@@ -188,8 +188,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
-        self.currentPageIndex = currentPageIndex
-        moveSelectionIndicator(self.currentPageIndex)
+        
+        if currentPageIndex != 0 {
+            moveToQuickPage(currentPageIndex)
+        }
         
         self.view.frame = frame
     }
