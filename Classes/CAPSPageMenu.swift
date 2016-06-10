@@ -191,9 +191,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         
         self.view.frame = frame
 
-        if currentPageIndex != 0 {
-            moveToQuickPage(currentPageIndex)
-        }
+//        if currentPageIndex != 0 {
+//            moveToQuickPage(currentPageIndex)
+//        }
     }
     
     public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?, currentPageIndex: Int = 0) {
@@ -371,7 +371,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         // Configure controller scroll view content size
         controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), 0.0)
         
-        var index : CGFloat = 0.0
+        var index : CGFloat = CGFloat(currentPageIndex)
         
         for controller in controllerArray {
             if index == 0.0 {
