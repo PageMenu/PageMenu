@@ -188,11 +188,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         super.init(nibName: nil, bundle: nil)
         
         controllerArray = viewControllers
-        
         self.currentPageIndex = currentPageIndex
         startingPageForScroll = currentPageIndex
         lastPageIndex = currentPageIndex
-        moveSelectionIndicator(currentPageIndex)
+        moveSelectionIndicator(self.currentPageIndex)
         
         self.view.frame = frame
     }
@@ -495,7 +494,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if useMenuLikeSegmentedControl {
             selectionIndicatorFrame = CGRectMake(0.0, menuHeight - selectionIndicatorHeight, self.view.frame.width / CGFloat(controllerArray.count), selectionIndicatorHeight)
         } else if menuItemWidthBasedOnTitleTextWidth {
-            selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[currentPageIndex], selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
         } else {
             if centerMenuItems  {
                 selectionIndicatorFrame = CGRectMake(startingMenuMargin + menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
@@ -511,7 +510,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {
             self.configureMenuItemWidthBasedOnTitleTextWidthAndCenterMenuItems()
             let leadingAndTrailingMargin = self.getMarginForMenuItemWidthBasedOnTitleTextWidthAndCenterMenuItems()
-            selectionIndicatorView.frame = CGRectMake(leadingAndTrailingMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[currentPageIndex], selectionIndicatorHeight)
+            selectionIndicatorView.frame = CGRectMake(leadingAndTrailingMargin, menuHeight - selectionIndicatorHeight, menuItemWidths[0], selectionIndicatorHeight)
         }
     }
     
