@@ -26,7 +26,7 @@ import UIKit
     optional func didMoveToPage(controller: UIViewController, index: Int)
 }
 
-public class PageViewController : BaseViewController {
+public class PageViewController : UIViewController {
     var titleImage : UIImage? ;
     var selectedTitleImage : UIImage? ;
     
