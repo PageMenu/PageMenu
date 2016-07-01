@@ -232,7 +232,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _controllerScrollView.alwaysBounceHorizontal = _enableHorizontalBounce;
     _controllerScrollView.bounces                = _enableHorizontalBounce;
     
-    _controllerScrollView.frame = CGRectMake(0.0, _menuHeight, self.view.frame.size.width, self.view.frame.size.height - _menuHeight);
+    _controllerScrollView.frame = CGRectMake(0.0, _menuHeight, self.view.frame.size.width, self.view.frame.size.height);
     
     [self.view addSubview:_controllerScrollView];
     
