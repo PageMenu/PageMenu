@@ -114,6 +114,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     let menuScrollView = UIScrollView()
     let controllerScrollView = UIScrollView()
     var controllerArray : [UIViewController] = []
+    public var controllers: [UIViewController] {
+        get {
+            return controllerArray
+        }
+    }
     var menuItems : [MenuItemView] = []
     var menuItemWidths : [CGFloat] = []
     
@@ -129,6 +134,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var selectionIndicatorView : UIView = UIView()
     
     var currentPageIndex : Int = 0
+    public var pageIndex: Int {
+        get {
+            return currentPageIndex
+        }
+    }
+    
     var lastPageIndex : Int = 0
     
     public var selectionIndicatorColor : UIColor = UIColor.whiteColor()
@@ -407,7 +418,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 totalMenuItemWidthIfDifferentWidths += itemWidthRect.width
                 menuItemWidths.append(itemWidthRect.width)
             } else {
-                if centerMenuItems && index == 0.0  {
+                if centerMenuItems {
                     startingMenuMargin = ((self.view.frame.width - ((CGFloat(controllerArray.count) * menuItemWidth) + (CGFloat(controllerArray.count - 1) * menuMargin))) / 2.0) -  menuMargin
                     
                     if startingMenuMargin < 0.0 {
@@ -762,7 +773,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     selectionIndicatorWidth = self.menuItemWidths[pageIndex]
                     selectionIndicatorX = CGRectGetMinX(self.menuItems[pageIndex].frame)
                 } else {
-                    if self.centerMenuItems && pageIndex == 0 {
+                    if self.centerMenuItems {
                         selectionIndicatorX = self.startingMenuMargin + self.menuMargin
                     } else {
                         selectionIndicatorX = self.menuItemWidth * CGFloat(pageIndex) + self.menuMargin * CGFloat(pageIndex + 1) + self.startingMenuMargin
