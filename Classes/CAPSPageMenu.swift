@@ -48,9 +48,22 @@ class MenuItemView: UIView {
 	var normalImage: UIImage?
 	var selectedImage: UIImage?
 	
-    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor) {
+	func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor, menuImageWidht: CGFloat, menuImageHeight: CGFloat, titleAlignment: CAPSPageMenuItemTitleAlignment) {
 		
-        titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
+		var result: (y: CGFloat, height: CGFloat) = (0.0, 0.0)
+		switch titleAlignment {
+		case .Top:
+			result.y = 0.0
+			result.height = menuScrollViewHeight / 3.0
+		case .Middle:
+			result.y = 0.0
+			result.height = menuScrollViewHeight
+		case .Bottom:
+			result.y = menuScrollViewHeight - (menuScrollViewHeight / 3.0)
+			result.height = menuScrollViewHeight / 3.0
+		}
+		
+        titleLabel = UILabel(frame: CGRectMake(0.0, result.y, menuItemWidth, result.height - indicatorHeight))
         
         menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth - (separatorWidth / 2), floor(menuScrollViewHeight * ((1.0 - separatorPercentageHeight) / 2.0)), separatorWidth, floor(menuScrollViewHeight * separatorPercentageHeight)))
         menuItemSeparator!.backgroundColor = menuItemSeparatorColor
@@ -64,7 +77,8 @@ class MenuItemView: UIView {
 		
 		if let normalImage = self.normalImage {
 			self.imageView = UIImageView(image: normalImage)
-			self.imageView?.frame.origin = CGPointMake(floor(menuItemWidth / 2), floor(CGRectGetHeight(self.imageView!.bounds) / 2))
+			self.imageView!.contentMode = .ScaleAspectFill
+			self.imageView!.frame = CGRectMake(floor((menuItemWidth - menuImageWidht) / 2), 0, menuImageWidht, menuImageHeight)
 			self.addSubview(self.imageView!)
 		}
 		
@@ -78,6 +92,12 @@ class MenuItemView: UIView {
             titleLabel!.sizeToFit()
         }
     }
+}
+
+public enum CAPSPageMenuItemTitleAlignment {
+	case Top
+	case Middle
+	case Bottom
 }
 
 public enum CAPSPageMenuOption {
@@ -98,6 +118,9 @@ public enum CAPSPageMenuOption {
     case MenuItemFont(UIFont)
     case MenuItemSeparatorPercentageHeight(CGFloat)
     case MenuItemWidth(CGFloat)
+	case MenuImageWidth(CGFloat)
+	case MenuImageHeight(CGFloat)
+	case MenuItemTitleAlignment(CAPSPageMenuItemTitleAlignment)
     case EnableHorizontalBounce(Bool)
     case AddBottomMenuHairline(Bool)
     case MenuItemWidthBasedOnTitleTextWidth(Bool)
@@ -122,9 +145,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var menuHeight : CGFloat = 34.0
     public var menuMargin : CGFloat = 15.0
     public var menuItemWidth : CGFloat = 111.0
+	public var menuImageWidht : CGFloat = 64.0
+	public var menuImageHeight : CGFloat = 64.0
+	public var menuItemTitleAlignment : CAPSPageMenuItemTitleAlignment = .Bottom
     public var selectionIndicatorHeight : CGFloat = 3.0
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
-    public var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
+    public var scrollAnimationDurationOnMenuItemTap : Int = 300 // Millisecons
     var startingMenuMargin : CGFloat = 0.0
     var menuItemMargin : CGFloat = 0.0
     
@@ -237,6 +263,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     menuItemSeparatorPercentageHeight = value
                 case let .MenuItemWidth(value):
                     menuItemWidth = value
+				case let .MenuImageWidth(value):
+					menuImageWidht = value
+				case let .MenuImageHeight(value):
+					menuImageHeight = value
+				case let .MenuItemTitleAlignment(value):
+					menuItemTitleAlignment = value
                 case let .EnableHorizontalBounce(value):
                     enableHorizontalBounce = value
                 case let .AddBottomMenuHairline(value):
@@ -397,7 +429,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 let controllerTitle : String? = controller.title
                 
                 let titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
-                
+				
                 let itemWidthRect : CGRect = (titleText as NSString).boundingRectWithSize(CGSizeMake(1000, 1000), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:menuItemFont], context: nil)
                 
                 menuItemWidth = itemWidthRect.width
@@ -431,13 +463,13 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 if menuItemMargin > 0 {
                     let marginSum = menuItemMargin * CGFloat(controllerArray.count + 1)
                     let menuItemWidth = (self.view.frame.width - marginSum) / CGFloat(controllerArray.count)
-                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, menuImageWidht: menuImageWidht, menuImageHeight: menuImageHeight, titleAlignment: menuItemTitleAlignment)
                 } else {
-                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, menuImageWidht: menuImageWidht, menuImageHeight: menuImageHeight, titleAlignment: menuItemTitleAlignment)
                 }
                 //**************************拡張ここまで*************************************
             } else {
-                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, menuImageWidht: menuImageWidht, menuImageHeight: menuImageHeight, titleAlignment: menuItemTitleAlignment)
             }
             
             // Configure menu item label font if font is set by user
@@ -561,7 +593,23 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         
         return leadingAndTrailingMargin
     }
-    
+	
+	func titleLabelTopAndHeight() -> (y: CGFloat, height: CGFloat) {
+		var result: (y: CGFloat, height: CGFloat) = (0.0, 0.0)
+		switch menuItemTitleAlignment {
+		case .Top:
+			result.y = 0.0
+			result.height = menuHeight / 3.0
+		case .Middle:
+			result.y = 0.0
+			result.height = menuHeight
+		case .Bottom:
+			result.y = menuHeight - (menuHeight / 3.0)
+			result.height = menuHeight / 3.0
+		}
+		return result
+	}
+	
     
     // MARK: - Scroll view delegate
     
@@ -910,7 +958,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     
     // MARK: - Orientation Change
-    
+	
     override public func viewDidLayoutSubviews() {
         // Configure controller scroll view content size
         controllerScrollView.contentSize = CGSizeMake(self.view.frame.width * CGFloat(controllerArray.count), self.view.frame.height - menuHeight)
@@ -935,10 +983,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 
                 for item : MenuItemView in menuItems as [MenuItemView] {
                     item.frame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
-                    item.titleLabel!.frame = CGRectMake(0.0, 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
+					let position = titleLabelTopAndHeight()
+                    item.titleLabel!.frame = CGRectMake(0.0, position.y, self.view.frame.width / CGFloat(controllerArray.count), position.height)
                     item.menuItemSeparator!.frame = CGRectMake(item.frame.width - (menuItemSeparatorWidth / 2), item.menuItemSeparator!.frame.origin.y, item.menuItemSeparator!.frame.width, item.menuItemSeparator!.frame.height)
                     
-                    index++
+                    index += 1
                 }
             } else if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {
                 self.configureMenuItemWidthBasedOnTitleTextWidthAndCenterMenuItems()
@@ -964,7 +1013,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                         item.frame = CGRectMake(menuItemWidth * CGFloat(index) + menuMargin * CGFloat(index + 1) + startingMenuMargin, 0.0, menuItemWidth, menuHeight)
                     }
                     
-                    index++
+                    index += 1
                 }
             }
             
