@@ -92,6 +92,15 @@ class MenuItemView: UIView {
             titleLabel!.sizeToFit()
         }
     }
+	
+	func setSelected(isSelected: Bool) {
+		guard let imageView = self.imageView else { return }
+		if isSelected && selectedImage != nil {
+			imageView.image = selectedImage!
+		} else if normalImage != nil {
+			imageView.image = normalImage!
+		}
+	}
 }
 
 public enum CAPSPageMenuItemTitleAlignment {
@@ -477,6 +486,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             
             menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
             menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
+			menuItemView.setSelected(false)
 			
             //**************************拡張*************************************
             menuItemView.titleLabel!.adjustsFontSizeToFitWidth = titleTextSizeBasedOnMenuItemWidth
@@ -488,7 +498,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             } else {
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
             }
-            
+
             // Add separator between menu items when using as segmented control
             if useMenuLikeSegmentedControl {
                 if Int(index) < controllerArray.count - 1 {
@@ -512,6 +522,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuItems.count > 0 {
             if menuItems[currentPageIndex].titleLabel != nil {
                 menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
+				menuItems[currentPageIndex].setSelected(true)
             }
         }
         
@@ -818,6 +829,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+						self.menuItems[self.currentPageIndex].setSelected(true)
+						self.menuItems[self.lastPageIndex].setSelected(true)
                     }
                 }
             })
