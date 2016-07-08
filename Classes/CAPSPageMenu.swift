@@ -93,8 +93,17 @@ class MenuItemView: UIView {
         }
     }
 	
-	func setSelected(isSelected: Bool) {
+	func setSelected(isSelected: Bool, animated: Bool = true) {
 		guard let imageView = self.imageView else { return }
+		
+		if animated {
+			let transition = CATransition()
+			transition.duration = 0.25
+			transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+			transition.type = kCATransitionFade
+			imageView.layer.addAnimation(transition, forKey: nil)
+		}
+		
 		if isSelected && selectedImage != nil {
 			imageView.image = selectedImage!
 		} else if normalImage != nil {
@@ -830,7 +839,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
 						self.menuItems[self.currentPageIndex].setSelected(true)
-						self.menuItems[self.lastPageIndex].setSelected(true)
+						self.menuItems[self.lastPageIndex].setSelected(false)
                     }
                 }
             })

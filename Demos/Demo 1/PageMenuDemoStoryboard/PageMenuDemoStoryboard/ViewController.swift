@@ -53,6 +53,11 @@ class ViewController: UIViewController {
 		normalImages.append(UIImage(named: "happy")!)
 		normalImages.append(UIImage(named: "loved")!)
 
+		var selectedImages: [UIImage] = []
+		selectedImages.append(UIImage(named: "loved")!)
+		selectedImages.append(UIImage(named: "happy")!)
+		selectedImages.append(UIImage(named: "adventurous")!)
+		selectedImages.append(UIImage(named: "active")!)
 		
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
@@ -70,7 +75,7 @@ class ViewController: UIViewController {
         ]
         
         // Initialize scroll menu
-		pageMenu = CAPSPageMenu(viewControllers: controllerArray, normalImages: normalImages, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
+		pageMenu = CAPSPageMenu(viewControllers: controllerArray, normalImages: normalImages, selectedImages: selectedImages, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
 
 		self.addChildViewController(pageMenu!)
         self.view.addSubview(pageMenu!.view)
