@@ -26,13 +26,30 @@ import UIKit
     optional func didMoveToPage(controller: UIViewController, index: Int)
 }
 
+protocol ImageViewController {
+	
+}
+
+extension ImageViewController {
+	func normalImage() -> UIImage? {
+		return nil
+	}
+	func selectedImage() -> UIImage? {
+		return nil
+	}
+}
+
 class MenuItemView: UIView {
     // MARK: - Menu item view
-    
+	
     var titleLabel : UILabel?
     var menuItemSeparator : UIView?
-    
+	var imageView: UIImageView?
+	var normalImage: UIImage?
+	var selectedImage: UIImage?
+	
     func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor) {
+		
         titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
         
         menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth - (separatorWidth / 2), floor(menuScrollViewHeight * ((1.0 - separatorPercentageHeight) / 2.0)), separatorWidth, floor(menuScrollViewHeight * separatorPercentageHeight)))
@@ -44,7 +61,13 @@ class MenuItemView: UIView {
         
         menuItemSeparator!.hidden = true
         self.addSubview(menuItemSeparator!)
-        
+		
+		if let normalImage = self.normalImage {
+			self.imageView = UIImageView(image: normalImage)
+			self.imageView?.frame.origin = CGPointMake(floor(menuItemWidth / 2), floor(CGRectGetHeight(self.imageView!.bounds) / 2))
+			self.addSubview(self.imageView!)
+		}
+		
         self.addSubview(titleLabel!)
     }
     
@@ -84,13 +107,15 @@ public enum CAPSPageMenuOption {
     case HideTopMenuBar(Bool)
 }
 
-public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate, ImageViewController {
     
     // MARK: - Properties
     
     let menuScrollView = UIScrollView()
     let controllerScrollView = UIScrollView()
     var controllerArray : [UIViewController] = []
+	var normalImages : [UIImage]?
+	var selectedImages : [UIImage]?
     var menuItems : [MenuItemView] = []
     var menuItemWidths : [CGFloat] = []
     
@@ -169,9 +194,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         self.view.frame = frame
     }
     
-    public convenience init(viewControllers: [UIViewController], frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?) {
+	public convenience init(viewControllers: [UIViewController], normalImages: [UIImage]? = nil, selectedImages: [UIImage]? = nil, frame: CGRect, pageMenuOptions: [CAPSPageMenuOption]?) {
         self.init(viewControllers:viewControllers, frame:frame, options:nil)
-        
+		
+		self.normalImages = normalImages
+		self.selectedImages = selectedImages
+		
         if let options = pageMenuOptions {
             for option in options {
                 switch (option) {
@@ -346,7 +374,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         
         var index : CGFloat = 0.0
         
-        for controller in controllerArray {
+        for (controllerIndex, controller) in controllerArray.enumerate() {
             if index == 0.0 {
                 // Add first two controllers to scrollview and as child view controller
                 addPageAtIndex(0)
@@ -393,6 +421,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             }
             
             let menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
+			
+			// Configure menu item image
+			menuItemView.normalImage = self.normalImages?[controllerIndex]
+			menuItemView.selectedImage = self.selectedImages?[controllerIndex]
+			
             if useMenuLikeSegmentedControl {
                 //**************************拡張*************************************
                 if menuItemMargin > 0 {
@@ -412,7 +445,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             
             menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
             menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
-            
+			
             //**************************拡張*************************************
             menuItemView.titleLabel!.adjustsFontSizeToFitWidth = titleTextSizeBasedOnMenuItemWidth
             //**************************拡張ここまで*************************************
