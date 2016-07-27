@@ -73,6 +73,7 @@ public enum CAPSPageMenuOption {
     case UseMenuLikeSegmentedControl(Bool)
     case MenuItemSeparatorRoundEdges(Bool)
     case MenuItemFont(UIFont)
+    case MenuSelectedItemFont(UIFont)
     case MenuItemSeparatorPercentageHeight(CGFloat)
     case MenuItemWidth(CGFloat)
     case EnableHorizontalBounce(Bool)
@@ -117,6 +118,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var menuItemSeparatorColor : UIColor = UIColor.lightGrayColor()
     
     public var menuItemFont : UIFont = UIFont.systemFontOfSize(15.0)
+    public var menuSelectedItemFont : UIFont = UIFont.systemFontOfSize(15.0)
+
     public var menuItemSeparatorPercentageHeight : CGFloat = 0.2
     public var menuItemSeparatorWidth : CGFloat = 0.5
     public var menuItemSeparatorRoundEdges : Bool = false
@@ -205,6 +208,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     menuItemSeparatorRoundEdges = value
                 case let .MenuItemFont(value):
                     menuItemFont = value
+                case let .MenuSelectedItemFont(value):
+                    menuSelectedItemFont = value
                 case let .MenuItemSeparatorPercentageHeight(value):
                     menuItemSeparatorPercentageHeight = value
                 case let .MenuItemWidth(value):
@@ -447,6 +452,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuItems.count > 0 {
             if menuItems[currentPageIndex].titleLabel != nil {
                 menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
+                menuItems[currentPageIndex].titleLabel!.font =
+                    menuSelectedItemFont
             }
         }
         
