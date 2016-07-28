@@ -744,6 +744,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                        self.menuItems[self.lastPageIndex].titleLabel!.font = self.menuItemFont;
+                        self.menuItems[self.currentPageIndex].titleLabel!.font = self.menuSelectedItemFont;
                     }
                 }
             })
