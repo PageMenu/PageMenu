@@ -101,6 +101,7 @@
 		D7BF96561B6B8445002F32A0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Center for Advanced Public Safety";
 				TargetAttributes = {
@@ -289,6 +290,7 @@
 				D7BF96771B6B8445002F32A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
