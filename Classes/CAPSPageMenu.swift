@@ -43,7 +43,7 @@ class MenuItemView: UIView {
             
             iconImage?.frame = CGRectMake(menuIconXPos, menuIconYPos, menuIconWidth,menuIconHeight)
             // title label start with the end of x from iconImageSize
-            titleLabel = UILabel(frame: CGRectMake(menuIconWidth, 0.0, titleLabelSize, menuScrollViewHeight - indicatorHeight))
+            titleLabel = UILabel(frame: CGRectMake(menuIconWidth+menuIconXPos, 0.0, titleLabelSize, menuScrollViewHeight - indicatorHeight))
         } else {
             titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
         }
