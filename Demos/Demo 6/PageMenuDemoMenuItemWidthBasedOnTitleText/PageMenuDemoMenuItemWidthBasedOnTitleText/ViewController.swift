@@ -54,7 +54,8 @@ class ViewController: UIViewController {
             .SelectionIndicatorHeight(5),
             .MenuItemWidth(275),
             .SelectedMenuItemLabelColor(UIColor.orangeColor()),
-            .WithMenuIcon(true)
+            .WithMenuIcon(true),
+            .WithSelectionImageView("linebar")
         ]
         
         // Initialize scroll menu

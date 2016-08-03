@@ -111,6 +111,7 @@ public enum CAPSPageMenuOption {
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
     case WithMenuIcon(Bool)
+    case WithSelectionImageView(String)
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -181,6 +182,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         case Right
         case Other
     }
+    
+    var menuItemSeparatorIcon : UIImageView = UIImageView()
+    
+    public var separatorIcon : String = ""
     
     // MARK: - View life cycle
     
@@ -255,6 +260,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     hideTopMenuBar = value
                 case let .WithMenuIcon(value):
                     withMenuIcon = value
+                case let .WithSelectionImageView(value):
+                    separatorIcon = value
                 }
             }
             
@@ -499,11 +506,23 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
             }
         }
-        
+        menuItemSeparatorIcon = UIImageView()
         selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
-        selectionIndicatorView.backgroundColor = selectionIndicatorColor
-        menuScrollView.addSubview(selectionIndicatorView)
         
+        // Check if with separator icon
+        if(separatorIcon.isEmpty){
+            selectionIndicatorView.backgroundColor = selectionIndicatorColor
+        }
+        else{
+            // Set separator icon to view
+            menuItemSeparatorIcon.frame = selectionIndicatorFrame
+            menuItemSeparatorIcon.image = UIImage(named: separatorIcon)
+            menuItemSeparatorIcon.frame = selectionIndicatorView.bounds
+            selectionIndicatorView.addSubview(menuItemSeparatorIcon)
+        }
+        
+        menuScrollView.addSubview(selectionIndicatorView)
+
         if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {
             self.configureMenuItemWidthBasedOnTitleTextWidthAndCenterMenuItems()
             let leadingAndTrailingMargin = self.getMarginForMenuItemWidthBasedOnTitleTextWidthAndCenterMenuItems()
