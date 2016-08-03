@@ -484,7 +484,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             // Set title depending on if controller has a title set
             if controller.title != nil {
                 menuItemView.titleLabel!.text = controller.title!
-                menuItemView.iconImage?.image = UIImage(named: controller.title!)
+                let controllerTitle = controller.title!.stringByReplacingOccurrencesOfString("/", withString:"_")
+                menuItemView.iconImage?.image = UIImage(named: controllerTitle)
             } else {
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
             }
