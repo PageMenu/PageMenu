@@ -58,7 +58,8 @@ class ViewController: UIViewController {
             .WithMenuIcon(true),
             .WithSelectionImageView("linebar2"),
             .MenuIconWidth((image?.size.width)!),
-            .MenuIconHeight((image?.size.height)!)
+            .MenuIconHeight((image?.size.height)!),
+            .SeparatorYPos(33)
         ]
         
         // Initialize scroll menu

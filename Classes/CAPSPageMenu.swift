@@ -114,6 +114,8 @@ public enum CAPSPageMenuOption {
     case WithSelectionImageView(String)
     case MenuIconWidth(CGFloat)
     case MenuIconHeight(CGFloat)
+    case SeparatorXPos(CGFloat)
+    case SeparatorYPos(CGFloat)
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -191,7 +193,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     public var menuIconWidth : CGFloat = 22.0
     public var menuIconHeight : CGFloat = 22.0
-    
+    public var separatorXPos: CGFloat = 0.0
+    public var separatorYPos: CGFloat = 0.0
     // MARK: - View life cycle
     
     /**
@@ -271,7 +274,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     menuIconWidth = value
                 case let .MenuIconHeight(value):
                     menuIconHeight = value
-                
+                case let .SeparatorXPos(value):
+                    separatorXPos = value
+                case let .SeparatorYPos(value):
+                    separatorYPos = value
                 }
                 
             }
@@ -519,7 +525,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
         menuItemSeparatorIcon = UIImageView()
         let image = UIImage(named: separatorIcon)
-        selectionIndicatorView = UIView(frame: CGRectMake(0,33,(image?.size.width)!,(image?.size.height)!))
+        selectionIndicatorView = UIView(frame: CGRectMake(separatorXPos,separatorYPos,(image?.size.width)!,(image?.size.height)!))
         
         // Check if with separator icon
         if(separatorIcon.isEmpty){
