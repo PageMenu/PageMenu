@@ -43,19 +43,20 @@ class ViewController: UIViewController {
         controller4.title = "music"
         controllerArray.append(controller4)
         
+        
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
             .ScrollMenuBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
             .ViewBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
             .SelectionIndicatorColor(UIColor.orangeColor()),
             .AddBottomMenuHairline(false),
-            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 35.0)!),
+            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 20)!),
             .MenuHeight(50.0),
-            .SelectionIndicatorHeight(5),
+            .SelectionIndicatorHeight(10),
             .MenuItemWidth(275),
             .SelectedMenuItemLabelColor(UIColor.orangeColor()),
             .WithMenuIcon(true),
-            .WithSelectionImageView("linebar")
+            .WithSelectionImageView("linebar2")
         ]
         
         // Initialize scroll menu

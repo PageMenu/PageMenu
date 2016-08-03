@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "gfx trophy 28X26 dblue.png",
+      "filename" : "Select Line.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Select Line@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Select Line@3x.png",
       "scale" : "3x"
     }
   ],

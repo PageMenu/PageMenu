@@ -507,7 +507,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             }
         }
         menuItemSeparatorIcon = UIImageView()
-        selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
+        let image = UIImage(named: separatorIcon)
+        selectionIndicatorView = UIView(frame: CGRectMake(0,33,(image?.size.width)!,(image?.size.height)!))
         
         // Check if with separator icon
         if(separatorIcon.isEmpty){
@@ -515,9 +516,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
         else{
             // Set separator icon to view
-            menuItemSeparatorIcon.frame = selectionIndicatorFrame
-            menuItemSeparatorIcon.image = UIImage(named: separatorIcon)
-            menuItemSeparatorIcon.frame = selectionIndicatorView.bounds
+            
+            image?.size.width
+//            menuItemSeparatorIcon.frame = selectionIndicatorFrame
+            menuItemSeparatorIcon.image = image
+            menuItemSeparatorIcon.frame =  selectionIndicatorView.bounds
             selectionIndicatorView.addSubview(menuItemSeparatorIcon)
         }
         
