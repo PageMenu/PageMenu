@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         let controller4 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
         controller4.title = "music"
         controllerArray.append(controller4)
-        
+        let image = UIImage(named: "friends")
         
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
@@ -56,7 +56,9 @@ class ViewController: UIViewController {
             .MenuItemWidth(275),
             .SelectedMenuItemLabelColor(UIColor.orangeColor()),
             .WithMenuIcon(true),
-            .WithSelectionImageView("linebar2")
+            .WithSelectionImageView("linebar2"),
+            .MenuIconWidth((image?.size.width)!),
+            .MenuIconHeight((image?.size.height)!)
         ]
         
         // Initialize scroll menu
