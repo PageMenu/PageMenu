@@ -33,7 +33,7 @@ class MenuItemView: UIView {
     var menuItemSeparator : UIView?
     var withMenuIcon : Bool = false
     
-    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor, menuIconWidth: CGFloat, menuIconHeight: CGFloat) {
+    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor, menuIconWidth: CGFloat, menuIconHeight: CGFloat, menuIconXPos: CGFloat, menuIconYPos: CGFloat) {
         
         if withMenuIcon {
             // initialize icon view
@@ -41,7 +41,7 @@ class MenuItemView: UIView {
             let iconImageSize = menuItemWidth * 1/4
             let titleLabelSize = menuItemWidth * 3/4
             
-            iconImage?.frame = CGRectMake(menuIconWidth, 0.0, menuIconWidth,menuIconHeight)
+            iconImage?.frame = CGRectMake(menuIconXPos, menuIconYPos, menuIconWidth,menuIconHeight)
             // title label start with the end of x from iconImageSize
             titleLabel = UILabel(frame: CGRectMake(menuIconWidth, 0.0, titleLabelSize, menuScrollViewHeight - indicatorHeight))
         } else {
@@ -64,10 +64,10 @@ class MenuItemView: UIView {
         self.addSubview(titleLabel!)
     }
     
-    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor, withMenuIcon: Bool, menuIconWidth: CGFloat, menuIconHeight: CGFloat) {
+    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor, withMenuIcon: Bool, menuIconWidth: CGFloat, menuIconHeight: CGFloat, menuIconXPos: CGFloat, menuIconYPos: CGFloat) {
     
         self.withMenuIcon = withMenuIcon
-        self.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuScrollViewHeight, indicatorHeight: indicatorHeight, separatorPercentageHeight: separatorPercentageHeight, separatorWidth: separatorWidth, separatorRoundEdges: separatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, menuIconWidth: menuIconWidth, menuIconHeight: menuIconHeight)
+        self.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuScrollViewHeight, indicatorHeight: indicatorHeight, separatorPercentageHeight: separatorPercentageHeight, separatorWidth: separatorWidth, separatorRoundEdges: separatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, menuIconWidth: menuIconWidth, menuIconHeight: menuIconHeight, menuIconXPos: menuIconXPos, menuIconYPos: menuIconYPos)
     }
     
     func setTitleText(text: NSString) {
@@ -116,6 +116,8 @@ public enum CAPSPageMenuOption {
     case MenuIconHeight(CGFloat)
     case SeparatorXPos(CGFloat)
     case SeparatorYPos(CGFloat)
+    case MenuIconXPos(CGFloat)
+    case MenuIconYPos(CGFloat)
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -195,6 +197,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var menuIconHeight : CGFloat = 22.0
     public var separatorXPos: CGFloat = 0.0
     public var separatorYPos: CGFloat = 0.0
+    public var menuIconXPos : CGFloat = 22.0
+    public var menuIconYPos : CGFloat = 22.0
     // MARK: - View life cycle
     
     /**
@@ -278,6 +282,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     separatorXPos = value
                 case let .SeparatorYPos(value):
                     separatorYPos = value
+                case let .MenuIconXPos(value):
+                    menuIconXPos = value
+                case let .MenuIconYPos(value):
+                    menuIconYPos = value
                 }
                 
             }
@@ -454,13 +462,13 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 if menuItemMargin > 0 {
                     let marginSum = menuItemMargin * CGFloat(controllerArray.count + 1)
                     let menuItemWidth = (self.view.frame.width - marginSum) / CGFloat(controllerArray.count)
-                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, withMenuIcon: withMenuIcon, menuIconWidth: menuIconWidth, menuIconHeight: menuIconHeight)
+                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, withMenuIcon: withMenuIcon, menuIconWidth: menuIconWidth, menuIconHeight: menuIconHeight, menuIconXPos: menuIconXPos, menuIconYPos: menuIconYPos)
                 } else {
-                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, withMenuIcon: withMenuIcon, menuIconWidth: menuIconWidth, menuIconHeight: menuIconHeight)
+                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, withMenuIcon: withMenuIcon, menuIconWidth: menuIconWidth, menuIconHeight: menuIconHeight, menuIconXPos: menuIconXPos, menuIconYPos: menuIconYPos)
                 }
                 //**************************拡張ここまで*************************************
             } else {
-                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, withMenuIcon: withMenuIcon, menuIconWidth: menuIconWidth, menuIconHeight: menuIconHeight)
+                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, withMenuIcon: withMenuIcon, menuIconWidth: menuIconWidth, menuIconHeight: menuIconHeight, menuIconXPos: menuIconXPos, menuIconYPos: menuIconYPos)
             }
             
             // Configure menu item label font if font is set by user
