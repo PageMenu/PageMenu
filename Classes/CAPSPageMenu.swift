@@ -533,7 +533,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
         menuItemSeparatorIcon = UIImageView()
         let image = UIImage(named: separatorIcon)
-        selectionIndicatorView = UIView(frame: CGRectMake(separatorXPos,separatorYPos,(image?.size.width)!,(image?.size.height)!))
+        selectionIndicatorView = UIView(frame: CGRectMake(selectionIndicatorFrame.origin.x ,separatorYPos,(image?.size.width)!,(image?.size.height)!))
         
         // Check if with separator icon
         if(separatorIcon.isEmpty){
