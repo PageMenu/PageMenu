@@ -488,8 +488,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             } else {
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
             }
-            
-            
+        
             
             // Add separator between menu items when using as segmented control
             if useMenuLikeSegmentedControl {
@@ -531,16 +530,17 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 selectionIndicatorFrame = CGRectMake(menuMargin, menuHeight - selectionIndicatorHeight, menuItemWidth, selectionIndicatorHeight)
             }
         }
-        menuItemSeparatorIcon = UIImageView()
-        let image = UIImage(named: separatorIcon)
-        selectionIndicatorView = UIView(frame: CGRectMake(selectionIndicatorFrame.origin.x ,separatorYPos,(image?.size.width)!,(image?.size.height)!))
         
         // Check if with separator icon
         if(separatorIcon.isEmpty){
+            selectionIndicatorView.frame = selectionIndicatorFrame
             selectionIndicatorView.backgroundColor = selectionIndicatorColor
         }
         else{
             // Set separator icon to view
+            menuItemSeparatorIcon = UIImageView()
+            let image = UIImage(named: separatorIcon)
+            selectionIndicatorView = UIView(frame: CGRectMake(selectionIndicatorFrame.origin.x ,separatorYPos,(image?.size.width)!,(image?.size.height)!))
             menuItemSeparatorIcon.image = image
             menuItemSeparatorIcon.frame =  selectionIndicatorView.bounds
             selectionIndicatorView.addSubview(menuItemSeparatorIcon)
@@ -816,6 +816,14 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                        if let image = self.menuItems[self.lastPageIndex].iconImage!.image{
+                            self.menuItems[self.lastPageIndex].iconImage!.image = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                            self.menuItems[self.lastPageIndex].iconImage!.tintColor = self.unselectedMenuItemLabelColor
+                        }
+                        if let image = self.menuItems[self.currentPageIndex].iconImage!.image{
+                            self.menuItems[self.currentPageIndex].iconImage!.image = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                            self.menuItems[self.currentPageIndex].iconImage!.tintColor = self.selectedMenuItemLabelColor
+                        }
                     }
                 }
             })
