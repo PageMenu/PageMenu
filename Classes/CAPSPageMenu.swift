@@ -82,6 +82,9 @@ public enum CAPSPageMenuOption {
     case ScrollAnimationDurationOnMenuItemTap(Int)
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
+    case IconIndicator(Bool)        //Activate the icon indicator
+    case IconIndicatorView(UIView)  //Set custom icon indicator to show
+    
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -103,6 +106,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var startingMenuMargin : CGFloat = 0.0
     var menuItemMargin : CGFloat = 0.0
     
+    
+    var iconIndicator:Bool = false
+    var selectionIndicatorCustomView:UIView?
     var selectionIndicatorView : UIView = UIView()
     
     var currentPageIndex : Int = 0
@@ -155,12 +161,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     // MARK: - View life cycle
     
     /**
-    Initialize PageMenu with view controllers
-    
-    :param: viewControllers List of view controllers that must be subclasses of UIViewController
-    :param: frame Frame for page menu view
-    :param: options Dictionary holding any customization options user might want to set
-    */
+     Initialize PageMenu with view controllers
+     
+     :param: viewControllers List of view controllers that must be subclasses of UIViewController
+     :param: frame Frame for page menu view
+     :param: options Dictionary holding any customization options user might want to set
+     */
     public init(viewControllers: [UIViewController], frame: CGRect, options: [String: AnyObject]?) {
         super.init(nibName: nil, bundle: nil)
         
@@ -223,6 +229,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     centerMenuItems = value
                 case let .HideTopMenuBar(value):
                     hideTopMenuBar = value
+                case let .IconIndicator(value):
+                    iconIndicator = value
+                case let .IconIndicatorView(value):
+                    selectionIndicatorCustomView = value
                 }
             }
             
@@ -242,16 +252,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-	
-	// MARK: - Container View Controller
-	public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
-		return true
-	}
-	
-	public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
-		return true
-	}
-	
+    
+    // MARK: - Container View Controller
+    public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+        return true
+    }
+    
+    public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
+        return true
+    }
+    
     // MARK: - UI Setup
     
     func setUpUserInterface() {
@@ -466,7 +476,18 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
         
         selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
-        selectionIndicatorView.backgroundColor = selectionIndicatorColor
+        
+        //Check if icon indicator is activate and has a valid icon indicator view
+        if let indicatorView = self.selectionIndicatorCustomView where self.iconIndicator{
+            //modify bounds of icon indicator
+            indicatorView.frame.origin.x = selectionIndicatorFrame.size.width/2-selectionIndicatorFrame.size.height/2
+            //Add incon indicator to selection view container
+            selectionIndicatorView.addSubview(indicatorView)
+        }
+        //Hide background of selectionIndicatorView if incon indicator was setted
+        selectionIndicatorView.backgroundColor = self.iconIndicator ? UIColor.clearColor() :  selectionIndicatorColor
+        
+        
         menuScrollView.addSubview(selectionIndicatorView)
         
         if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {
@@ -732,6 +753,13 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 
                 self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.height)
                 
+                
+                //If icon indicator was setted and has a valid icon indicator
+                if let indicatorView = self.selectionIndicatorCustomView where self.iconIndicator{
+                    //Modify the frame position
+                    indicatorView.frame = CGRect(x: self.selectionIndicatorView.frame.size.width/2-self.selectionIndicatorView.frame.size.height/2, y: 0, width: self.selectionIndicatorView.frame.size.height, height: self.selectionIndicatorView.frame.size.height)
+                }
+                
                 // Switch newly selected menu item title label to selected color and old one to unselected color
                 if self.menuItems.count > 0 {
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
@@ -905,7 +933,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     item.titleLabel!.frame = CGRectMake(0.0, 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
                     item.menuItemSeparator!.frame = CGRectMake(item.frame.width - (menuItemSeparatorWidth / 2), item.menuItemSeparator!.frame.origin.y, item.menuItemSeparator!.frame.width, item.menuItemSeparator!.frame.height)
                     
-                    index++
+                    index+=1
                 }
             } else if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {
                 self.configureMenuItemWidthBasedOnTitleTextWidthAndCenterMenuItems()
@@ -965,10 +993,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     // MARK: - Move to page index
     
     /**
-    Move to page at index
-    
-    :param: index Index of the page to move to
-    */
+     Move to page at index
+     
+     :param: index Index of the page to move to
+     */
     public func moveToPage(index: Int) {
         if index >= 0 && index < controllerArray.count {
             // Update page if changed
@@ -1006,4 +1034,5 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             })
         }
     }
+    
 }
