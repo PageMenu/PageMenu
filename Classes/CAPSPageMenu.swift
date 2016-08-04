@@ -161,9 +161,9 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     /**
     Initialize PageMenu with view controllers
     
-    :param: viewControllers List of view controllers that must be subclasses of UIViewController
-    :param: frame Frame for page menu view
-    :param: options Dictionary holding any customization options user might want to set
+    - parameter viewControllers: List of view controllers that must be subclasses of UIViewController
+    - parameter frame: Frame for page menu view
+    - parameter options: Dictionary holding any customization options user might want to set
     */
     public init(viewControllers: [UIViewController], frame: CGRect, options: [String: AnyObject]?) {
         super.init(nibName: nil, bundle: nil)
@@ -238,6 +238,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 addBottomMenuHairline = false
                 menuHeight = 0.0
             }
+            
+            
         }
         
         setUpUserInterface()
@@ -245,12 +247,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuScrollView.subviews.count == 0 {
             configureUserInterface()
         }
+        
+        if iconIndicator {
+            moveSelectionIndicator(currentPageIndex)
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-	
+    
 	// MARK: - Container View Controller
 	public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
 		return true
@@ -995,7 +1001,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     /**
     Move to page at index
     
-    :param: index Index of the page to move to
+    - parameter index: Index of the page to move to
     */
     public func moveToPage(index: Int) {
         if index >= 0 && index < controllerArray.count {
