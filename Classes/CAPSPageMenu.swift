@@ -817,13 +817,15 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
-                        if let image = self.menuItems[self.lastPageIndex].iconImage!.image{
-                            self.menuItems[self.lastPageIndex].iconImage!.image = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                            self.menuItems[self.lastPageIndex].iconImage!.tintColor = self.unselectedMenuItemLabelColor
-                        }
-                        if let image = self.menuItems[self.currentPageIndex].iconImage!.image{
-                            self.menuItems[self.currentPageIndex].iconImage!.image = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                            self.menuItems[self.currentPageIndex].iconImage!.tintColor = self.selectedMenuItemLabelColor
+                        if self.withMenuIcon{
+                            if let image = self.menuItems[self.lastPageIndex].iconImage!.image{
+                                self.menuItems[self.lastPageIndex].iconImage!.image = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                                self.menuItems[self.lastPageIndex].iconImage!.tintColor = self.unselectedMenuItemLabelColor
+                            }
+                            if let image = self.menuItems[self.currentPageIndex].iconImage!.image{
+                                self.menuItems[self.currentPageIndex].iconImage!.image = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                                self.menuItems[self.currentPageIndex].iconImage!.tintColor = self.selectedMenuItemLabelColor
+                            }
                         }
                     }
                 }
