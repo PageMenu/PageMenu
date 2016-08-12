@@ -53,12 +53,12 @@ class ViewController: UIViewController {
             .MenuItemFont(UIFont(name: "HelveticaNeue", size: 20)!),
             .MenuHeight(50.0),
             .SelectionIndicatorHeight(10),
-            .MenuItemWidth(275),
+            .MenuItemWidth(215),
             .SelectedMenuItemLabelColor(UIColor.orangeColor()),
-            .WithMenuIcon(true),
+            .WithMenuIcon(false),
             .WithSelectionImageView("linebar2"),
-            .MenuIconWidth((image?.size.width)!),
-            .MenuIconHeight((image?.size.height)!),
+//            .MenuIconWidth((image?.size.width)!),
+//            .MenuIconHeight((image?.size.height)!),
             .SeparatorYPos(33)
         ]
         
