@@ -32,11 +32,25 @@ class MenuItemView: UIView {
     var titleLabel : UILabel?
     var menuItemSeparator : UIView?
     
-    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor) {
-        titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, menuItemWidth, menuScrollViewHeight - indicatorHeight))
+    func setUpMenuItemView(menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor, menuItemLabelMargin : CGFloat, menuItemLabelCornerRadius: CGFloat) {
+        
+        
+        titleLabel = UILabel(frame: CGRectMake(
+            menuItemLabelMargin,
+            menuItemLabelMargin,
+            menuItemWidth - (2 * menuItemLabelMargin),
+            menuScrollViewHeight - indicatorHeight - (2 * menuItemLabelMargin)
+            )
+        )
         
         menuItemSeparator = UIView(frame: CGRectMake(menuItemWidth - (separatorWidth / 2), floor(menuScrollViewHeight * ((1.0 - separatorPercentageHeight) / 2.0)), separatorWidth, floor(menuScrollViewHeight * separatorPercentageHeight)))
         menuItemSeparator!.backgroundColor = menuItemSeparatorColor
+        
+        if menuItemLabelCornerRadius > 0 {
+            
+            titleLabel!.layer.cornerRadius = menuItemLabelCornerRadius
+            titleLabel!.layer.masksToBounds = true
+        }
         
         if separatorRoundEdges {
             menuItemSeparator!.layer.cornerRadius = menuItemSeparator!.frame.width / 2
@@ -82,6 +96,12 @@ public enum CAPSPageMenuOption {
     case ScrollAnimationDurationOnMenuItemTap(Int)
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
+    case HideSectionIndicator(Bool)
+    case SelectedMenuItemLabelBackgroundColor(UIColor)
+    case UnselectedMenuItemLabelBackgroundColor(UIColor)
+    case ScrollViewMargin(CGFloat)
+    case MenuItemLabelMargin(CGFloat)
+    case MenuItemLabelCornerRadius(CGFloat)
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -110,12 +130,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     public var selectionIndicatorColor : UIColor = UIColor.whiteColor()
     public var selectedMenuItemLabelColor : UIColor = UIColor.whiteColor()
+    public var selectedMenuItemLabelBackgroundColor : UIColor = UIColor.clearColor()
     public var unselectedMenuItemLabelColor : UIColor = UIColor.lightGrayColor()
+    public var unselectedMenuItemLabelBackgroundColor : UIColor = UIColor.clearColor()
     public var scrollMenuBackgroundColor : UIColor = UIColor.blackColor()
     public var viewBackgroundColor : UIColor = UIColor.whiteColor()
     public var bottomMenuHairlineColor : UIColor = UIColor.whiteColor()
     public var menuItemSeparatorColor : UIColor = UIColor.lightGrayColor()
     
+    public var menuItemLabelMargin : CGFloat = 0.0
+    public var menuItemLabelCornerRadius : CGFloat = 0.0
     public var menuItemFont : UIFont = UIFont.systemFontOfSize(15.0)
     public var menuItemSeparatorPercentageHeight : CGFloat = 0.2
     public var menuItemSeparatorWidth : CGFloat = 0.5
@@ -128,6 +152,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var centerMenuItems : Bool = false
     public var enableHorizontalBounce : Bool = true
     public var hideTopMenuBar : Bool = false
+    public var hideSectionIndicator : Bool = false
+    public var scrollViewMargin : CGFloat = 0.0
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -155,12 +181,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     // MARK: - View life cycle
     
     /**
-    Initialize PageMenu with view controllers
-    
-    :param: viewControllers List of view controllers that must be subclasses of UIViewController
-    :param: frame Frame for page menu view
-    :param: options Dictionary holding any customization options user might want to set
-    */
+     Initialize PageMenu with view controllers
+     
+     :param: viewControllers List of view controllers that must be subclasses of UIViewController
+     :param: frame Frame for page menu view
+     :param: options Dictionary holding any customization options user might want to set
+     */
     public init(viewControllers: [UIViewController], frame: CGRect, options: [String: AnyObject]?) {
         super.init(nibName: nil, bundle: nil)
         
@@ -223,6 +249,18 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     centerMenuItems = value
                 case let .HideTopMenuBar(value):
                     hideTopMenuBar = value
+                case let .SelectedMenuItemLabelBackgroundColor(value):
+                    selectedMenuItemLabelBackgroundColor = value
+                case let .UnselectedMenuItemLabelBackgroundColor(value):
+                    unselectedMenuItemLabelBackgroundColor = value
+                case let .HideSectionIndicator(value):
+                    hideSectionIndicator = value
+                case let .MenuItemLabelMargin(value):
+                    menuItemLabelMargin = value
+                case let .MenuItemLabelCornerRadius(value):
+                    menuItemLabelCornerRadius = value
+                case let .ScrollViewMargin(value):
+                    scrollViewMargin = value
                 }
             }
             
@@ -230,9 +268,13 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 addBottomMenuHairline = false
                 menuHeight = 0.0
             }
+            if hideSectionIndicator {
+                selectionIndicatorHeight = 0.0
+            }
+            
         }
         
-        setUpUserInterface()
+        setUpUserInterface(scrollViewMargin)
         
         if menuScrollView.subviews.count == 0 {
             configureUserInterface()
@@ -242,19 +284,19 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-	
-	// MARK: - Container View Controller
-	public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
-		return true
-	}
-	
-	public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
-		return true
-	}
-	
+    
+    // MARK: - Container View Controller
+    public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+        return true
+    }
+    
+    public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
+        return true
+    }
+    
     // MARK: - UI Setup
     
-    func setUpUserInterface() {
+    func setUpUserInterface(scrollViewMargin: CGFloat) {
         let viewsDictionary = ["menuScrollView":menuScrollView, "controllerScrollView":controllerScrollView]
         
         // Set up controller scroll view
@@ -276,15 +318,20 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         // Set up menu scroll view
         menuScrollView.translatesAutoresizingMaskIntoConstraints = false
         
-        menuScrollView.frame = CGRectMake(0.0, 0.0, self.view.frame.width, menuHeight)
+        //menuScrollView.frame = CGRectMake(5.0, 5.0, self.view.frame.width - (2 * 5), menuHeight - (2 * 5))
+        menuScrollView.frame = CGRectMake(scrollViewMargin, scrollViewMargin, self.view.frame.width - (2 * scrollViewMargin), menuHeight - (2 * scrollViewMargin))
+        menuScrollView.layer.masksToBounds = true
+        menuScrollView.layer.cornerRadius = 5.0
         
         self.view.addSubview(menuScrollView)
         
-        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[menuScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuScrollView(\(menuHeight))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        
-        self.view.addConstraints(menuScrollView_constraint_H)
-        self.view.addConstraints(menuScrollView_constraint_V)
+        /*
+         let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|[menuScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+         let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuScrollView(\(menuHeight - 10))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+         
+         self.view.addConstraints(menuScrollView_constraint_H)
+         self.view.addConstraints(menuScrollView_constraint_V)
+         */
         
         // Add hairline to menu scroll view
         if addBottomMenuHairline {
@@ -356,14 +403,18 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             var menuItemFrame : CGRect = CGRect()
             
             if useMenuLikeSegmentedControl {
+                
                 //**************************拡張*************************************
                 if menuItemMargin > 0 {
                     let marginSum = menuItemMargin * CGFloat(controllerArray.count + 1)
-                    let menuItemWidth = (self.view.frame.width - marginSum) / CGFloat(controllerArray.count)
-                    menuItemFrame = CGRectMake(CGFloat(menuItemMargin * (index + 1)) + menuItemWidth * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
+                    let menuItemWidth = (self.menuScrollView.frame.size.width - marginSum) / CGFloat(controllerArray.count)
+                    menuItemFrame = CGRectMake(CGFloat(menuItemMargin * (index + 1)) + menuItemWidth * CGFloat(index), 0.0, CGFloat(self.menuScrollView.frame.size.width) / CGFloat(controllerArray.count), menuHeight)
                 } else {
-                    menuItemFrame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
+                    
+                    
+                    menuItemFrame = CGRectMake(self.menuScrollView.frame.size.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, CGFloat(self.menuScrollView.frame.size.width) / CGFloat(controllerArray.count), menuHeight)
                 }
+                
                 //**************************拡張ここまで*************************************
             } else if menuItemWidthBasedOnTitleTextWidth {
                 let controllerTitle : String? = controller.title
@@ -380,7 +431,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 menuItemWidths.append(itemWidthRect.width)
             } else {
                 if centerMenuItems && index == 0.0  {
-                    startingMenuMargin = ((self.view.frame.width - ((CGFloat(controllerArray.count) * menuItemWidth) + (CGFloat(controllerArray.count - 1) * menuMargin))) / 2.0) -  menuMargin
+                    startingMenuMargin = ((self.menuScrollView.frame.size.width - ((CGFloat(controllerArray.count) * menuItemWidth) + (CGFloat(controllerArray.count - 1) * menuMargin))) / 2.0) -  menuMargin
                     
                     if startingMenuMargin < 0.0 {
                         startingMenuMargin = 0.0
@@ -397,14 +448,22 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 //**************************拡張*************************************
                 if menuItemMargin > 0 {
                     let marginSum = menuItemMargin * CGFloat(controllerArray.count + 1)
-                    let menuItemWidth = (self.view.frame.width - marginSum) / CGFloat(controllerArray.count)
-                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                    let menuItemWidth = (self.menuScrollView.frame.size.width - marginSum) / CGFloat(controllerArray.count)
+                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight - (2 * scrollViewMargin), indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, menuItemLabelMargin: menuItemLabelMargin, menuItemLabelCornerRadius: menuItemLabelCornerRadius)
                 } else {
-                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                    menuItemView.setUpMenuItemView(CGFloat(self.menuScrollView.frame.size.width) / CGFloat(controllerArray.count),
+                                                   menuScrollViewHeight: menuHeight - (2 * scrollViewMargin),
+                                                   indicatorHeight: selectionIndicatorHeight,
+                                                   separatorPercentageHeight: menuItemSeparatorPercentageHeight,
+                                                   separatorWidth: menuItemSeparatorWidth,
+                                                   separatorRoundEdges: menuItemSeparatorRoundEdges,
+                                                   menuItemSeparatorColor: menuItemSeparatorColor,
+                                                   menuItemLabelMargin: menuItemLabelMargin,
+                                                   menuItemLabelCornerRadius: menuItemLabelCornerRadius)
                 }
                 //**************************拡張ここまで*************************************
             } else {
-                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight - (2 * scrollViewMargin), indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor, menuItemLabelMargin: menuItemLabelMargin, menuItemLabelCornerRadius: menuItemLabelCornerRadius)
             }
             
             // Configure menu item label font if font is set by user
@@ -412,6 +471,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             
             menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
             menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
+            menuItemView.titleLabel!.backgroundColor = self.unselectedMenuItemLabelBackgroundColor
             
             //**************************拡張*************************************
             menuItemView.titleLabel!.adjustsFontSizeToFitWidth = titleTextSizeBasedOnMenuItemWidth
@@ -447,6 +507,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         if menuItems.count > 0 {
             if menuItems[currentPageIndex].titleLabel != nil {
                 menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
+                menuItems[currentPageIndex].titleLabel!.backgroundColor = self.selectedMenuItemLabelBackgroundColor
             }
         }
         
@@ -735,8 +796,14 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 // Switch newly selected menu item title label to selected color and old one to unselected color
                 if self.menuItems.count > 0 {
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
+                        
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
+                        self.menuItems[self.lastPageIndex].titleLabel!.backgroundColor = self.unselectedMenuItemLabelBackgroundColor
+                        
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                        self.menuItems[self.currentPageIndex].titleLabel!.backgroundColor = self.selectedMenuItemLabelBackgroundColor
+                        
+                        
                     }
                 }
             })
@@ -965,10 +1032,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     // MARK: - Move to page index
     
     /**
-    Move to page at index
-    
-    :param: index Index of the page to move to
-    */
+     Move to page at index
+     
+     :param: index Index of the page to move to
+     */
     public func moveToPage(index: Int) {
         if index >= 0 && index < controllerArray.count {
             // Update page if changed
