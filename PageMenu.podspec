@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/uacaps/PageMenu"
   s.license      = { :type => 'UA', :file => 'LICENSE' }
   s.author       = { "uacaps" => "nfahl@cs.ua.edu" }
-  s.source       = { :git => "https://github.com/uacaps/PageMenu.git", :tag => '1.2.9' }
+  s.source       = { :git => "https://github.com/uacaps/PageMenu.git", :tag => '1.2.9' , :submodules => true}
   s.platform     = :ios, '8.0'
   s.source_files = 'Classes/*'
   s.requires_arc = true
