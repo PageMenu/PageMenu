@@ -42,7 +42,8 @@ class MenuItemView: UIView {
             menuItemSeparator!.layer.cornerRadius = menuItemSeparator!.frame.width / 2
         }
         
-        menuItemSeparator!.hidden = true
+        menuItemSeparator!.hidden = false
+        menuItemSeparator!.backgroundColor = menuItemSeparatorColor
         self.addSubview(menuItemSeparator!)
         
         self.addSubview(titleLabel!)
