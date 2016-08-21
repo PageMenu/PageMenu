@@ -59,6 +59,8 @@ class MenuItemView: UIView {
 
 public enum CAPSPageMenuOption {
     case SelectionIndicatorHeight(CGFloat)
+    case SelectionIndicatorWidth(CGFloat)
+    case SelectionIndicatorY(CGFloat)
     case MenuItemSeparatorWidth(CGFloat)
     case ScrollMenuBackgroundColor(UIColor)
     case ViewBackgroundColor(UIColor)
@@ -98,6 +100,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var menuMargin : CGFloat = 15.0
     public var menuItemWidth : CGFloat = 111.0
     public var selectionIndicatorHeight : CGFloat = 3.0
+    public var selectionIndicatorWidth : CGFloat = 0.0
+    public var selectionIndicatorY : CGFloat = 0.0
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
     public var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     var startingMenuMargin : CGFloat = 0.0
@@ -177,6 +181,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 switch (option) {
                 case let .SelectionIndicatorHeight(value):
                     selectionIndicatorHeight = value
+                case let .SelectionIndicatorWidth(value):
+                    selectionIndicatorWidth = value
+                case let .SelectionIndicatorY(value):
+                    selectionIndicatorY = value
                 case let .MenuItemSeparatorWidth(value):
                     menuItemSeparatorWidth = value
                 case let .ScrollMenuBackgroundColor(value):
@@ -466,7 +474,19 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
         }
         
         selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
-        selectionIndicatorView.backgroundColor = selectionIndicatorColor
+        
+        let finalSelectionIndicatorWidth : CGFloat;
+        if selectionIndicatorWidth > 0.0 {
+            finalSelectionIndicatorWidth = selectionIndicatorWidth
+        } else {
+            finalSelectionIndicatorWidth = menuItemWidth
+        }
+        
+        let indicatorX : CGFloat = (menuItemWidth - finalSelectionIndicatorWidth)/2
+        let indicator : UIView =  UIView(frame: CGRectMake(indicatorX, selectionIndicatorY, finalSelectionIndicatorWidth, selectionIndicatorView.frame.size.height))
+        indicator.backgroundColor = selectionIndicatorColor
+        selectionIndicatorView.addSubview(indicator)
+        
         menuScrollView.addSubview(selectionIndicatorView)
         
         if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {

@@ -55,7 +55,9 @@ class ViewController: UIViewController {
             .MenuItemFont(UIFont(name: "HelveticaNeue", size: 13.0)!),
             .MenuHeight(40.0),
             .MenuItemWidth(90.0),
-            .CenterMenuItems(true)
+            .CenterMenuItems(true),
+            .SelectionIndicatorY(0.0),
+            .SelectionIndicatorWidth(90.0)
         ]
         
         // Initialize scroll menu

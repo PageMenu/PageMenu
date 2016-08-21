@@ -72,6 +72,8 @@ typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
 @implementation CAPSPageMenu
 
 NSString * const CAPSPageMenuOptionSelectionIndicatorHeight             = @"selectionIndicatorHeight";
+NSString * const CAPSPageMenuOptionSelectionIndicatorWidth              = @"selectionIndicatorWidth";
+NSString * const CAPSPageMenuOptionSelectionIndicatorY                  = @"selectionIndicatorY";
 NSString * const CAPSPageMenuOptionMenuItemSeparatorWidth               = @"menuItemSeparatorWidth";
 NSString * const CAPSPageMenuOptionScrollMenuBackgroundColor            = @"scrollMenuBackgroundColor";
 NSString * const CAPSPageMenuOptionViewBackgroundColor                  = @"viewBackgroundColor";
@@ -109,6 +111,10 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         for (NSString *key in options) {
             if ([key isEqualToString:CAPSPageMenuOptionSelectionIndicatorHeight]) {
                 _selectionIndicatorHeight = [options[key] floatValue];
+            } else if ([key isEqualToString: CAPSPageMenuOptionSelectionIndicatorWidth]) {
+                _selectionIndicatorWidth = [options[key] floatValue];
+            } else if ([key isEqualToString: CAPSPageMenuOptionSelectionIndicatorY]) {
+                _selectionIndicatorY = [options[key] floatValue];
             } else if ([key isEqualToString: CAPSPageMenuOptionMenuItemSeparatorWidth]) {
                 _menuItemSeparatorWidth = [options[key] floatValue];
             } else if ([key isEqualToString:CAPSPageMenuOptionScrollMenuBackgroundColor]) {
@@ -179,6 +185,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _menuMargin                           = 15.0;
     _menuItemWidth                        = 111.0;
     _selectionIndicatorHeight             = 3.0;
+    _selectionIndicatorY                  = 0.0;
     _totalMenuItemWidthIfDifferentWidths  = 0.0;
     _scrollAnimationDurationOnMenuItemTap = 500;
     _startingMenuMargin                   = 0.0;
@@ -418,7 +425,22 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     }
     
     _selectionIndicatorView = [[UIView alloc] initWithFrame:selectionIndicatorFrame];
-    _selectionIndicatorView.backgroundColor = _selectionIndicatorColor;
+    
+    CGFloat finalSelectionIndicatorWidth;
+    if (_selectionIndicatorWidth > 0.0)
+    {
+        finalSelectionIndicatorWidth = _selectionIndicatorWidth;
+    }
+    else
+    {
+        finalSelectionIndicatorWidth = _menuItemWidth;
+    }
+    
+    CGFloat indicatorX = (_menuItemWidth - finalSelectionIndicatorWidth)/2;
+    UIView *indicator = [[UIView alloc] initWithFrame:CGRectMake(indicatorX, _selectionIndicatorY, finalSelectionIndicatorWidth, _selectionIndicatorView.frame.size.height)];
+    
+    indicator.backgroundColor = _selectionIndicatorColor;
+    [_selectionIndicatorView addSubview:indicator];
     [_menuScrollView addSubview:_selectionIndicatorView];
 }
 
