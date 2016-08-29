@@ -66,6 +66,7 @@ public enum CAPSPageMenuOption {
     case SelectionIndicatorColor(UIColor)
     case MenuItemSeparatorColor(UIColor)
     case MenuMargin(CGFloat)
+    case MenuItemMargin(CGFloat)
     case MenuHeight(CGFloat)
     case SelectedMenuItemLabelColor(UIColor)
     case UnselectedMenuItemLabelColor(UIColor)
@@ -77,6 +78,7 @@ public enum CAPSPageMenuOption {
     case EnableHorizontalBounce(Bool)
     case AddBottomMenuHairline(Bool)
     case MenuItemWidthBasedOnTitleTextWidth(Bool)
+    case TitleTextSizeBasedOnMenuItemWidth(Bool)
     case ScrollAnimationDurationOnMenuItemTap(Int)
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
@@ -99,6 +101,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
     public var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     var startingMenuMargin : CGFloat = 0.0
+    var menuItemMargin : CGFloat = 0.0
 
     var selectionIndicatorView : UIView = UIView()
 
@@ -120,6 +123,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
 
     public var addBottomMenuHairline : Bool = true
     public var menuItemWidthBasedOnTitleTextWidth : Bool = false
+    public var titleTextSizeBasedOnMenuItemWidth : Bool = false
     public var useMenuLikeSegmentedControl : Bool = false
     public var centerMenuItems : Bool = false
     public var enableHorizontalBounce : Bool = true
@@ -187,6 +191,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     menuItemSeparatorColor = value
                 case let .MenuMargin(value):
                     menuMargin = value
+                case let .MenuItemMargin(value):
+                    menuItemMargin = value
                 case let .MenuHeight(value):
                     menuHeight = value
                 case let .SelectedMenuItemLabelColor(value):
@@ -209,6 +215,8 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     addBottomMenuHairline = value
                 case let .MenuItemWidthBasedOnTitleTextWidth(value):
                     menuItemWidthBasedOnTitleTextWidth = value
+                case let .TitleTextSizeBasedOnMenuItemWidth(value):
+                    titleTextSizeBasedOnMenuItemWidth = value
                 case let .ScrollAnimationDurationOnMenuItemTap(value):
                     scrollAnimationDurationOnMenuItemTap = value
                 case let .CenterMenuItems(value):
@@ -341,14 +349,20 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             var menuItemFrame : CGRect = CGRect()
 
             if useMenuLikeSegmentedControl {
-                menuItemFrame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
+                //**************************拡張*************************************
+                if menuItemMargin > 0 {
+                    let marginSum = menuItemMargin * CGFloat(controllerArray.count + 1)
+                    let menuItemWidth = (self.view.frame.width - marginSum) / CGFloat(controllerArray.count)
+                    menuItemFrame = CGRectMake(CGFloat(menuItemMargin * (index + 1)) + menuItemWidth * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
+                } else {
+                    menuItemFrame = CGRectMake(self.view.frame.width / CGFloat(controllerArray.count) * CGFloat(index), 0.0, CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuHeight)
+                }
+                //**************************拡張ここまで*************************************
             } else if menuItemWidthBasedOnTitleTextWidth {
                 let controllerTitle : String? = controller.title
 
                 let titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
-
                 let itemWidthRect : CGRect = (titleText as NSString).boundingRectWithSize(CGSizeMake(1000, 1000), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:menuItemFont], context: nil)
-
                 menuItemWidth = itemWidthRect.width
 
                 menuItemFrame = CGRectMake(totalMenuItemWidthIfDifferentWidths + menuMargin + (menuMargin * index), 0.0, menuItemWidth, menuHeight)
@@ -371,7 +385,15 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
 
             let menuItemView : MenuItemView = MenuItemView(frame: menuItemFrame)
             if useMenuLikeSegmentedControl {
-                menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                //**************************拡張*************************************
+                if menuItemMargin > 0 {
+                    let marginSum = menuItemMargin * CGFloat(controllerArray.count + 1)
+                    let menuItemWidth = (self.view.frame.width - marginSum) / CGFloat(controllerArray.count)
+                    menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                } else {
+                    menuItemView.setUpMenuItemView(CGFloat(self.view.frame.width) / CGFloat(controllerArray.count), menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
+                }
+                //**************************拡張ここまで*************************************
             } else {
                 menuItemView.setUpMenuItemView(menuItemWidth, menuScrollViewHeight: menuHeight, indicatorHeight: selectionIndicatorHeight, separatorPercentageHeight: menuItemSeparatorPercentageHeight, separatorWidth: menuItemSeparatorWidth, separatorRoundEdges: menuItemSeparatorRoundEdges, menuItemSeparatorColor: menuItemSeparatorColor)
             }
@@ -381,7 +403,11 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
 
             menuItemView.titleLabel!.textAlignment = NSTextAlignment.Center
             menuItemView.titleLabel!.textColor = unselectedMenuItemLabelColor
-
+            
+            //**************************拡張*************************************
+            menuItemView.titleLabel!.adjustsFontSizeToFitWidth = titleTextSizeBasedOnMenuItemWidth
+            //**************************拡張ここまで*************************************
+            
             // Set title depending on if controller has a title set
             if controller.title != nil {
                 menuItemView.titleLabel!.text = controller.title!
