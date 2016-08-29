@@ -23,7 +23,7 @@ class ContactsTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        println("\(self.title) page: viewWillAppear")
+        print("\(self.title) page: viewWillAppear")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -77,7 +77,7 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("did select contact row")
+        print("select contact row")
         let contactPrompt = UIAlertController(title: "Contact Selected", message: "You have selected a contact.", preferredStyle: UIAlertControllerStyle.Alert)
         contactPrompt.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         presentViewController(contactPrompt, animated: true, completion: nil)

@@ -18,7 +18,7 @@ class FriendTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        var path : UIBezierPath = UIBezierPath()
+        let path : UIBezierPath = UIBezierPath()
         path.moveToPoint(CGPointMake(0, 34))
         path.addLineToPoint(CGPointMake(0, 64))
         path.addLineToPoint(CGPointMake(64, 64))
@@ -26,7 +26,7 @@ class FriendTableViewCell: UITableViewCell {
         path.addLineToPoint(CGPointMake(34, 0))
         path.closePath()
         
-        var mask : CAShapeLayer = CAShapeLayer()
+        let mask : CAShapeLayer = CAShapeLayer()
         mask.frame = photoImageView.bounds
         mask.path = path.CGPath
         
