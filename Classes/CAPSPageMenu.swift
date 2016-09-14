@@ -82,6 +82,13 @@ public enum CAPSPageMenuOption {
     case ScrollAnimationDurationOnMenuItemTap(Int)
     case CenterMenuItems(Bool)
     case HideTopMenuBar(Bool)
+    //**********joaoritter***********//
+    case MenuShadowRadius(CGFloat)
+    case MenuShadowOpacity(Float)
+    case MenuShadowColor(UIColor)
+    case MenuShadowOffset(CGFloat)
+    case AddBottomMenuShadow(Bool)
+    //********************************
 }
 
 public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -128,6 +135,15 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var centerMenuItems : Bool = false
     public var enableHorizontalBounce : Bool = true
     public var hideTopMenuBar : Bool = false
+    
+
+    //**********joaoritter***********//
+    public var menuShadowRadius : CGFloat = 0
+    public var menuShadowOpacity : Float = 0
+    public var menuShadowColor : UIColor = UIColor.whiteColor()
+    public var menuShadowOffset : CGFloat = 0
+    public var addBottomMenuShadow : Bool = false
+    //********************************
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -223,12 +239,28 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     centerMenuItems = value
                 case let .HideTopMenuBar(value):
                     hideTopMenuBar = value
+
+                //**********joaoritter***********//
+                case let .MenuShadowRadius(value):
+                    menuShadowRadius = value
+                case let .MenuShadowOpacity(value):
+                    menuShadowOpacity = value
+                case let .MenuShadowColor(value):
+                    menuShadowColor = value
+                case let .MenuShadowOffset(value):
+                    menuShadowOffset = value
+                case let .AddBottomMenuShadow(value):
+                    addBottomMenuShadow = value
+                //********************************
                 }
             }
             
             if hideTopMenuBar {
                 addBottomMenuHairline = false
                 menuHeight = 0.0
+                //**********joaoritter***********//
+                addBottomMenuShadow = false
+                //********************************
             }
         }
         
@@ -302,6 +334,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
             
             menuBottomHairline.backgroundColor = bottomMenuHairlineColor
         }
+        
+        //**********joaoritter***********//
+        if addBottomMenuShadow {
+            menuScrollView.layer.shadowColor = menuShadowColor.CGColor
+            menuScrollView.layer.shadowRadius = menuShadowRadius
+            menuScrollView.layer.shadowOpacity = menuShadowOpacity
+            menuScrollView.layer.shadowOffset = CGSizeMake(0, menuShadowOffset)
+            menuScrollView.layer.masksToBounds = true
+        }
+        //********************************
         
         // Disable scroll bars
         menuScrollView.showsHorizontalScrollIndicator = false
