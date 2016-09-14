@@ -251,6 +251,11 @@ There are many ways you are able to customize page menu for your needs and there
         bottomMenuHairlineColor (UIColor)
 
 
+  * Bottom menu shadow color
+
+        bottomMenuShadowColor (UIColor)
+
+
 
 **2)  Dimensions**
 
@@ -307,6 +312,11 @@ There are many ways you are able to customize page menu for your needs and there
         addBottomMenuHairline (Bool)
 
 
+  * Bottom menu shadow
+
+        addBottomMenuShadow (Bool)
+
+
   * Menu item witdh based on title text width (see Demo 3)
 
         menuItemWidthBasedOnTitleTextWidth (Bool)
@@ -330,6 +340,21 @@ There are many ways you are able to customize page menu for your needs and there
   * Scroll animation duration on menu item tap in milliseconds
 
         scrollAnimationDurationOnMenuItemTap (Int)
+        
+
+  * The bottom menu shadow's opacity
+
+        shadowOpacity (Float)
+        
+
+  * The bottom menu shadow's radius
+
+        shadowRadius (CGFloat)
+
+
+  * The bottom menu shadow's vertical offset
+
+        shadowOffset (CGFloat)
 
 ## Apps using PageMenu
 
