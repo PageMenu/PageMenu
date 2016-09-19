@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,35 +13,30 @@
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CiA-Ic-7eh">
-                        <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
-                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CiA-Ic-7eh"/>
                     <view alpha="0.80000000000000016" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDb-0w-4oW">
-                        <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
-                        <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.089511200785636902" green="0.089508526027202606" blue="0.089510053396224976" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxT-TK-gT8">
-                        <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ihB-yP-WxM">
-                                <rect key="frame" x="27" y="17" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="6bv-nC-66v"/>
                                     <constraint firstAttribute="height" constant="100" id="l3F-5I-LCK"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mood Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUW-Vt-AA5">
-                                <rect key="frame" x="0.0" y="117" width="155" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="7tl-gH-4bP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="ihB-yP-WxM" secondAttribute="centerY" constant="10.5" id="790-vI-rzh"/>
                             <constraint firstAttribute="centerY" secondItem="pUW-Vt-AA5" secondAttribute="centerY" constant="-50" id="7Gp-PB-iuP"/>
@@ -61,7 +58,6 @@
                         </variation>
                     </view>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="vxT-TK-gT8" secondAttribute="bottom" id="0Pb-aM-diz"/>
@@ -79,9 +75,9 @@
             </constraints>
             <size key="customSize" width="186" height="163"/>
             <connections>
-                <outlet property="backgroundImageView" destination="CiA-Ic-7eh" id="Nso-2K-d0i"/>
-                <outlet property="moodIconImageView" destination="ihB-yP-WxM" id="e6C-Xn-qRK"/>
-                <outlet property="moodTitleLabel" destination="pUW-Vt-AA5" id="Ukm-sz-BUV"/>
+                <outlet property="backgroundImageView" destination="CiA-Ic-7eh" id="SFf-0T-k2T"/>
+                <outlet property="moodIconImageView" destination="ihB-yP-WxM" id="6ba-t2-uy8"/>
+                <outlet property="moodTitleLabel" destination="pUW-Vt-AA5" id="AAL-ZW-o9L"/>
             </connections>
             <point key="canvasLocation" x="184.5" y="298.5"/>
         </collectionViewCell>

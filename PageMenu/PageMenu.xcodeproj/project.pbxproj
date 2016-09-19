@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C797E14E1BAB764400D2808F /* PageMenuFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = C797E14D1BAB764400D2808F /* PageMenuFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C797E1581BAB765100D2808F /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797E1441BAB754600D2808F /* CAPSPageMenu.swift */; settings = {ASSET_TAGS = (); }; };
+		C797E1581BAB765100D2808F /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C797E1441BAB754600D2808F /* CAPSPageMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -117,6 +117,7 @@
 				TargetAttributes = {
 					C797E14A1BAB764400D2808F = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -257,6 +258,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = PageMenu.PageMenuFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -276,6 +278,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = PageMenu.PageMenuFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -300,6 +303,7 @@
 				C797E1561BAB764400D2808F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
