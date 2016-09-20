@@ -18,17 +18,17 @@ class FriendTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        var path : UIBezierPath = UIBezierPath()
-        path.moveToPoint(CGPointMake(0, 34))
-        path.addLineToPoint(CGPointMake(0, 64))
-        path.addLineToPoint(CGPointMake(64, 64))
-        path.addLineToPoint(CGPointMake(64, 0))
-        path.addLineToPoint(CGPointMake(34, 0))
-        path.closePath()
+        let path : UIBezierPath = UIBezierPath()
+        path.move(to: CGPoint(x:0, y:34))
+        path.addLine(to: CGPoint(x:0, y:64))
+        path.addLine(to: CGPoint(x:64, y:64))
+        path.addLine(to: CGPoint(x:64, y:0))
+        path.addLine(to: CGPoint(x:34, y:0))
+        path.close()
         
-        var mask : CAShapeLayer = CAShapeLayer()
+        let mask : CAShapeLayer = CAShapeLayer()
         mask.frame = photoImageView.bounds
-        mask.path = path.CGPath
+        mask.path = path.cgPath
         
         photoImageView.layer.mask = mask
         
@@ -36,7 +36,7 @@ class FriendTableViewCell: UITableViewCell {
         favoriteView.layer.cornerRadius = 15
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

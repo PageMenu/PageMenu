@@ -24,51 +24,51 @@ class PageMenuOneViewController: UIViewController {
         // Initialize view controllers to display and place in array
         var controllerArray : [UIViewController] = []
         
-        var controller1 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
+        let controller1 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
         controller1.title = "favorites"
         controllerArray.append(controller1)
-        var controller2 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
+        let controller2 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller2.title = "recents"
         controllerArray.append(controller2)
-        var controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
+        let controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
         controller3.title = "contacts"
         controllerArray.append(controller3)
         
         for i in 0...10 {
-            var controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
+            let controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
             controller3.title = "contr\(i)"
             //            controller3.view.backgroundColor = getRandomColor()
             controllerArray.append(controller3)
         }
         
         // Customize menu (Optional)
-        var parameters: [CAPSPageMenuOption] = [
-            .ScrollMenuBackgroundColor(UIColor.orangeColor()),
-            .ViewBackgroundColor(UIColor.whiteColor()),
-            .SelectionIndicatorColor(UIColor.whiteColor()),
-            .UnselectedMenuItemLabelColor(UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4)),
-            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 35.0)!),
-            .MenuHeight(44.0),
-            .MenuMargin(20.0),
-            .SelectionIndicatorHeight(0.0),
-            .BottomMenuHairlineColor(UIColor.orangeColor()),
-            .MenuItemWidthBasedOnTitleTextWidth(true),
-            .SelectedMenuItemLabelColor(UIColor.whiteColor())
+        let parameters: [CAPSPageMenuOption] = [
+            .scrollMenuBackgroundColor(UIColor.orange),
+            .viewBackgroundColor(UIColor.white),
+            .selectionIndicatorColor(UIColor.white),
+            .unselectedMenuItemLabelColor(UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4)),
+            .menuItemFont(UIFont(name: "HelveticaNeue", size: 35.0)!),
+            .menuHeight(44.0),
+            .menuMargin(20.0),
+            .selectionIndicatorHeight(0.0),
+            .bottomMenuHairlineColor(UIColor.orange),
+            .menuItemWidthBasedOnTitleTextWidth(true),
+            .selectedMenuItemLabelColor(UIColor.white)
         ]
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 60.0, self.view.frame.width, self.view.frame.height - 60.0), pageMenuOptions: parameters)
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRect(x:0.0, y:60.0, width:self.view.frame.width, height:self.view.frame.height - 60.0), pageMenuOptions: parameters)
         
         self.view.addSubview(pageMenu!.view)
     }
     
     func getRandomColor() -> UIColor{
         
-        var randomRed:CGFloat = CGFloat(drand48())
+        let randomRed:CGFloat = CGFloat(drand48())
         
-        var randomGreen:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
         
-        var randomBlue:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
         
         return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
         

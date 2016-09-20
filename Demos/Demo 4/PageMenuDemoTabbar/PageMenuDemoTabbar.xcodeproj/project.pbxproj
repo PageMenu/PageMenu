@@ -281,9 +281,11 @@
 				TargetAttributes = {
 					A616A0301A603D68008CE0F6 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 					};
 					A616A0451A603D69008CE0F6 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = A616A0301A603D68008CE0F6;
 					};
 				};
@@ -499,6 +501,7 @@
 				INFOPLIST_FILE = PageMenuDemoTabbar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -510,6 +513,7 @@
 				INFOPLIST_FILE = PageMenuDemoTabbar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -529,6 +533,7 @@
 				INFOPLIST_FILE = PageMenuDemoTabbarTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PageMenuDemoTabbar.app/PageMenuDemoTabbar";
 			};
 			name = Debug;
@@ -544,6 +549,7 @@
 				INFOPLIST_FILE = PageMenuDemoTabbarTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PageMenuDemoTabbar.app/PageMenuDemoTabbar";
 			};
 			name = Release;
