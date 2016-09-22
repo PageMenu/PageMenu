@@ -330,6 +330,34 @@ There are many ways you are able to customize page menu for your needs and there
   * Scroll animation duration on menu item tap in milliseconds
 
         scrollAnimationDurationOnMenuItemTap (Int)
+        
+  * Bottom menu shadow color
+  
+       bottomMenuShadowColor (UIColor)
+
+  * Bottom menu shadow
+  
+       addBottomMenuShadow (Bool)
+
+  * The bottom menu shadow's opacity
+       shadowOpacity (Float)
+ 
+  * The bottom menu shadow's radius
+ 
+       shadowRadius (CGFloat)
+ 
+  * The bottom menu shadow's vertical offset
+
+       shadowOffset (CGFloat)
+       
+  * Icon Indicator
+   
+       iconIndicator(Bool)
+
+  * Icon Indicator view to show like indicator
+
+       iconIndicatorView(UIView) 
+
 
 ## Apps using PageMenu
 
