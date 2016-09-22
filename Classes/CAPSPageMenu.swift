@@ -82,6 +82,11 @@ public enum CAPSPageMenuOption {
     case scrollAnimationDurationOnMenuItemTap(Int)
     case centerMenuItems(Bool)
     case hideTopMenuBar(Bool)
+    case menuShadowRadius(CGFloat)
+    case menuShadowOpacity(Float)
+    case menuShadowColor(UIColor)
+    case menuShadowOffset(CGFloat)
+    case addBottomMenuShadow(Bool)
 }
 
 open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -128,6 +133,12 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     open var centerMenuItems : Bool = false
     open var enableHorizontalBounce : Bool = true
     open var hideTopMenuBar : Bool = false
+    
+    public var menuShadowRadius : CGFloat = 0
+    public var menuShadowOpacity : Float = 0
+    public var menuShadowColor : UIColor = UIColor.white
+    public var menuShadowOffset : CGFloat = 0
+    public var addBottomMenuShadow : Bool = false
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -223,12 +234,23 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                     centerMenuItems = value
                 case let .hideTopMenuBar(value):
                     hideTopMenuBar = value
+                case let .menuShadowRadius(value):
+                    menuShadowRadius = value
+                case let .menuShadowOpacity(value):
+                    menuShadowOpacity = value
+                case let .menuShadowColor(value):
+                    menuShadowColor = value
+                case let .menuShadowOffset(value):
+                    menuShadowOffset = value
+                case let .addBottomMenuShadow(value):
+                    addBottomMenuShadow = value
                 }
             }
             
             if hideTopMenuBar {
                 addBottomMenuHairline = false
                 menuHeight = 0.0
+                addBottomMenuShadow = false
             }
         }
         
@@ -301,6 +323,14 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
             self.view.addConstraints(menuBottomHairline_constraint_V)
             
             menuBottomHairline.backgroundColor = bottomMenuHairlineColor
+        }
+        
+        if addBottomMenuShadow {
+            menuScrollView.layer.shadowColor = menuShadowColor.cgColor
+            menuScrollView.layer.shadowRadius = menuShadowRadius
+            menuScrollView.layer.shadowOpacity = menuShadowOpacity
+            menuScrollView.layer.shadowOffset = CGSize(width:0, height:menuShadowOffset)
+            menuScrollView.layer.masksToBounds = true
         }
         
         // Disable scroll bars

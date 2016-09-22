@@ -55,7 +55,10 @@ class ViewController: UIViewController {
             .menuItemFont(UIFont(name: "HelveticaNeue", size: 13.0)!),
             .menuHeight(40.0),
             .menuItemWidth(90.0),
-            .centerMenuItems(true)
+            .centerMenuItems(true),
+            .addBottomMenuShadow(true),
+            .menuShadowColor(UIColor.white),
+            .menuShadowRadius(4)
         ]
         
         // Initialize scroll menu
