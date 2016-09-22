@@ -57,8 +57,10 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
             .menuItemFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!),
             .useMenuLikeSegmentedControl(true),
             .menuItemSeparatorRoundEdges(true),
-            .selectionIndicatorHeight(2.0),
-            .menuItemSeparatorPercentageHeight(0.1)
+            .selectionIndicatorHeight(20),
+            .menuItemSeparatorPercentageHeight(0.1),
+            .iconIndicator(true),
+            .iconIndicatorView(self.getIndicatorView())
         ]
         
         // Initialize scroll menu
@@ -68,6 +70,12 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
         pageMenu!.delegate = self
         
         self.view.addSubview(pageMenu!.view)
+    }
+    
+    private func getIndicatorView()->UIView{
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 130))
+        imgView.image = UIImage(named: "phone")
+        return imgView
     }
 
     // Uncomment below for some navbar color animation fun using the new delegate functions
