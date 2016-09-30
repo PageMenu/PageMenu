@@ -45,7 +45,15 @@ class ViewController: UIViewController {
         let controller4 : TestViewController = TestViewController(nibName: "TestViewController", bundle: nil)
         controller4.title = "FAVORITES"
         controllerArray.append(controller4)
-        
+		
+		// Initialize menu item images
+		var normalImages: [UIImage] = []
+		normalImages.append(UIImage(named: "active")!)
+		normalImages.append(UIImage(named: "adventurous")!)
+		normalImages.append(UIImage(named: "happy")!)
+		normalImages.append(UIImage(named: "loved")!)
+
+		
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
             .ScrollMenuBackgroundColor(UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0)),
@@ -53,13 +61,16 @@ class ViewController: UIViewController {
             .SelectionIndicatorColor(UIColor.orangeColor()),
             .BottomMenuHairlineColor(UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0)),
             .MenuItemFont(UIFont(name: "HelveticaNeue", size: 13.0)!),
-            .MenuHeight(40.0),
+            .MenuHeight(70.0),
             .MenuItemWidth(90.0),
+            .MenuImageWidth(32.0),
+            .MenuImageHeight(32.0),
+            .MenuItemTitleAlignment(.Bottom),
             .CenterMenuItems(true)
         ]
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
+		pageMenu = CAPSPageMenu(viewControllers: controllerArray, normalImages: normalImages, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
 
 		self.addChildViewController(pageMenu!)
         self.view.addSubview(pageMenu!.view)
