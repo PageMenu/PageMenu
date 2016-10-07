@@ -58,6 +58,7 @@ typedef NS_ENUM(NSUInteger, CAPSPageMenuScrollDirection) {
 @property (nonatomic) NSInteger pageIndexForOrientationChange;
 @property (nonatomic) BOOL didLayoutSubviewsAfterRotation;
 @property (nonatomic) BOOL didScrollAlready;
+@property (nonatomic) CGFloat currentViewWidth;
 
 @property (nonatomic) CGFloat lastControllerScrollViewContentOffset;
 @property (nonatomic) CAPSPageMenuScrollDirection lastScrollDirection;
@@ -217,6 +218,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _startingPageForScroll = 0;
     _didTapMenuItemToScroll = NO;
     
+    _currentViewWidth = 0;
+    
     _pagesAddedSet = [NSMutableSet set];
 }
 
@@ -314,6 +317,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     
     CGFloat index = 0.0;
     
+    [_mutableMenuItemWidths removeAllObjects];
     for (UIViewController *controller in _controllerArray) {
         if (index == 0.0) {
             // Add first two controllers to scrollview and as child view controller
@@ -352,7 +356,11 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             } else {
                 menuItemFrame = CGRectMake(_menuItemWidth * index + _menuMargin * (index + 1) + _startingMenuMargin, 0.0, _menuItemWidth, _menuHeight);
             }
+            
+            [_mutableMenuItemWidths addObject:@(_menuItemWidth)];
         }
+        
+        _totalMenuItemWidth += _menuItemWidth;
         
         MenuItemView *menuItemView = [[MenuItemView alloc] initWithFrame:menuItemFrame];
         if (_useMenuLikeSegmentedControl) {
@@ -422,6 +430,22 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     [_menuScrollView addSubview:_selectionIndicatorView];
 }
 
+#pragma mark View
+
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateViewFrames)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+    
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 #pragma mark - Scroll view delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -448,9 +472,9 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                                     if (index >= 0 && index < _controllerArray.count ){
                                         // Check dictionary if page was already added
                                         if (![_pagesAddedSet containsObject:@(index)]) {
-
+                                            
                                             [self addPageAtIndex:index];
-
+                                            
                                             [_pagesAddedSet addObject:@(index)];
                                         }
                                     }
@@ -465,10 +489,10 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                                 if (_currentPageIndex != _controllerArray.count - 1 ){
                                     // Add page to the left of current page
                                     NSInteger index = _currentPageIndex - 1;
-
+                                    
                                     if (![_pagesAddedSet containsObject:@(index)] && index < _controllerArray.count && index >= 0) {
                                         [self addPageAtIndex:index];
-
+                                        
                                         [_pagesAddedSet addObject:@(index)];
                                     }
                                     
@@ -480,7 +504,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                                     NSInteger index = _currentPageIndex + 1;
                                     
                                     if (![_pagesAddedSet containsObject:@(index)] && index < _controllerArray.count && index >= 0) {
-
+                                        
                                         [self addPageAtIndex:index];
                                         [_pagesAddedSet addObject:@(index)];
                                     }
@@ -538,9 +562,9 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                             }
                             NSInteger indexRightTwo = page + 2;
                             if ([_pagesAddedSet containsObject:@(indexRightTwo)]) {
-
+                                
                                 [_pagesAddedSet removeObject:@(indexRightTwo)];
-
+                                
                                 [self removePageAtIndex:indexRightTwo];
                             }
                         }
@@ -608,7 +632,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             [self removePageAtIndex:num.integerValue];
         }
     }
-
+    
     _startingPageForScroll = _currentPageIndex;
     _didTapMenuItemToScroll = NO;
     
@@ -623,28 +647,10 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     if (pageIndex >= 0 && pageIndex < _controllerArray.count) {
         [UIView animateWithDuration:0.15 animations:^{
             
-            CGFloat selectionIndicatorWidth = self.selectionIndicatorView.frame.size.width;
-            CGFloat selectionIndicatorX = 0.0;
+            MenuItemView *menuItemView = [_mutableMenuItems objectAtIndex:pageIndex];
             
-            if (self.useMenuLikeSegmentedControl) {
-                selectionIndicatorX = (CGFloat)pageIndex * (self.view.frame.size.width / (CGFloat)self.controllerArray.count);
-                selectionIndicatorWidth = self.view.frame.size.width / (CGFloat)self.controllerArray.count;
-            } else if (self.menuItemWidthBasedOnTitleTextWidth) {
-                selectionIndicatorWidth = [self.menuItemWidths[pageIndex] floatValue];
-                selectionIndicatorX += self.menuMargin;
-                
-                if (pageIndex > 0) {
-                    for (NSInteger i=0; i<pageIndex; i++) {
-                        selectionIndicatorX += (self.menuMargin + [self.menuItemWidths[i] floatValue]);
-                    }
-                }
-            } else {
-                if (self.centerMenuItems && pageIndex == 0) {
-                    selectionIndicatorX = self.startingMenuMargin + self.menuMargin;
-                } else {
-                    selectionIndicatorX = self.menuItemWidth * (CGFloat)pageIndex + self.menuMargin * (CGFloat)(pageIndex + 1) + self.startingMenuMargin;
-                }
-            }
+            CGFloat selectionIndicatorWidth = menuItemView.frame.size.width;
+            CGFloat selectionIndicatorX = menuItemView.frame.origin.x;
             
             self.selectionIndicatorView.frame = CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, selectionIndicatorWidth, self.selectionIndicatorView.frame.size.height);
             
@@ -673,21 +679,29 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         if (_useMenuLikeSegmentedControl) {
             itemIndex = (NSInteger) (tappedPoint.x / (self.view.frame.size.width / (CGFloat)_controllerArray.count));
         } else if (_menuItemWidthBasedOnTitleTextWidth) {
-            // Base case being first item
-            CGFloat menuItemLeftBound = 0.0;
-            CGFloat menuItemRightBound = [_mutableMenuItemWidths[0] floatValue] + _menuMargin + (_menuMargin / 2);
-            
-            if (!(tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound)) {
-                for (NSInteger i = 1; i<=_controllerArray.count - 1; i++) {
-                    menuItemLeftBound = menuItemRightBound + 1.0;
-                    menuItemRightBound = menuItemLeftBound + [_mutableMenuItemWidths[i] floatValue] + _menuMargin;
-                    
-                    if (tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound) {
-                        itemIndex = i;
-                        break;
-                    }
+            for (NSInteger i = 0; i < _mutableMenuItems.count; i++) {
+                MenuItemView *item = [_mutableMenuItems objectAtIndex:i];
+                if(CGRectContainsPoint(item.frame, tappedPoint)){
+                    itemIndex = i;
+                    break;
                 }
             }
+            // Base case being first item
+            //            CGFloat menuItemLeftBound = 0.0;
+            //            CGFloat menuItemRightBound = [_mutableMenuItemWidths[0] floatValue] + _menuMargin + (_menuMargin / 2);
+            //
+            //            if (!(tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound)) {
+            //                for (NSInteger i = 1; i<=_controllerArray.count - 1; i++) {
+            //                    menuItemLeftBound = menuItemRightBound + 1.0;
+            //                    menuItemRightBound = menuItemLeftBound + [_mutableMenuItemWidths[i] floatValue] + _menuMargin;
+            //
+            //                    if (tappedPoint.x >= menuItemLeftBound && tappedPoint.x <= menuItemRightBound) {
+            //                        itemIndex = i;
+            //                        break;
+            //                    }
+            //                }
+            //            }
+            
         } else {
             CGFloat rawItemIndex = ((tappedPoint.x - _startingMenuMargin) - _menuMargin / 2) / (_menuMargin + _menuItemWidth);
             
@@ -780,17 +794,23 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
 
 // MARK: - Orientation Change
 
-- (void)viewDidLayoutSubviews
+- (void)updateViewFrames
 {
     // Configure controller scroll view content size
     _controllerScrollView.contentSize = CGSizeMake(self.view.frame.size.width * (CGFloat)_controllerArray.count, self.view.frame.size.height - _menuHeight);
+    
+    CGFloat oldViewHeight = _currentViewWidth;
+    _currentViewWidth = self.view.frame.size.width;
     
     BOOL oldCurrentOrientationIsPortrait = _currentOrientationIsPortrait;
     
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     _currentOrientationIsPortrait = UIInterfaceOrientationIsPortrait(orientation);
     
-    if ((oldCurrentOrientationIsPortrait && UIInterfaceOrientationIsLandscape(orientation)) || (!oldCurrentOrientationIsPortrait && UIInterfaceOrientationIsPortrait(orientation))){
+    if ((oldCurrentOrientationIsPortrait && UIInterfaceOrientationIsLandscape(orientation))
+        || (!oldCurrentOrientationIsPortrait && UIInterfaceOrientationIsPortrait(orientation))
+        || oldViewHeight != _currentViewWidth){
+        
         _didLayoutSubviewsAfterRotation = YES;
         
         //Resize menu items if using as segmented control
@@ -817,27 +837,41 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 index++;
             }
         } else if (_centerMenuItems) {
-            _startingMenuMargin = ((self.view.frame.size.width - (((CGFloat)_controllerArray.count * _menuItemWidth) + ((CGFloat)(_controllerArray.count - 1) * _menuMargin))) / 2.0) -  _menuMargin;
+            
+            CGFloat totalWidth = _totalMenuItemWidth + ((CGFloat)(_controllerArray.count - 1) * _menuMargin);
+            _startingMenuMargin = ((self.view.frame.size.width - totalWidth) / 2.0) - _menuMargin;
             
             if (_startingMenuMargin < 0.0) {
                 _startingMenuMargin = 0.0;
             }
             
-            CGFloat selectionIndicatorX = self.menuItemWidth * (CGFloat)_currentPageIndex + self.menuMargin * (CGFloat)(_currentPageIndex + 1) + self.startingMenuMargin;
+            _menuItemWidth = [_mutableMenuItemWidths.firstObject floatValue];
+            
+            CGFloat selectionIndicatorX = _menuItemWidth * (CGFloat)_currentPageIndex + self.menuMargin * (CGFloat)(_currentPageIndex + 1) + self.startingMenuMargin;
             _selectionIndicatorView.frame =  CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, self.selectionIndicatorView.frame.size.width, self.selectionIndicatorView.frame.size.height);
             
             // Recalculate frame for menu items if centered
             NSInteger index = 0;
-            
+            CGFloat startX = _startingMenuMargin;
             for (MenuItemView *item in _mutableMenuItems) {
-                if (index == 0) {
-                    item.frame = CGRectMake(_startingMenuMargin + _menuMargin, 0.0, _menuItemWidth, _menuHeight);
-                } else {
-                    item.frame = CGRectMake(_menuItemWidth * (CGFloat)index + _menuMargin * (CGFloat)index + 1.0 + _startingMenuMargin, 0.0, _menuItemWidth, _menuHeight);
+                
+                _menuItemWidth = [[_mutableMenuItemWidths objectAtIndex:index] floatValue];
+                item.frame = CGRectMake(startX + _menuMargin, 0.0, _menuItemWidth, _menuHeight);
+                
+                if(index == _currentPageIndex){
+                    CGFloat selectionIndicatorX = startX + _menuMargin;
+                    _selectionIndicatorView.frame =  CGRectMake(selectionIndicatorX, self.selectionIndicatorView.frame.origin.y, _menuItemWidth, self.selectionIndicatorView.frame.size.height);
                 }
                 
+                startX += _menuItemWidth + _menuMargin;
+                
                 index++;
+                
             }
+            
+            
+        }else{
+            
         }
         
         for (UIView *view in _controllerScrollView.subviews) {
@@ -874,7 +908,12 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
  
  :param: index Index of the page to move to
  */
-- (void)moveToPage:(NSInteger)index
+- (void)moveToPage:(NSInteger)index{
+    
+    [self moveToPage:index animate:YES];
+}
+
+- (void)moveToPage:(NSInteger)index animate:(BOOL)animate
 {
     if (index >= 0 && index < _controllerArray.count) {
         // Update page if changed
