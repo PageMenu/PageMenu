@@ -1,6 +1,6 @@
 //
 //  CAPSPageMenu.h
-//
+//  
 //
 //  Created by Jin Sasaki on 2015/05/30.
 //

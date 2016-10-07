@@ -908,12 +908,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
  
  :param: index Index of the page to move to
  */
-- (void)moveToPage:(NSInteger)index{
-    
-    [self moveToPage:index animate:YES];
-}
-
-- (void)moveToPage:(NSInteger)index animate:(BOOL)animate
+- (void)moveToPage:(NSInteger)index
 {
     if (index >= 0 && index < _controllerArray.count) {
         // Update page if changed
