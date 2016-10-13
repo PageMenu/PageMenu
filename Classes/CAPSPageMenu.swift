@@ -58,6 +58,7 @@ class MenuItemView: UIView {
 }
 
 public enum CAPSPageMenuOption {
+    case selectionIndicatorBottomOffset(CGFloat)
     case selectionIndicatorHeight(CGFloat)
     case menuItemSeparatorWidth(CGFloat)
     case scrollMenuBackgroundColor(UIColor)
@@ -104,6 +105,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     open var menuHeight : CGFloat = 34.0
     open var menuMargin : CGFloat = 15.0
     open var menuItemWidth : CGFloat = 111.0
+    open var selectionIndicatorBottomOffset : CGFloat = 0.0
     open var selectionIndicatorHeight : CGFloat = 3.0
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
     open var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
@@ -190,6 +192,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         if let options = pageMenuOptions {
             for option in options {
                 switch (option) {
+                case let .selectionIndicatorBottomOffset(value):
+                    selectionIndicatorBottomOffset = value
                 case let .selectionIndicatorHeight(value):
                     selectionIndicatorHeight = value
                 case let .menuItemSeparatorWidth(value):
@@ -496,14 +500,14 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         var selectionIndicatorFrame : CGRect = CGRect()
         
         if useMenuLikeSegmentedControl {
-            selectionIndicatorFrame = CGRect(x: 0.0, y: menuHeight - selectionIndicatorHeight, width: self.view.frame.width / CGFloat(controllerArray.count), height: selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRect(x: 0.0, y: menuHeight - selectionIndicatorHeight - selectionIndicatorBottomOffset, width: self.view.frame.width / CGFloat(controllerArray.count), height: selectionIndicatorHeight)
         } else if menuItemWidthBasedOnTitleTextWidth {
-            selectionIndicatorFrame = CGRect(x: menuMargin, y: menuHeight - selectionIndicatorHeight, width: menuItemWidths[0], height: selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRect(x: menuMargin, y: menuHeight - selectionIndicatorHeight - selectionIndicatorBottomOffset, width: menuItemWidths[0], height: selectionIndicatorHeight)
         } else {
             if centerMenuItems  {
-                selectionIndicatorFrame = CGRect(x: startingMenuMargin + menuMargin, y: menuHeight - selectionIndicatorHeight, width: menuItemWidth, height: selectionIndicatorHeight)
+                selectionIndicatorFrame = CGRect(x: startingMenuMargin + menuMargin, y: menuHeight - selectionIndicatorHeight - selectionIndicatorBottomOffset, width: menuItemWidth, height: selectionIndicatorHeight)
             } else {
-                selectionIndicatorFrame = CGRect(x: menuMargin, y: menuHeight - selectionIndicatorHeight, width: menuItemWidth, height: selectionIndicatorHeight)
+                selectionIndicatorFrame = CGRect(x: menuMargin, y: menuHeight - selectionIndicatorHeight - selectionIndicatorBottomOffset, width: menuItemWidth, height: selectionIndicatorHeight)
             }
         }
         
