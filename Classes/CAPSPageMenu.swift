@@ -90,6 +90,7 @@ public enum CAPSPageMenuOption {
     case addBottomMenuShadow(Bool)
     case iconIndicator(Bool)
     case iconIndicatorView(UIView)
+    case showStepperView(Bool)
 }
 
 open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -115,6 +116,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     var iconIndicator:Bool = false
     var selectionIndicatorCustomView: UIView?
     var selectionIndicatorView : UIView = UIView()
+    var stepperView : UIView = UIView()
     
     var currentPageIndex : Int = 0
     var lastPageIndex : Int = 0
@@ -139,6 +141,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     open var centerMenuItems : Bool = false
     open var enableHorizontalBounce : Bool = true
     open var hideTopMenuBar : Bool = false
+    open var showStepperView : Bool = false
     
     public var menuShadowRadius : CGFloat = 0
     public var menuShadowOpacity : Float = 0
@@ -256,6 +259,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                     iconIndicator = value
                 case let .iconIndicatorView(value):
                     selectionIndicatorCustomView = value
+                case let .showStepperView(value):
+                    showStepperView = value
                 }
             }
             
@@ -514,6 +519,13 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
         selectionIndicatorView.backgroundColor = selectionIndicatorColor
         menuScrollView.addSubview(selectionIndicatorView)
+        
+        //Stepper view
+        if showStepperView {
+            selectionIndicatorFrame = CGRect(x: 0.0, y: menuHeight - selectionIndicatorHeight, width: menuScrollView.frame.width, height: selectionIndicatorHeight)
+            stepperView = UIView(frame: selectionIndicatorFrame)
+            menuScrollView.addSubview(self.stepperView)
+        }
         
         //Check if icon indicator is active and has a valid icon indicator view
         if let indicatorView = self.selectionIndicatorCustomView, self.iconIndicator {
@@ -959,7 +971,6 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                 let selectionIndicatorX : CGFloat = CGFloat(currentPageIndex) * (self.view.frame.width / CGFloat(self.controllerArray.count))
                 let selectionIndicatorWidth : CGFloat = self.view.frame.width / CGFloat(self.controllerArray.count)
                 selectionIndicatorView.frame =  CGRect(x: selectionIndicatorX, y: self.selectionIndicatorView.frame.origin.y, width: selectionIndicatorWidth, height: self.selectionIndicatorView.frame.height)
-                
                 // Resize menu items
                 var index : Int = 0
                 
