@@ -65,9 +65,10 @@ A fully customizable and flexible paging menu controller built from other view c
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemoScreen6.png" alt="PageMenuDemoScreen6">
 
 **SteppedProgressBar**
+
 *if you want do it for landscape mode and (create a pull request)
 
-<img src="tree/master/Demos/Demo%207/demo7.gif" alt="SteppedProgressBar">
+<img width='230' src="https://github.com/orazz/PageMenu/blob/master/Demos/Demo%207/demo7.gif?raw=true" alt="SteppedProgressBar">
 
 ## Installation
 
