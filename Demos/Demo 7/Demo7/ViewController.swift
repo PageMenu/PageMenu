@@ -50,7 +50,7 @@ class ViewController: UIViewController, CAPSPageMenuDelegate, CMSteppedProgressB
             .scrollMenuBackgroundColor(UIColor.white),
             .viewBackgroundColor(UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 1.0)),
             .selectionIndicatorHeight(20.0),
-            .menuHeight(40.0),
+            .menuHeight(45.0),
             .menuItemSeparatorWidth(0),
             .addBottomMenuHairline(false),
             .selectedMenuItemLabelColor(UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)),
