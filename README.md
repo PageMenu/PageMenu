@@ -65,9 +65,10 @@ A fully customizable and flexible paging menu controller built from other view c
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemoScreen6.png" alt="PageMenuDemoScreen6">
 
 **SteppedProgressBar**
-*if you want do it for landscape mode and (create a pull request)
 
-<img src="tree/master/Demos/Demo%207/demo7.gif" alt="SteppedProgressBar">
+*only portrait mode
+
+<img width='230' src="https://github.com/orazz/PageMenu/blob/master/Demos/Demo%207/demo7.gif?raw=true" alt="SteppedProgressBar">
 
 ## Installation
 
@@ -338,22 +339,23 @@ There are many ways you are able to customize page menu for your needs and there
 
   * Bottom menu shadow color
 
-       bottomMenuShadowColor (UIColor)
+        bottomMenuShadowColor (UIColor)
 
   * Bottom menu shadow
 
-       addBottomMenuShadow (Bool)
+        addBottomMenuShadow (Bool)
 
   * The bottom menu shadow's opacity
-       shadowOpacity (Float)
+        
+        shadowOpacity (Float)
 
   * The bottom menu shadow's radius
 
-       shadowRadius (CGFloat)
+        shadowRadius (CGFloat)
 
   * The bottom menu shadow's vertical offset
 
-       shadowOffset (CGFloat)
+        shadowOffset (CGFloat)
 
   * Icon Indicator
 
@@ -361,11 +363,11 @@ There are many ways you are able to customize page menu for your needs and there
 
   * Icon Indicator view to show like indicator
 
-       iconIndicatorView(UIView)
+        iconIndicatorView(UIView)
 
   * ShowSteppedView
 
-       showSteppedView(Bool)
+        showSteppedView(Bool)
 
 
 ## Apps using PageMenu
