@@ -19,7 +19,7 @@
 #pragma mark -  Life
 
 - (void)commonInit {
-    self.animDuration = 0.4f;
+    self.animDuration = 0.6f;
     self.dotsWidth = 20.f;
     self.linesHeight = 5.f;
     self.barColor = [UIColor grayColor];
@@ -142,9 +142,17 @@
     NSMutableArray* aviews = [[NSMutableArray alloc] init];
     NSMutableArray* afilledViews = [[NSMutableArray alloc] init];
     
-    CGFloat padding = (self.frame.size.width-(self.numberOfSteps*self.dotsWidth))/(self.numberOfSteps+1);
+    CGFloat pad = self.frame.size.width/self.numberOfSteps;
+    CGFloat p = pad / 2;
+    
     for (int i = 0; i < self.numberOfSteps; i++) {
-        UIView *round = [[UIView alloc] initWithFrame:CGRectMake((i*self.dotsWidth)+((i+1)*padding), self.frame.size.height/2-self.dotsWidth/2, self.dotsWidth, self.dotsWidth)];
+        
+        int k = i + 1;
+        
+        CGFloat padd = pad*k-p;
+        
+        UIView *round = [[UIView alloc] initWithFrame:CGRectMake((padd)-(self.dotsWidth/2), self.frame.size.height/2-self.dotsWidth/2, self.dotsWidth, self.dotsWidth)];
+        
         round.tag = i;
         round.layer.cornerRadius = self.dotsWidth/2;
         if (i == 0)
@@ -152,7 +160,7 @@
         else
             round.backgroundColor = self.barColor;
         
-        UIView* filledround = [[UIView alloc] initWithFrame:CGRectMake((i*self.dotsWidth)+((i+1)*padding), self.frame.size.height/2-self.dotsWidth/2, 0, self.dotsWidth)];
+        UIView* filledround = [[UIView alloc] initWithFrame:CGRectMake((padd)-(self.dotsWidth/2), self.frame.size.height/2-self.dotsWidth/2, 0, self.dotsWidth)];
         filledround.backgroundColor = self.tintColor;
         filledround.layer.cornerRadius = self.dotsWidth/2;
         filledround.layer.masksToBounds = NO;
@@ -164,7 +172,7 @@
         [afilledViews addObject:filledround];
         [aviews addObject:round];
         if (i < self.numberOfSteps-1) {
-            UIView* line = [[UIView alloc] initWithFrame:CGRectMake((round.frame.origin.x+round.frame.size.width)-1, self.frame.size.height/2-self.linesHeight/2, padding+2, self.linesHeight)];
+            UIView* line = [[UIView alloc] initWithFrame:CGRectMake((round.frame.origin.x+round.frame.size.width)-1, self.frame.size.height/2-self.linesHeight/2, pad, self.linesHeight)];
             line.backgroundColor = self.barColor;
             [self addSubview:line];
             [aviews addObject:line];
