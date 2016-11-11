@@ -33,18 +33,20 @@ class PageMenuTwoViewController: UIViewController {
         controllerArray.append(controller4)
         
         // Customize menu (Optional)
-        var parameters: [String: AnyObject] = ["scrollMenuBackgroundColor": UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0),
-                                                     "viewBackgroundColor": UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0),
-                                                 "selectionIndicatorColor": UIColor.orangeColor(),
-                                                   "addBottomMenuHairline": false,
-                                                            "menuItemFont": UIFont(name: "HelveticaNeue", size: 35.0)!,
-                                                              "menuHeight": 50.0,
-                                                "selectionIndicatorHeight": 0.0,
-                                      "menuItemWidthBasedOnTitleTextWidth": true,
-                                              "selectedMenuItemLabelColor": UIColor.orangeColor()]
+        var parameters: [CAPSPageMenuOption] = [
+            .ScrollMenuBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
+            .ViewBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
+            .SelectionIndicatorColor(UIColor.orangeColor()),
+            .AddBottomMenuHairline(false),
+            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 35.0)!),
+            .MenuHeight(50.0),
+            .SelectionIndicatorHeight(0.0),
+            .MenuItemWidthBasedOnTitleTextWidth(true),
+            .SelectedMenuItemLabelColor(UIColor.orangeColor())
+        ]
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 60.0, self.view.frame.width, self.view.frame.height - 60.0), options: parameters)
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 60.0, self.view.frame.width, self.view.frame.height - 60.0), pageMenuOptions: parameters)
         
         self.view.addSubview(pageMenu!.view)
     }
