@@ -15,65 +15,73 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
         super.viewDidLoad()
         
         self.title = "PAGE MENU"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         
         // MARK: - Scroll menu setup
         
         // Initialize view controllers to display and place in array
         var controllerArray : [UIViewController] = []
         
-        var controller1 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
+        let controller1 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
         controller1.parentNavigationController = self.navigationController
         controller1.title = "FAVORITES"
         controllerArray.append(controller1)
         
-        var controller2 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
+        let controller2 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller2.title = "RECENTS"
         controller2.parentNavigationController = self.navigationController
         controllerArray.append(controller2)
         
-        var controller3 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
+        let controller3 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller3.title = "FRIENDS"
         controller3.parentNavigationController = self.navigationController
         controllerArray.append(controller3)
         
-        var controller4 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
+        let controller4 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller4.title = "OTHERS"
         controller4.parentNavigationController = self.navigationController
         controllerArray.append(controller4)
         
         // Customize menu (Optional)
-        var parameters: [CAPSPageMenuOption] = [
-            .MenuItemSeparatorWidth(4.3),
-            .ScrollMenuBackgroundColor(UIColor.whiteColor()),
-            .ViewBackgroundColor(UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 1.0)),
-            .BottomMenuHairlineColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 0.1)),
-            .SelectionIndicatorColor(UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)),
-            .MenuMargin(20.0),
-            .MenuHeight(40.0),
-            .SelectedMenuItemLabelColor(UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)),
-            .UnselectedMenuItemLabelColor(UIColor(red: 40.0/255.0, green: 40.0/255.0, blue: 40.0/255.0, alpha: 1.0)),
-            .MenuItemFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!),
-            .UseMenuLikeSegmentedControl(true),
-            .MenuItemSeparatorRoundEdges(true),
-            .SelectionIndicatorHeight(2.0),
-            .MenuItemSeparatorPercentageHeight(0.1)
+        let parameters: [CAPSPageMenuOption] = [
+            .menuItemSeparatorWidth(4.3),
+            .scrollMenuBackgroundColor(UIColor.white),
+            .viewBackgroundColor(UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 1.0)),
+            .bottomMenuHairlineColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 0.1)),
+            .selectionIndicatorColor(UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)),
+            .menuMargin(20.0),
+            .menuHeight(40.0),
+            .selectedMenuItemLabelColor(UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)),
+            .unselectedMenuItemLabelColor(UIColor(red: 40.0/255.0, green: 40.0/255.0, blue: 40.0/255.0, alpha: 1.0)),
+            .menuItemFont(UIFont(name: "HelveticaNeue-Medium", size: 14.0)!),
+            .useMenuLikeSegmentedControl(true),
+            .menuItemSeparatorRoundEdges(true),
+            .selectionIndicatorHeight(20),
+            .menuItemSeparatorPercentageHeight(0.1),
+            .iconIndicator(true),
+            .iconIndicatorView(self.getIndicatorView())
         ]
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRect(x:0.0, y:0.0, width:self.view.frame.width, height:self.view.frame.height), pageMenuOptions: parameters)
         
         // Optional delegate 
         pageMenu!.delegate = self
         
         self.view.addSubview(pageMenu!.view)
     }
+    
+    private func getIndicatorView()->UIView{
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 130))
+        imgView.image = UIImage(named: "phone")
+        return imgView
+    }
 
     // Uncomment below for some navbar color animation fun using the new delegate functions
     
-    func didMoveToPage(controller: UIViewController, index: Int) {
-        println("did move to page")
+    func didMoveToPage(_ controller: UIViewController, index: Int) {
+        print("did move to page")
         
 //        var color : UIColor = UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)
 //        var navColor : UIColor = UIColor(red: 17.0/255.0, green: 64.0/255.0, blue: 107.0/255.0, alpha: 1.0)
@@ -96,8 +104,8 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
 //        }
     }
     
-    func willMoveToPage(controller: UIViewController, index: Int) {
-        println("will move to page")
+    func willMoveToPage(_ controller: UIViewController, index: Int) {
+        print("will move to page")
         
 //        var color : UIColor = UIColor(red: 18.0/255.0, green: 150.0/255.0, blue: 225.0/255.0, alpha: 1.0)
 //        var navColor : UIColor = UIColor(red: 17.0/255.0, green: 64.0/255.0, blue: 107.0/255.0, alpha: 1.0)

@@ -19,58 +19,59 @@ class TestViewController: UIViewController {
         // Initialize view controllers to display and place in array
         var controllerArray : [UIViewController] = []
         
-        var controller1 : UIViewController = UIViewController()
-        controller1.view.backgroundColor = UIColor.purpleColor()
+        let controller1 : UIViewController = UIViewController()
+        controller1.view.backgroundColor = UIColor.purple
         controller1.title = "PURPLE"
         controllerArray.append(controller1)
         
-        var controller2 : UIViewController = UIViewController()
-        controller2.view.backgroundColor = UIColor.orangeColor()
+        let controller2 : UIViewController = UIViewController()
+        controller2.view.backgroundColor = UIColor.orange
         controller2.title = "ORANGE"
         controllerArray.append(controller2)
         
-        var controller3 : UIViewController = UIViewController()
-        controller3.view.backgroundColor = UIColor.grayColor()
+        let controller3 : UIViewController = UIViewController()
+        controller3.view.backgroundColor = UIColor.gray
         controller3.title = "GRAY"
         controllerArray.append(controller3)
         
-        var controller4 : UIViewController = UIViewController()
-        controller4.view.backgroundColor = UIColor.brownColor()
+        let controller4 : UIViewController = UIViewController()
+        controller4.view.backgroundColor = UIColor.brown
         controller4.title = "BROWN"
         controllerArray.append(controller4)
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 50.0, self.view.frame.width, 100), pageMenuOptions: nil)
+        let rect = CGRect(x: 0.0, y: 50.0, width: self.view.frame.width, height: 100)
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: rect, pageMenuOptions: nil)
         
-        println(self.view.frame.height)
+        print(self.view.frame.height)
         
         self.view.addSubview(pageMenu!.view)
         
         // Initialize view controllers to display and place in array
         var controllerArray_1 : [UIViewController] = []
         
-        var controller1_1 : UIViewController = UIViewController()
-        controller1_1.view.backgroundColor = UIColor.brownColor()
+        let controller1_1 : UIViewController = UIViewController()
+        controller1_1.view.backgroundColor = UIColor.brown
         controller1_1.title = "BROWN"
         controllerArray_1.append(controller1_1)
         
-        var controller2_1 : UIViewController = UIViewController()
-        controller2_1.view.backgroundColor = UIColor.grayColor()
+        let controller2_1 : UIViewController = UIViewController()
+        controller2_1.view.backgroundColor = UIColor.gray
         controller2_1.title = "GRAY"
         controllerArray_1.append(controller2_1)
         
-        var controller3_1 : UIViewController = UIViewController()
-        controller3_1.view.backgroundColor = UIColor.orangeColor()
+        let controller3_1 : UIViewController = UIViewController()
+        controller3_1.view.backgroundColor = UIColor.orange
         controller3_1.title = "ORANGE"
         controllerArray_1.append(controller3_1)
         
-        var controller4_1 : UIViewController = UIViewController()
-        controller4_1.view.backgroundColor = UIColor.purpleColor()
+        let controller4_1 : UIViewController = UIViewController()
+        controller4_1.view.backgroundColor = UIColor.purple
         controller4_1.title = "PURPLE"
         controllerArray_1.append(controller4_1)
         
         // Initialize scroll menu
-        pageMenu1 = CAPSPageMenu(viewControllers: controllerArray_1, frame: CGRectMake(0.0, 400.0, self.view.frame.width, 100.0), pageMenuOptions: nil)
+        pageMenu1 = CAPSPageMenu(viewControllers: controllerArray_1, frame: CGRect(x:0.0, y:400.0, width:self.view.frame.width, height:100.0), pageMenuOptions: nil)
         
         self.view.addSubview(pageMenu1!.view)
     }

@@ -106,6 +106,7 @@
 				TargetAttributes = {
 					D7BF965E1B6B8445002F32A0 = {
 						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -251,6 +252,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -267,6 +269,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -289,6 +292,7 @@
 				D7BF96771B6B8445002F32A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

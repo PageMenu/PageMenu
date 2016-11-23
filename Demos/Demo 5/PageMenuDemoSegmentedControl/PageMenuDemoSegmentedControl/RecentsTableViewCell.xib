@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,41 +13,36 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="94"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uPf-FT-rCo" id="s92-qH-WBM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <frame key="frameInset" width="320" height="93"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BYf-3F-hYs">
-                        <rect key="frame" x="20" y="15" width="64" height="64"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="64" id="32G-4S-UKw"/>
                             <constraint firstAttribute="height" constant="64" id="oYB-qh-XPV"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgr-VX-8Ct">
-                        <rect key="frame" x="99" y="17" width="206" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="j6m-Wt-Ptm"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(205) 354-9126" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qdx-4P-NiG">
-                        <rect key="frame" x="99" y="43" width="206" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="mJc-uN-1aZ"/>
                             <constraint firstAttribute="width" constant="206" id="vXy-nB-u1V"/>
                             <constraint firstAttribute="height" constant="32" id="xDS-KC-fDu"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OjN-Cx-jgG">
-                        <rect key="frame" x="252" y="12" width="60" height="70"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone_send.png" translatesAutoresizingMaskIntoConstraints="NO" id="FJW-wK-vc5">
-                                <rect key="frame" x="12" y="7" width="35" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="tFK-OK-gza"/>
                                     <constraint firstAttribute="height" constant="35" id="vFX-9T-F4Q"/>
@@ -58,16 +55,15 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yesterday" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKq-yf-Yy4">
-                                <rect key="frame" x="0.0" y="42" width="60" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="dyz-WW-2gk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
-                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.26379796862602234" green="0.2637900710105896" blue="0.26379451155662537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.97037827968597412" green="0.97034925222396851" blue="0.97036570310592651" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="FJW-wK-vc5" firstAttribute="top" secondItem="OjN-Cx-jgG" secondAttribute="top" constant="7" id="2od-0D-hwg"/>
                             <constraint firstItem="FJW-wK-vc5" firstAttribute="leading" secondItem="OjN-Cx-jgG" secondAttribute="leading" constant="12" id="Aax-kR-q16"/>
@@ -91,7 +87,7 @@
                     <constraint firstItem="Pgr-VX-8Ct" firstAttribute="trailing" secondItem="Qdx-4P-NiG" secondAttribute="trailing" id="y33-Ad-ToI"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.97037827968597412" green="0.97034925222396851" blue="0.97036570310592651" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="activityImageView" destination="FJW-wK-vc5" id="eAc-4P-E36"/>
                 <outlet property="dateLabel" destination="XKq-yf-Yy4" id="7ZR-Et-B65"/>

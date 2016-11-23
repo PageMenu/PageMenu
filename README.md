@@ -64,6 +64,12 @@ A fully customizable and flexible paging menu controller built from other view c
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemoSegmentedControlGif.gif" alt="PageMenuDemoSegmentedControlGif">
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemoScreen6.png" alt="PageMenuDemoScreen6">
 
+**SteppedProgressBar**
+
+*only portrait mode
+
+<img width='230' src="https://github.com/orazz/PageMenu/blob/master/Demos/Demo%207/demo7.gif?raw=true" alt="SteppedProgressBar">
+
 ## Installation
 
 **CocoaPods**
@@ -116,8 +122,8 @@ Swift
 // Array to keep track of controllers in page menu
 var controllerArray : [UIViewController] = []
 
-// Create variables for all view controllers you want to put in the 
-// page menu, initialize them, and add each to the controller array. 
+// Create variables for all view controllers you want to put in the
+// page menu, initialize them, and add each to the controller array.
 // (Can be any UIViewController subclass)
 // Make sure the title property of all view controllers is set
 // Example:
@@ -128,8 +134,8 @@ controllerArray.append(controller)
 // Customize page menu to your liking (optional) or use default settings by sending nil for 'options' in the init
 // Example:
 var parameters: [CAPSPageMenuOption] = [
-    .MenuItemSeparatorWidth(4.3), 
-    .UseMenuLikeSegmentedControl(true), 
+    .MenuItemSeparatorWidth(4.3),
+    .UseMenuLikeSegmentedControl(true),
     .MenuItemSeparatorPercentageHeight(0.1)
 ]
 
@@ -147,8 +153,8 @@ Objective-C
 // Array to keep track of controllers in page menu
 NSMutableArray *controllerArray = [NSMutableArray array];
 
-// Create variables for all view controllers you want to put in the 
-// page menu, initialize them, and add each to the controller array. 
+// Create variables for all view controllers you want to put in the
+// page menu, initialize them, and add each to the controller array.
 // (Can be any UIViewController subclass)
 // Make sure the title property of all view controllers is set
 // Example:
@@ -178,14 +184,14 @@ In order to use the delegate methods first set the delegate of page menu to the 
 Swift
 
 ```swift
-// Optional delegate 
+// Optional delegate
 pageMenu!.delegate = self
 ```
 
 Objective-C
 
 ```objectivec
-// Optional delegate 
+// Optional delegate
 _pageMenu.delegate = self;
 ```
 
@@ -203,7 +209,7 @@ func didMoveToPage(controller: UIViewController, index: Int){}
 Objective-C
 
 ```objectivec
-// Optional delegate 
+// Optional delegate
 - (void)willMoveToPage:(UIViewController *)controller index:(NSInteger)index {}
 
 - (void)didMoveToPage:(UIViewController *)controller index:(NSInteger)index {}
@@ -217,7 +223,7 @@ There are many ways you are able to customize page menu for your needs and there
 
 **1)  Colors**
 
-  * Background color behind the page menu scroll view to blend in view controller backgrounds 
+  * Background color behind the page menu scroll view to blend in view controller backgrounds
 
         viewBackgroundColor (UIColor)
 
@@ -280,7 +286,7 @@ There are many ways you are able to customize page menu for your needs and there
 
         useMenuLikeSegmentedControl (Bool)
 
-   
+
   * Menu item separator width in pixels
 
         menuItemSeparatorWidth (CGFloat)
@@ -330,6 +336,39 @@ There are many ways you are able to customize page menu for your needs and there
   * Scroll animation duration on menu item tap in milliseconds
 
         scrollAnimationDurationOnMenuItemTap (Int)
+
+  * Bottom menu shadow color
+
+        bottomMenuShadowColor (UIColor)
+
+  * Bottom menu shadow
+
+        addBottomMenuShadow (Bool)
+
+  * The bottom menu shadow's opacity
+        
+        shadowOpacity (Float)
+
+  * The bottom menu shadow's radius
+
+        shadowRadius (CGFloat)
+
+  * The bottom menu shadow's vertical offset
+
+        shadowOffset (CGFloat)
+
+  * Icon Indicator
+
+       iconIndicator(Bool)
+
+  * Icon Indicator view to show like indicator
+
+        iconIndicatorView(UIView)
+
+  * ShowSteppedView
+
+        showSteppedView(Bool)
+
 
 ## Apps using PageMenu
 

@@ -283,9 +283,11 @@
 				TargetAttributes = {
 					9E0B90041A468DC30095E919 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 					};
 					9E0B90191A468DC30095E919 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9E0B90041A468DC30095E919;
 					};
 				};
@@ -491,6 +493,7 @@
 				INFOPLIST_FILE = PageMenuDemoMenuItemWidthBasedOnTitleText/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -502,6 +505,7 @@
 				INFOPLIST_FILE = PageMenuDemoMenuItemWidthBasedOnTitleText/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -521,6 +525,7 @@
 				INFOPLIST_FILE = PageMenuDemoMenuItemWidthBasedOnTitleTextTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PageMenuDemoMenuItemWidthBasedOnTitleText.app/PageMenuDemoMenuItemWidthBasedOnTitleText";
 			};
 			name = Debug;
@@ -536,6 +541,7 @@
 				INFOPLIST_FILE = PageMenuDemoMenuItemWidthBasedOnTitleTextTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PageMenuDemoMenuItemWidthBasedOnTitleText.app/PageMenuDemoMenuItemWidthBasedOnTitleText";
 			};
 			name = Release;

@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     var pageMenu : CAPSPageMenu?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // MARK: - UI Setup
@@ -20,13 +20,13 @@ class ViewController: UIViewController {
         self.title = "PAGE MENU"
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orangeColor()]
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<-", style: UIBarButtonItemStyle.Done, target: self, action: "didTapGoToLeft")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "->", style: UIBarButtonItemStyle.Done, target: self, action: "didTapGoToRight")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<-", style: UIBarButtonItemStyle.done, target: self, action: #selector(ViewController.didTapGoToLeft))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "->", style: UIBarButtonItemStyle.done, target: self, action: #selector(ViewController.didTapGoToRight))
         
         // MARK: - Scroll menu setup
         
@@ -48,23 +48,27 @@ class ViewController: UIViewController {
         
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
-            .ScrollMenuBackgroundColor(UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0)),
-            .ViewBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
-            .SelectionIndicatorColor(UIColor.orangeColor()),
-            .BottomMenuHairlineColor(UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0)),
-            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 13.0)!),
-            .MenuHeight(40.0),
-            .MenuItemWidth(90.0),
-            .CenterMenuItems(true)
+            .scrollMenuBackgroundColor(UIColor(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0, alpha: 1.0)),
+            .viewBackgroundColor(UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)),
+            .selectionIndicatorColor(UIColor.orange),
+            .bottomMenuHairlineColor(UIColor(red: 70.0/255.0, green: 70.0/255.0, blue: 80.0/255.0, alpha: 1.0)),
+            .menuItemFont(UIFont(name: "HelveticaNeue", size: 13.0)!),
+            .menuHeight(40.0),
+            .menuItemWidth(90.0),
+            .centerMenuItems(true),
+            .addBottomMenuShadow(true),
+            .menuShadowColor(UIColor.white),
+            .menuShadowRadius(4)
         ]
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
+        let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.frame.width, height: self.view.frame.height))
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: rect, pageMenuOptions: parameters)
 
 		self.addChildViewController(pageMenu!)
         self.view.addSubview(pageMenu!.view)
 		
-		pageMenu!.didMoveToParentViewController(self)
+		pageMenu!.didMove(toParentViewController: self)
     }
     
     func didTapGoToLeft() {
@@ -84,9 +88,9 @@ class ViewController: UIViewController {
     }
 	
 	// MARK: - Container View Controller
-	override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
-		return true
-	}
+//	override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+//		return true
+//	}
 	
 	override func shouldAutomaticallyForwardRotationMethods() -> Bool {
 		return true

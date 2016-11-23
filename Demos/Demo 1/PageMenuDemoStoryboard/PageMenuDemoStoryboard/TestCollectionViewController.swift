@@ -19,35 +19,38 @@ class TestCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView!.registerNib(UINib(nibName: "MoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView?.register(MoodCollectionViewCell.self, forCellWithReuseIdentifier: "MoodCollectionViewCell")
+        self.collectionView?.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: UICollectionViewDataSource
-
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-
-
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         return 8
     }
-
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell : MoodCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MoodCollectionViewCell
     
-        // Configure the cell
-        cell.backgroundImageView.image = UIImage(named: backgroundPhotoNameArray[indexPath.row])
-        cell.moodTitleLabel.text = moodArray[indexPath.row]
-        cell.moodIconImageView.image = UIImage(named: photoNameArray[indexPath.row])
-    
-        return cell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell : MoodCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MoodCollectionViewCell {
+            
+            // Configure the cell
+            cell.backgroundImageView.image = UIImage(named: backgroundPhotoNameArray[indexPath.row])
+            cell.moodTitleLabel.text = moodArray[indexPath.row]
+            cell.moodIconImageView.image = UIImage(named: photoNameArray[indexPath.row])
+            
+            return cell
+        }
+        
+        return UICollectionViewCell()
+        
     }
 }
