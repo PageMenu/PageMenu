@@ -602,12 +602,14 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                         
                         
                         // Calculate ratio between scroll views
-                        ratio = (menuScrollView.contentSize.width - self.view.frame.width) / (controllerScrollView.contentSize.width - self.view.frame.width)
+                        ratio = menuScrollView.contentSize.width / controllerScrollView.contentSize.width
                         
                         if menuScrollView.contentSize.width > self.view.frame.width {
                             var offset : CGPoint = menuScrollView.contentOffset
                             offset.x = controllerScrollView.contentOffset.x * ratio
-                            menuScrollView.setContentOffset(offset, animated: false)
+                            if offset.x <= menuScrollView.contentSize.width - self.view.frame.width {
+                                menuScrollView.setContentOffset(offset, animated: false)
+                            }
                         }
                         
                         // Calculate current page
