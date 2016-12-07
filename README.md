@@ -40,9 +40,8 @@
 
 ## Latest Update
 
-**1.2.8 Release (06/22/2015)**
-* Bug fixes
-* Obj-c more stable
+**1.3.0 Release (12/07/2016)**
+* Swift 3.0 support
 
 
 ## Description
@@ -348,6 +347,9 @@ Please let me know if your app in the AppStore uses this library so I can add yo
 [Niklas Fahl (fahlout)](http://bit.ly/fahlout) - iOS Developer ([LinkedIn](http://bit.ly/linked-in-niklas-fahl))
 
 **Thank you for your contributions:**
+
+[Joe Ferrucci (joeferrucci)](https://github.com/joeferrucci)
+* Swift 3.0 Support
 
 [masarusanjp](https://github.com/masarusanjp)
 * Type-safe options
