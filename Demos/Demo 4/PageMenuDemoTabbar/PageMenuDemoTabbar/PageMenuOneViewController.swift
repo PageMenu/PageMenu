@@ -43,21 +43,21 @@ class PageMenuOneViewController: UIViewController {
         
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
-            .ScrollMenuBackgroundColor(UIColor.orangeColor()),
-            .ViewBackgroundColor(UIColor.whiteColor()),
-            .SelectionIndicatorColor(UIColor.whiteColor()),
-            .UnselectedMenuItemLabelColor(UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4)),
-            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 35.0)!),
-            .MenuHeight(44.0),
-            .MenuMargin(20.0),
-            .SelectionIndicatorHeight(0.0),
-            .BottomMenuHairlineColor(UIColor.orangeColor()),
-            .MenuItemWidthBasedOnTitleTextWidth(true),
-            .SelectedMenuItemLabelColor(UIColor.whiteColor())
+            .scrollMenuBackgroundColor(UIColor.orange),
+            .viewBackgroundColor(UIColor.white),
+            .selectionIndicatorColor(UIColor.white),
+            .unselectedMenuItemLabelColor(UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4)),
+            .menuItemFont(UIFont(name: "HelveticaNeue", size: 35.0)!),
+            .menuHeight(44.0),
+            .menuMargin(20.0),
+            .selectionIndicatorHeight(0.0),
+            .bottomMenuHairlineColor(UIColor.orange),
+            .menuItemWidthBasedOnTitleTextWidth(true),
+            .selectedMenuItemLabelColor(UIColor.white)
         ]
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 60.0, self.view.frame.width, self.view.frame.height - 60.0), pageMenuOptions: parameters)
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRect(x: 0.0, y: 60.0, width: self.view.frame.width, height: self.view.frame.height - 60.0), pageMenuOptions: parameters)
         
         self.view.addSubview(pageMenu!.view)
     }
