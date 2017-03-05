@@ -24,25 +24,25 @@ class PageMenuOneViewController: UIViewController {
         // Initialize view controllers to display and place in array
         var controllerArray : [UIViewController] = []
         
-        var controller1 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
+        let controller1 : TestTableViewController = TestTableViewController(nibName: "TestTableViewController", bundle: nil)
         controller1.title = "favorites"
         controllerArray.append(controller1)
-        var controller2 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
+        let controller2 : RecentsTableViewController = RecentsTableViewController(nibName: "RecentsTableViewController", bundle: nil)
         controller2.title = "recents"
         controllerArray.append(controller2)
-        var controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
+        let controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
         controller3.title = "contacts"
         controllerArray.append(controller3)
         
         for i in 0...10 {
-            var controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
+            let controller3 : ContactsTableViewController = ContactsTableViewController(nibName: "ContactsTableViewController", bundle: nil)
             controller3.title = "contr\(i)"
             //            controller3.view.backgroundColor = getRandomColor()
             controllerArray.append(controller3)
         }
         
         // Customize menu (Optional)
-        var parameters: [CAPSPageMenuOption] = [
+        let parameters: [CAPSPageMenuOption] = [
             .ScrollMenuBackgroundColor(UIColor.orangeColor()),
             .ViewBackgroundColor(UIColor.whiteColor()),
             .SelectionIndicatorColor(UIColor.whiteColor()),
@@ -64,11 +64,11 @@ class PageMenuOneViewController: UIViewController {
     
     func getRandomColor() -> UIColor{
         
-        var randomRed:CGFloat = CGFloat(drand48())
+        let randomRed:CGFloat = CGFloat(drand48())
         
-        var randomGreen:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
         
-        var randomBlue:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
         
         return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
         
