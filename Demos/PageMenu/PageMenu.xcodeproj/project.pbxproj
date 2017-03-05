@@ -108,6 +108,7 @@
 				TargetAttributes = {
 					D7BF965E1B6B8445002F32A0 = {
 						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -255,6 +256,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -272,6 +274,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.ua.caps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
