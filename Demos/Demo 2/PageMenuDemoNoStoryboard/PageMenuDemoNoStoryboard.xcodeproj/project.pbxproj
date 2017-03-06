@@ -14,6 +14,9 @@
 		9EF0BA641A44E14F00F4DFF9 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0BA621A44E14F00F4DFF9 /* TestViewController.swift */; };
 		9EF0BA651A44E14F00F4DFF9 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EF0BA631A44E14F00F4DFF9 /* TestViewController.xib */; };
 		A6DA204D1A5ECA870048E0C0 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA204C1A5ECA870048E0C0 /* CAPSPageMenu.swift */; };
+		F04315E41E6D26DD00D8B3FD /* CAPSPageMenu+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315E11E6D26DD00D8B3FD /* CAPSPageMenu+Options.swift */; };
+		F04315E51E6D26DD00D8B3FD /* CAPSPageMenuConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315E21E6D26DD00D8B3FD /* CAPSPageMenuConfiguration.swift */; };
+		F04315E61E6D26DD00D8B3FD /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315E31E6D26DD00D8B3FD /* MenuItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,9 @@
 		9EF0BA621A44E14F00F4DFF9 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		9EF0BA631A44E14F00F4DFF9 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 		A6DA204C1A5ECA870048E0C0 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../Classes/CAPSPageMenu.swift; sourceTree = "<group>"; };
+		F04315E11E6D26DD00D8B3FD /* CAPSPageMenu+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAPSPageMenu+Options.swift"; path = "../../../../Classes/CAPSPageMenu+Options.swift"; sourceTree = "<group>"; };
+		F04315E21E6D26DD00D8B3FD /* CAPSPageMenuConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenuConfiguration.swift; path = ../../../../Classes/CAPSPageMenuConfiguration.swift; sourceTree = "<group>"; };
+		F04315E31E6D26DD00D8B3FD /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuItemView.swift; path = ../../../../Classes/MenuItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +85,8 @@
 		9EF0BA3D1A44DD7400F4DFF9 /* PageMenuDemoNoStoryboard */ = {
 			isa = PBXGroup;
 			children = (
+				F04315E71E6D26E000D8B3FD /* PageMenu */,
 				9EF0BA401A44DD7400F4DFF9 /* AppDelegate.swift */,
-				A6DA204C1A5ECA870048E0C0 /* CAPSPageMenu.swift */,
 				9EF0BA621A44E14F00F4DFF9 /* TestViewController.swift */,
 				9EF0BA631A44E14F00F4DFF9 /* TestViewController.xib */,
 				9EF0BA471A44DD7400F4DFF9 /* Images.xcassets */,
@@ -113,6 +119,17 @@
 				9EF0BA551A44DD7400F4DFF9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F04315E71E6D26E000D8B3FD /* PageMenu */ = {
+			isa = PBXGroup;
+			children = (
+				A6DA204C1A5ECA870048E0C0 /* CAPSPageMenu.swift */,
+				F04315E11E6D26DD00D8B3FD /* CAPSPageMenu+Options.swift */,
+				F04315E21E6D26DD00D8B3FD /* CAPSPageMenuConfiguration.swift */,
+				F04315E31E6D26DD00D8B3FD /* MenuItemView.swift */,
+			);
+			name = PageMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,8 +235,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F04315E51E6D26DD00D8B3FD /* CAPSPageMenuConfiguration.swift in Sources */,
 				9EF0BA411A44DD7400F4DFF9 /* AppDelegate.swift in Sources */,
+				F04315E41E6D26DD00D8B3FD /* CAPSPageMenu+Options.swift in Sources */,
 				9EF0BA641A44E14F00F4DFF9 /* TestViewController.swift in Sources */,
+				F04315E61E6D26DD00D8B3FD /* MenuItemView.swift in Sources */,
 				A6DA204D1A5ECA870048E0C0 /* CAPSPageMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

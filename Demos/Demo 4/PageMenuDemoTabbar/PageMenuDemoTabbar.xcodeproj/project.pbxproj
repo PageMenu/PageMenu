@@ -53,6 +53,9 @@
 		A6E252971A60896E0040E60B /* phone_send.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E252961A60896E0040E60B /* phone_send.png */; };
 		A6E252991A608B9E0040E60B /* phone_down.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E252981A608B9E0040E60B /* phone_down.png */; };
 		A6E2529B1A608BA40040E60B /* phone_receive.png in Resources */ = {isa = PBXBuildFile; fileRef = A6E2529A1A608BA40040E60B /* phone_receive.png */; };
+		F04315D71E6D265900D8B3FD /* CAPSPageMenu+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315D41E6D265900D8B3FD /* CAPSPageMenu+Options.swift */; };
+		F04315D81E6D265900D8B3FD /* CAPSPageMenuConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315D51E6D265900D8B3FD /* CAPSPageMenuConfiguration.swift */; };
+		F04315D91E6D265900D8B3FD /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315D61E6D265900D8B3FD /* MenuItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +119,9 @@
 		A6E252961A60896E0040E60B /* phone_send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone_send.png; sourceTree = "<group>"; };
 		A6E252981A608B9E0040E60B /* phone_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone_down.png; sourceTree = "<group>"; };
 		A6E2529A1A608BA40040E60B /* phone_receive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone_receive.png; sourceTree = "<group>"; };
+		F04315D41E6D265900D8B3FD /* CAPSPageMenu+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAPSPageMenu+Options.swift"; path = "../../../../Classes/CAPSPageMenu+Options.swift"; sourceTree = "<group>"; };
+		F04315D51E6D265900D8B3FD /* CAPSPageMenuConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenuConfiguration.swift; path = ../../../../Classes/CAPSPageMenuConfiguration.swift; sourceTree = "<group>"; };
+		F04315D61E6D265900D8B3FD /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuItemView.swift; path = ../../../../Classes/MenuItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,11 +163,11 @@
 		A616A0331A603D68008CE0F6 /* PageMenuDemoTabbar */ = {
 			isa = PBXGroup;
 			children = (
+				F04315D31E6D264A00D8B3FD /* PageMenu */,
 				A616A0361A603D68008CE0F6 /* AppDelegate.swift */,
 				A616A03A1A603D68008CE0F6 /* Main.storyboard */,
 				A616A03D1A603D68008CE0F6 /* Images.xcassets */,
 				A616A03F1A603D68008CE0F6 /* LaunchScreen.xib */,
-				A616A0561A603E45008CE0F6 /* CAPSPageMenu.swift */,
 				A616A0341A603D68008CE0F6 /* Supporting Files */,
 				A616A0581A603E7E008CE0F6 /* PageMenuOneViewController.swift */,
 				A616A05A1A603E8B008CE0F6 /* PageMenuTwoViewController.swift */,
@@ -230,6 +236,17 @@
 				A616A04B1A603D69008CE0F6 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F04315D31E6D264A00D8B3FD /* PageMenu */ = {
+			isa = PBXGroup;
+			children = (
+				A616A0561A603E45008CE0F6 /* CAPSPageMenu.swift */,
+				F04315D41E6D265900D8B3FD /* CAPSPageMenu+Options.swift */,
+				F04315D51E6D265900D8B3FD /* CAPSPageMenuConfiguration.swift */,
+				F04315D61E6D265900D8B3FD /* MenuItemView.swift */,
+			);
+			name = PageMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,14 +383,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				A616A0571A603E45008CE0F6 /* CAPSPageMenu.swift in Sources */,
+				F04315D81E6D265900D8B3FD /* CAPSPageMenuConfiguration.swift in Sources */,
 				A616A05B1A603E8B008CE0F6 /* PageMenuTwoViewController.swift in Sources */,
 				A616A0591A603E7E008CE0F6 /* PageMenuOneViewController.swift in Sources */,
+				F04315D91E6D265900D8B3FD /* MenuItemView.swift in Sources */,
 				A616A0601A603EEB008CE0F6 /* TestCollectionViewController.swift in Sources */,
 				A616A0371A603D68008CE0F6 /* AppDelegate.swift in Sources */,
 				A616A06A1A603F0D008CE0F6 /* MoodCollectionViewCell.swift in Sources */,
 				A616A0961A606F89008CE0F6 /* ContactTableViewCell.swift in Sources */,
 				A6E252901A60839D0040E60B /* RecentsTableViewCell.swift in Sources */,
 				A6E252941A6083B70040E60B /* RecentsTableViewController.swift in Sources */,
+				F04315D71E6D265900D8B3FD /* CAPSPageMenu+Options.swift in Sources */,
 				A616A0621A603EEB008CE0F6 /* TestTableViewController.swift in Sources */,
 				A616A0681A603F0D008CE0F6 /* FriendTableViewCell.swift in Sources */,
 				A616A0921A606F08008CE0F6 /* ContactsTableViewController.swift in Sources */,

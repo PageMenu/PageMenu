@@ -43,6 +43,9 @@
 		9E0B90681A468ED70095E919 /* woman4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90531A468ED70095E919 /* woman4.jpg */; };
 		9E0B90691A468ED70095E919 /* woman5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9E0B90541A468ED70095E919 /* woman5.jpg */; };
 		A6DA20511A5ECAA80048E0C0 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DA20501A5ECAA80048E0C0 /* CAPSPageMenu.swift */; };
+		F04315DE1E6D269E00D8B3FD /* CAPSPageMenu+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315DB1E6D269E00D8B3FD /* CAPSPageMenu+Options.swift */; };
+		F04315DF1E6D269E00D8B3FD /* CAPSPageMenuConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315DC1E6D269E00D8B3FD /* CAPSPageMenuConfiguration.swift */; };
+		F04315E01E6D269E00D8B3FD /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315DD1E6D269E00D8B3FD /* MenuItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +99,9 @@
 		9E0B90531A468ED70095E919 /* woman4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woman4.jpg; sourceTree = "<group>"; };
 		9E0B90541A468ED70095E919 /* woman5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woman5.jpg; sourceTree = "<group>"; };
 		A6DA20501A5ECAA80048E0C0 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../Classes/CAPSPageMenu.swift; sourceTree = "<group>"; };
+		F04315DB1E6D269E00D8B3FD /* CAPSPageMenu+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAPSPageMenu+Options.swift"; path = "../../../../Classes/CAPSPageMenu+Options.swift"; sourceTree = "<group>"; };
+		F04315DC1E6D269E00D8B3FD /* CAPSPageMenuConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenuConfiguration.swift; path = ../../../../Classes/CAPSPageMenuConfiguration.swift; sourceTree = "<group>"; };
+		F04315DD1E6D269E00D8B3FD /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuItemView.swift; path = ../../../../Classes/MenuItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,12 +143,12 @@
 		9E0B90071A468DC30095E919 /* PageMenuDemoMenuItemWidthBasedOnTitleText */ = {
 			isa = PBXGroup;
 			children = (
+				F04315DA1E6D268C00D8B3FD /* PageMenu */,
 				9E0B900A1A468DC30095E919 /* AppDelegate.swift */,
 				9E0B900C1A468DC30095E919 /* ViewController.swift */,
 				9E0B900E1A468DC30095E919 /* Main.storyboard */,
 				9E0B902E1A468E0C0095E919 /* Cells */,
 				9E0B902D1A468E040095E919 /* View Controllers */,
-				9E0B902A1A468DDE0095E919 /* CAPSPageMenu */,
 				9E0B90111A468DC30095E919 /* Images.xcassets */,
 				9E0B903F1A468EB20095E919 /* Images */,
 				9E0B90131A468DC30095E919 /* LaunchScreen.xib */,
@@ -174,14 +180,6 @@
 				9E0B901F1A468DC30095E919 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9E0B902A1A468DDE0095E919 /* CAPSPageMenu */ = {
-			isa = PBXGroup;
-			children = (
-				A6DA20501A5ECAA80048E0C0 /* CAPSPageMenu.swift */,
-			);
-			name = CAPSPageMenu;
 			sourceTree = "<group>";
 		};
 		9E0B902D1A468E040095E919 /* View Controllers */ = {
@@ -232,6 +230,17 @@
 				9E0B90541A468ED70095E919 /* woman5.jpg */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		F04315DA1E6D268C00D8B3FD /* PageMenu */ = {
+			isa = PBXGroup;
+			children = (
+				A6DA20501A5ECAA80048E0C0 /* CAPSPageMenu.swift */,
+				F04315DB1E6D269E00D8B3FD /* CAPSPageMenu+Options.swift */,
+				F04315DC1E6D269E00D8B3FD /* CAPSPageMenuConfiguration.swift */,
+				F04315DD1E6D269E00D8B3FD /* MenuItemView.swift */,
+			);
+			name = PageMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,7 +375,10 @@
 				9E0B900D1A468DC30095E919 /* ViewController.swift in Sources */,
 				A6DA20511A5ECAA80048E0C0 /* CAPSPageMenu.swift in Sources */,
 				9E0B900B1A468DC30095E919 /* AppDelegate.swift in Sources */,
+				F04315E01E6D269E00D8B3FD /* MenuItemView.swift in Sources */,
 				9E0B903B1A468E8E0095E919 /* TestCollectionViewController.swift in Sources */,
+				F04315DF1E6D269E00D8B3FD /* CAPSPageMenuConfiguration.swift in Sources */,
+				F04315DE1E6D269E00D8B3FD /* CAPSPageMenu+Options.swift in Sources */,
 				9E0B903D1A468E8E0095E919 /* TestTableViewController.swift in Sources */,
 				9E0B90311A468E220095E919 /* FriendTableViewCell.swift in Sources */,
 			);
