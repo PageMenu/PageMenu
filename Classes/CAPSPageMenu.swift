@@ -116,6 +116,37 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         controllerArray = viewControllers
 
         self.view.frame = frame
+        
+        //Build UI
+        setUpUserInterface()
+        if menuScrollView.subviews.count == 0 {
+            configureUserInterface()
+        }
+    }
+    
+    /**
+     Initialize PageMenu with view controllers
+     
+     - parameter viewControllers: List of view controllers that must be subclasses of UIViewController
+     - parameter storyBoard: Parent storyboard for rendering a page menu
+     - parameter configuration: A configuration instance for page menu
+     */
+    public init(viewControllers: [UIViewController], inStoryBoard: UIViewController, with configuration: CAPSPageMenuConfiguration) {
+        super.init(nibName: nil, bundle: nil)
+        self.configuration = configuration
+        controllerArray = viewControllers
+        
+        //Setup storyboard
+        self.view.frame = CGRect(x: 0, y: 0, width: inStoryBoard.view.frame.size.width, height: inStoryBoard.view.frame.size.height)
+        inStoryBoard.addChildViewController(self)
+        inStoryBoard.view.addSubview(self.view)
+        didMove(toParentViewController: inStoryBoard)
+        
+        //Build UI
+        setUpUserInterface()
+        if menuScrollView.subviews.count == 0 {
+            configureUserInterface()
+        }
     }
 
     required public init?(coder aDecoder: NSCoder) {
