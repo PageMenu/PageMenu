@@ -1,9 +1,9 @@
 //
 //  ViewController.swift
-//  PageMenuConfigurationDemo
+//  PageMenuNoStoryboardConfigurationDemo
 //
-//  Created by Matthew York on 3/5/17.
-//  Copyright © 2017 Aeron. All rights reserved.
+//  Created by Matthew York on 3/6/17.
+//  Copyright © 2017 UACAPS. All rights reserved.
 //
 
 import UIKit
@@ -21,12 +21,12 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         setupPageMenu()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func setupPageMenu() {
         //Create controllers
         let colors = [UIColor.black, UIColor.blue, UIColor.red, UIColor.gray, UIColor.green, UIColor.purple, UIColor.orange, UIColor.brown, UIColor.cyan]
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         }
         
         //Create page menu
-        self.pageMenu = CAPSPageMenu(viewControllers: controllers, in: self, with: dummyConfiguration(), usingStoryboards: true)
+        self.pageMenu = CAPSPageMenu(viewControllers: controllers, in: self, with: dummyConfiguration())
     }
     
     func dummyConfiguration() -> CAPSPageMenuConfiguration {
@@ -46,4 +46,3 @@ class ViewController: UIViewController {
         return configuration
     }
 }
-
