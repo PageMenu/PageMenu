@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PageMenu
 
 class TestViewController: UIViewController {
     

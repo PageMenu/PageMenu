@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F023F2941E6DBA8E000382EF /* PageMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F023F2931E6DBA8E000382EF /* PageMenu.framework */; };
 		F04315961E6D15CA00D8B3FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315951E6D15CA00D8B3FD /* AppDelegate.swift */; };
 		F04315981E6D15CA00D8B3FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315971E6D15CA00D8B3FD /* ViewController.swift */; };
 		F043159B1E6D15CA00D8B3FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F04315991E6D15CA00D8B3FD /* Main.storyboard */; };
@@ -14,10 +15,6 @@
 		F04315A01E6D15CA00D8B3FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F043159E1E6D15CA00D8B3FD /* LaunchScreen.storyboard */; };
 		F04315AB1E6D15CA00D8B3FD /* PageMenuConfigurationDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315AA1E6D15CA00D8B3FD /* PageMenuConfigurationDemoTests.swift */; };
 		F04315B61E6D15CA00D8B3FD /* PageMenuConfigurationDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315B51E6D15CA00D8B3FD /* PageMenuConfigurationDemoUITests.swift */; };
-		F04315C51E6D160100D8B3FD /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315C41E6D160100D8B3FD /* CAPSPageMenu.swift */; };
-		F04315C71E6D173800D8B3FD /* CAPSPageMenu+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315C61E6D173800D8B3FD /* CAPSPageMenu+Options.swift */; };
-		F04315C91E6D179900D8B3FD /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315C81E6D179900D8B3FD /* MenuItemView.swift */; };
-		F04315D01E6D1D5F00D8B3FD /* CAPSPageMenuConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04315CF1E6D1D5F00D8B3FD /* CAPSPageMenuConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F023F2931E6DBA8E000382EF /* PageMenu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PageMenu.framework; path = "../../PageMenu/build/Debug-iphoneos/PageMenu.framework"; sourceTree = "<group>"; };
 		F04315921E6D15CA00D8B3FD /* PageMenuConfigurationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PageMenuConfigurationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F04315951E6D15CA00D8B3FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F04315971E6D15CA00D8B3FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -51,10 +49,6 @@
 		F04315B11E6D15CA00D8B3FD /* PageMenuConfigurationDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PageMenuConfigurationDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F04315B51E6D15CA00D8B3FD /* PageMenuConfigurationDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageMenuConfigurationDemoUITests.swift; sourceTree = "<group>"; };
 		F04315B71E6D15CA00D8B3FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F04315C41E6D160100D8B3FD /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../../Classes/CAPSPageMenu.swift; sourceTree = "<group>"; };
-		F04315C61E6D173800D8B3FD /* CAPSPageMenu+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAPSPageMenu+Options.swift"; path = "../../../../Classes/CAPSPageMenu+Options.swift"; sourceTree = "<group>"; };
-		F04315C81E6D179900D8B3FD /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuItemView.swift; path = ../../../../Classes/MenuItemView.swift; sourceTree = "<group>"; };
-		F04315CF1E6D1D5F00D8B3FD /* CAPSPageMenuConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenuConfiguration.swift; path = ../../../../Classes/CAPSPageMenuConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F023F2941E6DBA8E000382EF /* PageMenu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +77,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F023F2921E6DBA8D000382EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F023F2931E6DBA8E000382EF /* PageMenu.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F04315891E6D15CA00D8B3FD = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +92,7 @@
 				F04315A91E6D15CA00D8B3FD /* PageMenuConfigurationDemoTests */,
 				F04315B41E6D15CA00D8B3FD /* PageMenuConfigurationDemoUITests */,
 				F04315931E6D15CA00D8B3FD /* Products */,
+				F023F2921E6DBA8D000382EF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,7 +109,6 @@
 		F04315941E6D15CA00D8B3FD /* PageMenuConfigurationDemo */ = {
 			isa = PBXGroup;
 			children = (
-				F04315C31E6D15F400D8B3FD /* PageMenu */,
 				F04315951E6D15CA00D8B3FD /* AppDelegate.swift */,
 				F04315971E6D15CA00D8B3FD /* ViewController.swift */,
 				F04315991E6D15CA00D8B3FD /* Main.storyboard */,
@@ -132,17 +135,6 @@
 				F04315B71E6D15CA00D8B3FD /* Info.plist */,
 			);
 			path = PageMenuConfigurationDemoUITests;
-			sourceTree = "<group>";
-		};
-		F04315C31E6D15F400D8B3FD /* PageMenu */ = {
-			isa = PBXGroup;
-			children = (
-				F04315C41E6D160100D8B3FD /* CAPSPageMenu.swift */,
-				F04315C61E6D173800D8B3FD /* CAPSPageMenu+Options.swift */,
-				F04315C81E6D179900D8B3FD /* MenuItemView.swift */,
-				F04315CF1E6D1D5F00D8B3FD /* CAPSPageMenuConfiguration.swift */,
-			);
-			name = PageMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,11 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F04315981E6D15CA00D8B3FD /* ViewController.swift in Sources */,
-				F04315C71E6D173800D8B3FD /* CAPSPageMenu+Options.swift in Sources */,
 				F04315961E6D15CA00D8B3FD /* AppDelegate.swift in Sources */,
-				F04315C51E6D160100D8B3FD /* CAPSPageMenu.swift in Sources */,
-				F04315C91E6D179900D8B3FD /* MenuItemView.swift in Sources */,
-				F04315D01E6D1D5F00D8B3FD /* CAPSPageMenuConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
