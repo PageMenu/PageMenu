@@ -29,8 +29,8 @@ Pod::Spec.new do |s|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  #s.license      = "AERON"
-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  #s.license      = "University of Alabama"
+   s.license      = { :type => "University of Alabama", :file => "LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
