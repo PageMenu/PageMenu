@@ -25,4 +25,7 @@
    <FileRef
       location = "group:Demo 1/PageMenuDemoStoryboard/PageMenuDemoStoryboard.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:PageMenuTests/PageMenuTests.xcodeproj">
+   </FileRef>
 </Workspace>
