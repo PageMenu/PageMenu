@@ -2,8 +2,8 @@
 //  PageMenuTestsUITests.swift
 //  PageMenuTestsUITests
 //
-//  Created by Grayson Webster on 3/9/17.
-//  Copyright © 2017 Grayson Webster. All rights reserved.
+//  Created by Matthew York on 3/9/17.
+//  Copyright © 2017 UACAPS. All rights reserved.
 //
 
 import XCTest

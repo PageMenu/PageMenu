@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PageMenu/PageMenu.xcodeproj">
+      location = "group:../PageMenu/PageMenu.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Demo6/PageMenuConfigurationDemo/PageMenuConfigurationDemo.xcodeproj">
@@ -24,8 +24,5 @@
    </FileRef>
    <FileRef
       location = "group:Demo 1/PageMenuDemoStoryboard/PageMenuDemoStoryboard.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:PageMenuTests/PageMenuTests.xcodeproj">
    </FileRef>
 </Workspace>

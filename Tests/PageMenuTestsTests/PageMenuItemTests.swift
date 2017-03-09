@@ -1,15 +1,14 @@
 //
-//  PageMenuTestsTests.swift
-//  PageMenuTestsTests
+//  PageMenuItemTests.swift
+//  PageMenuTests
 //
-//  Created by Grayson Webster on 3/9/17.
+//  Created by Matthew York on 3/9/17.
 //  Copyright © 2017 Grayson Webster. All rights reserved.
 //
 
 import XCTest
-@testable import PageMenu
 
-class PageMenuTests: XCTestCase {
+class PageMenuItemTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
