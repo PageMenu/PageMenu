@@ -8,26 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		D7BF96651B6B8445002F32A0 /* PageMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = D7BF96641B6B8445002F32A0 /* PageMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F023F28B1E6DBA4F000382EF /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023F2841E6DBA4F000382EF /* CAPSPageMenu.swift */; };
-		F023F28C1E6DBA4F000382EF /* CAPSPageMenu+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023F2851E6DBA4F000382EF /* CAPSPageMenu+Options.swift */; };
-		F023F28D1E6DBA4F000382EF /* CAPSPageMenu+UIConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023F2861E6DBA4F000382EF /* CAPSPageMenu+UIConfiguration.swift */; };
-		F023F28E1E6DBA4F000382EF /* CAPSPageMenu+UIGestureRecognizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023F2871E6DBA4F000382EF /* CAPSPageMenu+UIGestureRecognizerDelegate.swift */; };
-		F023F28F1E6DBA4F000382EF /* CAPSPageMenu+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023F2881E6DBA4F000382EF /* CAPSPageMenu+UIScrollViewDelegate.swift */; };
-		F023F2901E6DBA4F000382EF /* CAPSPageMenuConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023F2891E6DBA4F000382EF /* CAPSPageMenuConfiguration.swift */; };
-		F023F2911E6DBA4F000382EF /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F023F28A1E6DBA4F000382EF /* MenuItemView.swift */; };
+		F0A11BE01E71ADD700C069D6 /* PageMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A11BDF1E71ADD700C069D6 /* PageMenuController.swift */; };
+		F0A11BE21E71AE1000C069D6 /* PageMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A11BE11E71AE1000C069D6 /* PageMenuItem.swift */; };
+		F0A11BE41E71AE2600C069D6 /* UIViewController+PageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A11BE31E71AE2600C069D6 /* UIViewController+PageMenu.swift */; };
+		F0A11BE61E71B4D900C069D6 /* PageMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A11BE51E71B4D900C069D6 /* PageMenuBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D7BF965F1B6B8445002F32A0 /* PageMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PageMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7BF96631B6B8445002F32A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7BF96641B6B8445002F32A0 /* PageMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageMenu.h; sourceTree = "<group>"; };
-		F023F2841E6DBA4F000382EF /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenu.swift; path = ../../../Classes/CAPSPageMenu.swift; sourceTree = "<group>"; };
-		F023F2851E6DBA4F000382EF /* CAPSPageMenu+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAPSPageMenu+Options.swift"; path = "../../../Classes/CAPSPageMenu+Options.swift"; sourceTree = "<group>"; };
-		F023F2861E6DBA4F000382EF /* CAPSPageMenu+UIConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAPSPageMenu+UIConfiguration.swift"; path = "../../../Classes/CAPSPageMenu+UIConfiguration.swift"; sourceTree = "<group>"; };
-		F023F2871E6DBA4F000382EF /* CAPSPageMenu+UIGestureRecognizerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAPSPageMenu+UIGestureRecognizerDelegate.swift"; path = "../../../Classes/CAPSPageMenu+UIGestureRecognizerDelegate.swift"; sourceTree = "<group>"; };
-		F023F2881E6DBA4F000382EF /* CAPSPageMenu+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAPSPageMenu+UIScrollViewDelegate.swift"; path = "../../../Classes/CAPSPageMenu+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
-		F023F2891E6DBA4F000382EF /* CAPSPageMenuConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CAPSPageMenuConfiguration.swift; path = ../../../Classes/CAPSPageMenuConfiguration.swift; sourceTree = "<group>"; };
-		F023F28A1E6DBA4F000382EF /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuItemView.swift; path = ../../../Classes/MenuItemView.swift; sourceTree = "<group>"; };
+		F0A11BDF1E71ADD700C069D6 /* PageMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageMenuController.swift; path = ../../../Classes/PageMenuController.swift; sourceTree = "<group>"; };
+		F0A11BE11E71AE1000C069D6 /* PageMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageMenuItem.swift; path = ../../../Classes/PageMenuItem.swift; sourceTree = "<group>"; };
+		F0A11BE31E71AE2600C069D6 /* UIViewController+PageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+PageMenu.swift"; path = "../../../Classes/UIViewController+PageMenu.swift"; sourceTree = "<group>"; };
+		F0A11BE51E71B4D900C069D6 /* PageMenuBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageMenuBar.swift; path = ../../../Classes/PageMenuBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,15 +54,12 @@
 		D7BF96611B6B8445002F32A0 /* PageMenu */ = {
 			isa = PBXGroup;
 			children = (
-				F023F2841E6DBA4F000382EF /* CAPSPageMenu.swift */,
-				F023F2851E6DBA4F000382EF /* CAPSPageMenu+Options.swift */,
-				F023F2861E6DBA4F000382EF /* CAPSPageMenu+UIConfiguration.swift */,
-				F023F2871E6DBA4F000382EF /* CAPSPageMenu+UIGestureRecognizerDelegate.swift */,
-				F023F2881E6DBA4F000382EF /* CAPSPageMenu+UIScrollViewDelegate.swift */,
-				F023F2891E6DBA4F000382EF /* CAPSPageMenuConfiguration.swift */,
-				F023F28A1E6DBA4F000382EF /* MenuItemView.swift */,
 				D7BF96641B6B8445002F32A0 /* PageMenu.h */,
 				D7BF96621B6B8445002F32A0 /* Supporting Files */,
+				F0A11BDF1E71ADD700C069D6 /* PageMenuController.swift */,
+				F0A11BE11E71AE1000C069D6 /* PageMenuItem.swift */,
+				F0A11BE51E71B4D900C069D6 /* PageMenuBar.swift */,
+				F0A11BE31E71AE2600C069D6 /* UIViewController+PageMenu.swift */,
 			);
 			path = PageMenu;
 			sourceTree = "<group>";
@@ -121,7 +112,7 @@
 			attributes = {
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Center for Advanced Public Safety";
 				TargetAttributes = {
 					D7BF965E1B6B8445002F32A0 = {
@@ -162,13 +153,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F023F28B1E6DBA4F000382EF /* CAPSPageMenu.swift in Sources */,
-				F023F28E1E6DBA4F000382EF /* CAPSPageMenu+UIGestureRecognizerDelegate.swift in Sources */,
-				F023F28D1E6DBA4F000382EF /* CAPSPageMenu+UIConfiguration.swift in Sources */,
-				F023F28F1E6DBA4F000382EF /* CAPSPageMenu+UIScrollViewDelegate.swift in Sources */,
-				F023F2911E6DBA4F000382EF /* MenuItemView.swift in Sources */,
-				F023F28C1E6DBA4F000382EF /* CAPSPageMenu+Options.swift in Sources */,
-				F023F2901E6DBA4F000382EF /* CAPSPageMenuConfiguration.swift in Sources */,
+				F0A11BE41E71AE2600C069D6 /* UIViewController+PageMenu.swift in Sources */,
+				F0A11BE21E71AE1000C069D6 /* PageMenuItem.swift in Sources */,
+				F0A11BE01E71ADD700C069D6 /* PageMenuController.swift in Sources */,
+				F0A11BE61E71B4D900C069D6 /* PageMenuBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,8 +176,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -237,8 +227,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -258,6 +250,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -269,6 +262,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -288,6 +282,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
