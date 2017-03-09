@@ -26,7 +26,7 @@ public struct PageMenuItem {
     
     public var systemItem: PageMenuSystemItem = .text
     
-    //Badge
+    // Badge
     public var badgeColor: UIColor?
     public var badgeValue: String?
 }

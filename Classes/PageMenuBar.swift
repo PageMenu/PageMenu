@@ -10,6 +10,8 @@ import Foundation
 
 open class PageMenuBar {
     internal var toolbar = UIToolbar(frame: CGRect.zero)
+    internal var itemContainer: UIStackView?
+    
     public var items: [PageMenuItem]?
     public var selectedItem: PageMenuItem?
     
@@ -38,6 +40,13 @@ open class PageMenuBar {
         set {
             self.toolbar.isTranslucent = newValue
         }
+    }
+}
+
+// MARK: - Setup Functions
+extension PageMenuBar {
+    public func setItems(_ items: [PageMenuItem]) {
+        self.items = items
     }
 }
 
