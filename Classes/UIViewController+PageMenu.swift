@@ -32,13 +32,3 @@ extension UIViewController {
         }
     }
 }
-
-class testController : UIViewController {
-    override func viewDidLoad() {
-        self.pageMenuItem?.titleLabel?.text = "Roster"
-        self.pageMenuItem?.titleLabel?.textColor = UIColor.red
-        
-        self.pageMenuItem?.selectedTitleLabel?.text = "SelectedRoster"
-        self.pageMenuItem?.selectedTitleLabel?.textColor = UIColor.blue
-    }
-}

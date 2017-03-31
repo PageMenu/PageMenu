@@ -7,19 +7,23 @@
 //
 
 import UIKit
+import PageMenu
 
-class ViewController: UIViewController {
+class ViewController: PageMenuController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let first = FirstPageController()
+        let second = SecondPageController()
+        addPage(first)
+        addPage(second)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 

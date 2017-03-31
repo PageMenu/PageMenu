@@ -2,62 +2,31 @@
 //  PageMenuBar.swift
 //  PageMenu
 //
-//  Created by Matthew York on 3/9/17.
+//  Created by Grayson Webster on 3/31/17.
 //  Copyright © 2017 Center for Advanced Public Safety. All rights reserved.
 //
 
 import Foundation
 
-open class PageMenuBar {
-    internal var toolbar = UIToolbar(frame: CGRect.zero)
-    internal var itemContainer: UIStackView?
+open class PageMenuBar: UIToolbar {
+    internal var itemContainer: UICollectionView?
     
-    public var items: [PageMenuItem]?
+    open var menuItems: [PageMenuItem]?
     public var selectedItem: PageMenuItem?
     
-    public var barStyle: UIBarStyle {
-        get {
-            return self.toolbar.barStyle
-        }
-        set {
-            self.toolbar.barStyle = newValue
-        }
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
     }
     
-    public var barTintColor: UIColor? {
-        get {
-            return self.toolbar.barTintColor
-        }
-        set {
-            self.toolbar.barTintColor = newValue
-        }
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    public var isTranslucent: Bool {
-        get {
-            return self.toolbar.isTranslucent
-        }
-        set {
-            self.toolbar.isTranslucent = newValue
-        }
-    }
 }
 
 // MARK: - Setup Functions
 extension PageMenuBar {
     public func setItems(_ items: [PageMenuItem]) {
-        self.items = items
-    }
-}
-
-// MARK: - UIToolbar Bindings
-extension PageMenuBar {
-
-    open func setShadowImage(_ shadowImage: UIImage?, forToolbarPosition topOrBottom: UIBarPosition) {
-        return self.toolbar.setShadowImage(shadowImage, forToolbarPosition: topOrBottom)
-    }
-
-    open func shadowImage(forToolbarPosition topOrBottom: UIBarPosition) -> UIImage? {
-        return self.toolbar.shadowImage(forToolbarPosition: topOrBottom)
+        self.menuItems = items
     }
 }

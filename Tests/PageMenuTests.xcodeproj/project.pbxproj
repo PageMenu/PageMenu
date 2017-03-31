@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61D55F641E8EEB250083873C /* FirstPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D55F631E8EEB250083873C /* FirstPageController.swift */; };
+		61D55F661E8EEB360083873C /* SecondPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D55F651E8EEB360083873C /* SecondPageController.swift */; };
 		F05DAADC1E71F75F00D6BAE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05DAADB1E71F75F00D6BAE6 /* AppDelegate.swift */; };
 		F05DAADE1E71F75F00D6BAE6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05DAADD1E71F75F00D6BAE6 /* ViewController.swift */; };
 		F05DAAE11E71F75F00D6BAE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F05DAADF1E71F75F00D6BAE6 /* Main.storyboard */; };
@@ -53,6 +55,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		61D55F631E8EEB250083873C /* FirstPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstPageController.swift; sourceTree = "<group>"; };
+		61D55F651E8EEB360083873C /* SecondPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondPageController.swift; sourceTree = "<group>"; };
 		F05DAAD81E71F75F00D6BAE6 /* PageMenuTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PageMenuTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F05DAADB1E71F75F00D6BAE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F05DAADD1E71F75F00D6BAE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 			children = (
 				F05DAADB1E71F75F00D6BAE6 /* AppDelegate.swift */,
 				F05DAADD1E71F75F00D6BAE6 /* ViewController.swift */,
+				61D55F631E8EEB250083873C /* FirstPageController.swift */,
+				61D55F651E8EEB360083873C /* SecondPageController.swift */,
 				F05DAADF1E71F75F00D6BAE6 /* Main.storyboard */,
 				F05DAAE21E71F75F00D6BAE6 /* Assets.xcassets */,
 				F05DAAE41E71F75F00D6BAE6 /* LaunchScreen.storyboard */,
@@ -238,6 +244,7 @@
 				TargetAttributes = {
 					F05DAAD71E71F75F00D6BAE6 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 79J92XV598;
 						ProvisioningStyle = Automatic;
 					};
 					F05DAAEB1E71F75F00D6BAE6 = {
@@ -307,6 +314,8 @@
 			files = (
 				F05DAADE1E71F75F00D6BAE6 /* ViewController.swift in Sources */,
 				F05DAADC1E71F75F00D6BAE6 /* AppDelegate.swift in Sources */,
+				61D55F661E8EEB360083873C /* SecondPageController.swift in Sources */,
+				61D55F641E8EEB250083873C /* FirstPageController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +470,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 79J92XV598;
 				INFOPLIST_FILE = PageMenuTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -474,6 +484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 79J92XV598;
 				INFOPLIST_FILE = PageMenuTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
