@@ -44,13 +44,13 @@ open class PageMenuController : UIViewController {
         layout.itemSize = view.bounds.size
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.view.addSubview(collectionView!)
-        collectionView?.dataSource = self
-        collectionView?.isPagingEnabled = true
-        collectionView?.isScrollEnabled = true
-        collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.bounces = false
+        collectionView!.dataSource = self
+        collectionView!.isPagingEnabled = true
+        collectionView!.isScrollEnabled = true
+        collectionView!.showsHorizontalScrollIndicator = false
+        collectionView!.bounces = false
     }
     
     // MARK: - Add/Remove Pages

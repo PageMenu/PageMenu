@@ -32,11 +32,11 @@ open class PageMenuBar: UIToolbar {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView?.backgroundColor = UIColor.clear
-        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.backgroundColor = UIColor.clear
+        collectionView!.showsHorizontalScrollIndicator = false
         self.addSubview(collectionView!)
-        collectionView?.dataSource = self
+        collectionView!.dataSource = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
