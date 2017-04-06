@@ -16,8 +16,8 @@ class ViewController: PageMenuController {
         // Do any additional setup after loading the view, typically from a nib.
         let first = FirstPageController()
         let second = SecondPageController()
-        addPage(first)
-        addPage(second)
+        addPage(first, title: "Green")
+        addPage(second, title: "Red")
     }
 
     override func didReceiveMemoryWarning() {

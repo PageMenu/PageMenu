@@ -15,6 +15,7 @@ class SecondPageController: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.red
+        title = "Second"
     }
 
     override func didReceiveMemoryWarning() {

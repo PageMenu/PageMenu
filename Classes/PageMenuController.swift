@@ -13,14 +13,15 @@ open class PageMenuController : UIViewController {
     // MARK: - Properties
     var reuseIdentifier = "PageCell"
     var pages: [UIViewController] = []
-    var menuItems: [PageMenuItem] = []
+    
+    open var collectionView: UICollectionView?
     
     public var pageMenuBar: PageMenuBar!
     
     // MARK: - Setup
     override open func viewDidLoad() {
         super.viewDidLoad()
-        pageMenuBar = PageMenuBar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44.0))
+        pageMenuBar = PageMenuBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50.0), controller: self)
         setDefaultCollectionView()
         view.addSubview(pageMenuBar!)
     }
@@ -42,56 +43,48 @@ open class PageMenuController : UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = view.bounds.size
         layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        self.view.addSubview(collectionView)
-        collectionView.dataSource = self
-        collectionView.isPagingEnabled = true
-        collectionView.isScrollEnabled = true
-        collectionView.showsHorizontalScrollIndicator = true
-        collectionView.bounces = false
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.view.addSubview(collectionView!)
+        collectionView?.dataSource = self
+        collectionView?.isPagingEnabled = true
+        collectionView?.isScrollEnabled = true
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.bounces = false
     }
     
     // MARK: - Add/Remove Pages
-    public func addPage(_ controller: UIViewController) {
-        pages.append(controller)
-        menuItems.append(itemFromPage(controller: controller, name: nil))
-    }
     
-    public func addPage(_ controller: UIViewController, at: Int) {
+    public func addPage(_ controller: UIViewController, title: String, at: Int) {
         pages.insert(controller, at: at)
-        menuItems.insert(itemFromPage(controller: controller, name: nil), at: at)
+        pageMenuBar.addItem(title: title, at: at)
     }
     
-    public func addPage(_ controller: UIViewController, name: String) {
-        pages.append(controller)
-        menuItems.append(itemFromPage(controller: controller, name: nil))
-    }
-    
-    public func addPage(_ controller: UIViewController, name: String, at: Int) {
+    public func addPage(_ controller: UIViewController, image: UIImage, at: Int) {
         pages.insert(controller, at: at)
-        menuItems.insert(itemFromPage(controller: controller, name: name), at: at)
+        pageMenuBar.addItem(image: image, at: at)
     }
     
-    public func removeLastPage() {
-        pages.remove(at: pages.count - 1)
-        menuItems.remove(at: menuItems.count - 1)
+    public func addPage(_ controller: UIViewController, title: String) {
+        addPage(controller, title: title, at: pages.count)
+    }
+    
+    public func addPage(_ controller: UIViewController, image: UIImage) {
+        addPage(controller, image: image, at: pages.count)
     }
     
     public func removePage(at: Int) {
         pages.remove(at: at)
-        menuItems.remove(at: at)
+        pageMenuBar.removeItem(at: at)
     }
     
-    // MARK: - Create Menu Items
-    func itemFromPage(controller: UIViewController, name: String?) -> PageMenuItem {
-        let item = PageMenuItem()
-        if (name != nil) {
-            item.titleLabel?.text = name
-        } else {
-            item.titleLabel?.text = controller.title
-        }
-        return item
+    public func removeLastPage() {
+        removePage(at: pages.count - 1)
+    }
+    
+    // MARK: - Scroll to Page
+    public func scrollToPage(_ indexPath: IndexPath) {
+        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 }
 
@@ -119,5 +112,6 @@ extension PageMenuController: UICollectionViewDataSource {
         cell.contentView.addSubview(pageForIndexPath(indexPath))
         return cell
     }
+    
     
 }
