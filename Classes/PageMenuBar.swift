@@ -71,13 +71,6 @@ extension PageMenuBar {
     }
     
     
-    
-    // MARK: Item Customization
-    public func editItems() {
-        
-    }
-    
-    
     // MARK: Spacing and Alignment of Buttons
 //
 //    public func setItemSpacing(spacing: CGFloat) {

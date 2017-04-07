@@ -18,6 +18,7 @@ class ViewController: PageMenuController {
         let second = SecondPageController()
         addPage(first, title: "Green")
         addPage(second, title: "Red")
+        pageMenuBar.buttonItems.forEach { $0.setTitleColor(UIColor.blue, for: .normal) }
     }
 
     override func didReceiveMemoryWarning() {
