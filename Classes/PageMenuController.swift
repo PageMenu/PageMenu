@@ -21,7 +21,7 @@ open class PageMenuController : UIViewController {
     // MARK: - Setup
     override open func viewDidLoad() {
         super.viewDidLoad()
-        pageMenuBar = PageMenuBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50.0), controller: self)
+        pageMenuBar = PageMenuBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44.0), controller: self)
         setDefaultCollectionView()
         view.addSubview(pageMenuBar!)
     }

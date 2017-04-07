@@ -16,6 +16,7 @@ class SecondPageController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.red
         title = "Second"
+        print("Red loaded")
     }
 
     override func didReceiveMemoryWarning() {
@@ -23,6 +24,9 @@ class SecondPageController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        print("Red disappeared")
+    }
 
     /*
     // MARK: - Navigation

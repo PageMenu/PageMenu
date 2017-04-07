@@ -12,23 +12,51 @@ public enum Alignment {
     case left
     case centered
     case right
+    case middle // Center the middle menu item (or middle two if there is an even number of items).
+    case fit
+    case none
 }
 open class PageMenuBar: UIToolbar {
     //internal var itemContainer: UICollectionView?
     
     // MARK: - Properties
     var reuseIdentifier = "MenuCell"
+    
+    // Main properties
     open var controller: PageMenuController?
-    open var spacing: CGFloat = 22.0
-    open var alignment: Alignment = .centered
-    open var buttonItems: [UIButton] = []
-    open var selectedItem: UIButton?
     open var collectionView: UICollectionView?
-    open var cellSpacing: CGFloat = 1.0
+    open var buttonItems: [UIButton] = []
+    public private(set) var selectedItem: UIButton?
+    
+    // Customization properties
+    public fileprivate(set) var alignment: Alignment = .left
+    public fileprivate(set) var interspacing: CGFloat = 10.0
+    public fileprivate(set) var topSpacing: CGFloat = 6.0
+    public fileprivate(set) var leftSpacing: CGFloat = 6.0
+    public fileprivate(set) var bottomSpacing: CGFloat = 0
+    public fileprivate(set) var rightSpacing: CGFloat = 6.0
+    
+    // Alignment calculated property
+    fileprivate var alignmentLeftSpacing: CGFloat = 0
+    
+    // Menu overflow properties
+    open var overflowLeftSpacing: CGFloat = 6.0
+    open var overflowRightSpacing: CGFloat = 6.0
+    fileprivate var scrolledOnOverflow = false
+    fileprivate var overflow = false
     
     public init(frame: CGRect, controller: PageMenuController) {
         super.init(frame: frame)
         self.controller = controller
+        setupCollectionView()
+        adjustAlignment()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
@@ -37,10 +65,7 @@ open class PageMenuBar: UIToolbar {
         collectionView!.showsHorizontalScrollIndicator = false
         self.addSubview(collectionView!)
         collectionView!.dataSource = self
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        collectionView!.delegate = self
     }
     
 }
@@ -50,55 +75,92 @@ extension PageMenuBar {
     
     // MARK: Add/Remove Items
     public func addItem(title: String, at: Int) {
-        let button = UIButton(frame: CGRect(x:0, y:0, width: 40.0, height: 60.0))
+        let button = UIButton()
         button.setTitle(title, for: .normal)
+        button.sizeToFit()
         button.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
         buttonItems.insert(button, at: at)
-        collectionView?.reloadData()
+        adjustAlignment()
     }
     
     public func addItem(image: UIImage, at: Int) {
-        let button = UIButton(frame: CGRect(x:0, y:0, width: 40.0, height: 60.0))
+        let button = UIButton()
         button.setImage(image, for: .normal)
+        button.sizeToFit()
         button.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
         buttonItems.insert(button, at: at)
-        collectionView?.reloadData()
+        adjustAlignment()
     }
     
     public func removeItem(at: Int) {
         buttonItems.remove(at: at)
-        collectionView?.reloadData()
+        adjustAlignment()
     }
     
+    // MARK: Alignment (changes spacing variables)
+    public func setAlignment(alignment: Alignment) {
+        self.overflow = false
+        self.scrolledOnOverflow = false
+        self.alignment = alignment
+        if alignment == .left {
+            if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
+                self.overflow = true
+            } else {
+                alignmentLeftSpacing = 0
+            }
+        } else if alignment == .centered {
+            if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
+                self.overflow = true
+            } else {
+                alignmentLeftSpacing = (self.frame.width - getTotalItemWidth() - getTotalSpacingWidth()) / 2 - rightSpacing
+            }
+        } else if alignment == .right {
+            if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
+                self.overflow = true
+            } else {
+                alignmentLeftSpacing = self.frame.width - getTotalItemWidth() - getTotalSpacingWidth() - leftSpacing - rightSpacing
+            }
+        } else if alignment == .middle {
+            if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
+                self.overflow = true
+            } else {
+                if buttonItems.count % 2 == 0 {
+                    alignmentLeftSpacing = (self.frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
+                } else {
+                    alignmentLeftSpacing = (self.frame.width - buttonItems[buttonItems.count/2].frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
+                }
+            }
+        } else if alignment == .fit {
+            if buttonItems.count > 1 {
+                alignmentLeftSpacing = 0
+                self.interspacing = (self.frame.width - getTotalItemWidth() - leftSpacing - rightSpacing) / CGFloat(buttonItems.count - 1)
+            } else {
+                setAlignment(alignment: .centered)
+            }
+        } else {
+            alignmentLeftSpacing = 0
+        }
+    }
     
-    // MARK: Spacing and Alignment of Buttons
-//
-//    public func setItemSpacing(spacing: CGFloat) {
-//        self.spacing = spacing
-//        updateItems()
-//    }
-//    
-//    public func setAlignment(alignment: Alignment) {
-//        clearItems()
-//        if alignment == .left {
-//            setMenuWithSpacing()
-//        }
-//        else if alignment == .centered {
-//            setMenuWithSpacing()
-//        }
-//        else {
-//            setMenuWithSpacing()
-//        }
-//    }
+    public func setInterspacing(interspacing: CGFloat) {
+        self.interspacing = interspacing
+        adjustAlignment()
+    }
+    
+    public func setSpacing(_ top: CGFloat, _ left: CGFloat, _ bottom: CGFloat, _ right: CGFloat) {
+        self.topSpacing = top
+        self.leftSpacing = left
+        self.bottomSpacing = bottom
+        self.rightSpacing = right
+        adjustAlignment()
+    }
     
     // MARK: Helpers
-    func scrollToPage(sender: UIButton) {
-        let index = buttonItems.index(of: sender)
-        let indexPath = IndexPath(item: 0, section: index!)
-        controller?.scrollToPage(indexPath)
+    func adjustAlignment() {
+        setAlignment(alignment: self.alignment)
     }
     
-    func getTotalCellWidth() -> CGFloat {
+    func getTotalItemWidth() -> CGFloat {
         var totalWidth: CGFloat = 0
         for item in buttonItems {
             totalWidth += item.frame.width
@@ -106,6 +168,23 @@ extension PageMenuBar {
         return totalWidth
     }
     
+    func getFirstHalfItemWidth() -> CGFloat {
+        var halfWidth: CGFloat = 0
+        for index in 0..<buttonItems.count/2 {
+            halfWidth += buttonItems[index].frame.width
+        }
+        return halfWidth
+    }
+    
+    func getTotalSpacingWidth() -> CGFloat {
+        return interspacing * CGFloat(buttonItems.count - 1)
+    }
+    
+    func scrollToPage(sender: UIButton) {
+        let index = buttonItems.index(of: sender)
+        let indexPath = IndexPath(item: 0, section: index!)
+        controller?.scrollToPage(indexPath)
+    }
 }
 
 // MARK: - Private
@@ -132,31 +211,44 @@ extension PageMenuBar: UICollectionViewDataSource {
         cell.contentView.addSubview(itemForIndexPath(indexPath))
         return cell
     }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension PageMenuBar: UICollectionViewDelegateFlowLayout {
     
     // Cell size
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: itemForIndexPath(indexPath as IndexPath).frame.width, height: self.frame.height)
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: itemForIndexPath(indexPath as IndexPath).frame.width, height: itemForIndexPath(indexPath as IndexPath).frame.height)
     }
     
     // Interspacing
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return cellSpacing
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return interspacing
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return cellSpacing
+    // Padding
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if !overflow {
+            return UIEdgeInsetsMake(topSpacing, leftSpacing + alignmentLeftSpacing, bottomSpacing, rightSpacing)
+        }
+        else {
+            return UIEdgeInsetsMake(topSpacing, overflowLeftSpacing, bottomSpacing, overflowRightSpacing)
+        }
     }
     
-    // Alignment
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        
-        let totalCellWidth = getTotalCellWidth()
-        let totalSpacingWidth = cellSpacing * (CGFloat(buttonItems.count) - 1)
-        
-        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-        let rightInset = leftInset
-        
-        return UIEdgeInsetsMake(0, leftInset, 0, rightInset)
+    // Set initial scroll position on overflow
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if !scrolledOnOverflow && overflow {
+            var indexToScrollTo = IndexPath(item: 0, section: 0)
+            // Middle and centered alignment are the same when there is overflow (i.e. centering on the middle element)
+            if alignment == .middle || alignment == .centered {
+                indexToScrollTo = IndexPath(item: buttonItems.count / 2, section: 0)
+            }
+            else if alignment == .right {
+                indexToScrollTo = IndexPath(item: buttonItems.count - 1, section: 0)
+            }
+            collectionView.scrollToItem(at: indexToScrollTo, at: .centeredHorizontally, animated: false)
+            scrolledOnOverflow = true
+        }
     }
-    
 }

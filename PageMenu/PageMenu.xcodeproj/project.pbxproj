@@ -10,7 +10,6 @@
 		D7BF96651B6B8445002F32A0 /* PageMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = D7BF96641B6B8445002F32A0 /* PageMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F05DAB3D1E71FF0D00D6BAE6 /* PageMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05DAB391E71FF0D00D6BAE6 /* PageMenuBar.swift */; };
 		F05DAB3E1E71FF0D00D6BAE6 /* PageMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05DAB3A1E71FF0D00D6BAE6 /* PageMenuController.swift */; };
-		F05DAB401E71FF0D00D6BAE6 /* UIViewController+PageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05DAB3C1E71FF0D00D6BAE6 /* UIViewController+PageMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,7 +18,6 @@
 		D7BF96641B6B8445002F32A0 /* PageMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageMenu.h; sourceTree = "<group>"; };
 		F05DAB391E71FF0D00D6BAE6 /* PageMenuBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageMenuBar.swift; path = ../../Classes/PageMenuBar.swift; sourceTree = "<group>"; };
 		F05DAB3A1E71FF0D00D6BAE6 /* PageMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageMenuController.swift; path = ../../Classes/PageMenuController.swift; sourceTree = "<group>"; };
-		F05DAB3C1E71FF0D00D6BAE6 /* UIViewController+PageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+PageMenu.swift"; path = "../../Classes/UIViewController+PageMenu.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +53,6 @@
 				D7BF96641B6B8445002F32A0 /* PageMenu.h */,
 				F05DAB391E71FF0D00D6BAE6 /* PageMenuBar.swift */,
 				F05DAB3A1E71FF0D00D6BAE6 /* PageMenuController.swift */,
-				F05DAB3C1E71FF0D00D6BAE6 /* UIViewController+PageMenu.swift */,
 				D7BF96621B6B8445002F32A0 /* Supporting Files */,
 			);
 			path = PageMenu;
@@ -150,7 +147,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F05DAB401E71FF0D00D6BAE6 /* UIViewController+PageMenu.swift in Sources */,
 				F05DAB3D1E71FF0D00D6BAE6 /* PageMenuBar.swift in Sources */,
 				F05DAB3E1E71FF0D00D6BAE6 /* PageMenuController.swift in Sources */,
 			);
