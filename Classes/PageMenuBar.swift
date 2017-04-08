@@ -46,7 +46,7 @@ open class PageMenuBar: UIToolbar {
     
     // Alignment calculated properties
     fileprivate var alignmentLeftSpacing: CGFloat = 0
-    fileprivate var alignmentInterspacing: CGFloat = 0
+    fileprivate var fitInterspacing: CGFloat = 0
     
     // Menu overflow properties
     open var overflowLeftSpacing: CGFloat = 6.0
@@ -68,6 +68,7 @@ open class PageMenuBar: UIToolbar {
     func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 200.0
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
         collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView!.backgroundColor = UIColor.clear
@@ -118,7 +119,7 @@ extension PageMenuBar {
         } else if alignment == .fit {
             if barItems.count > 1 {
                 alignmentLeftSpacing = 0
-                self.alignmentInterspacing = (self.frame.width - getTotalItemWidth() - leftSpacing - rightSpacing) / CGFloat(barItems.count - 1)
+                self.fitInterspacing = (self.frame.width - getTotalItemWidth() - leftSpacing - rightSpacing) / CGFloat(barItems.count - 1)
             } else {
                 setAlignment(alignment: .centered)
             }
@@ -275,12 +276,21 @@ extension PageMenuBar: UICollectionViewDelegateFlowLayout {
         return CGSize(width: itemForIndexPath(indexPath as IndexPath).frame.width, height: itemForIndexPath(indexPath as IndexPath).frame.height)
     }
     
-    // Interspacing
+    // Interpacing
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         if alignment == .fit {
-            return alignmentInterspacing
+            return fitInterspacing
         } else {
             return interspacing
+        }
+    }
+    
+    // Interspacing for uniform sizing with fit alignment
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if alignment == .fit && sizing == .uniform {
+            return fitInterspacing
+        } else {
+            return 0
         }
     }
     

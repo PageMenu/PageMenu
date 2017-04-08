@@ -17,7 +17,7 @@ class ViewController: PageMenuController {
         let first = FirstPageController()
         let second = SecondPageController()
         let third = FirstPageController()
-        let fourth = SecondPageController()
+//        let fourth = SecondPageController()
 //        let fifth = FirstPageController()
 //        let sixth = SecondPageController()
 //        let seventh = FirstPageController()
@@ -28,7 +28,7 @@ class ViewController: PageMenuController {
         addPage(first, title: "Green")
         addPage(second, title: "Red")
         addPage(third, title: "Green2")
-        addPage(fourth, title: "Red2")
+//        addPage(fourth, title: "Red2")
 //        addPage(fifth, title: "Green3")
 //        addPage(sixth, title: "Red3")
 //        addPage(seventh, title: "Green4")
@@ -42,7 +42,7 @@ class ViewController: PageMenuController {
         pageMenuBar.setSpacing(12, 6, 0, 6)
         pageMenuBar.setSizing(sizing: .uniform)
         pageMenuBar.setUniformItemWidth(width: 80)
-        pageMenuBar.setAlignment(alignment: .centered)
+        pageMenuBar.setAlignment(alignment: .fit)
     }
 
     override func didReceiveMemoryWarning() {
