@@ -36,9 +36,13 @@ class ViewController: PageMenuController {
 //        addPage(ninth, title: "Green5")
 //        addPage(tenth, title: "Red5")
 //        addPage(eleventh, title: "Green6")
-        pageMenuBar.buttonItems.forEach { $0.setTitleColor(UIColor.green, for: .normal) }
-        pageMenuBar.setAlignment(alignment: .fit)
-        pageMenuBar.setSpacing(10, 40, 0, 40)
+        pageMenuBar.setBarHeight(height: 60)
+        pageMenuBar.barItems.forEach { $0.setTitleColor(UIColor.darkGray, for: .normal) }
+        pageMenuBar.barItems.forEach { $0.titleLabel!.font = UIFont.systemFont(ofSize: 20.0) }
+        pageMenuBar.setSpacing(12, 6, 0, 6)
+        pageMenuBar.setSizing(sizing: .uniform)
+        pageMenuBar.setUniformItemWidth(width: 80)
+        pageMenuBar.setAlignment(alignment: .centered)
     }
 
     override func didReceiveMemoryWarning() {

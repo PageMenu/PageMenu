@@ -16,6 +16,12 @@ public enum Alignment {
     case fit
     case none
 }
+
+// Change the size of the bar items to be variable or uniform
+public enum Sizing {
+    case uniform
+    case variable
+}
 open class PageMenuBar: UIToolbar {
     //internal var itemContainer: UICollectionView?
     
@@ -25,19 +31,22 @@ open class PageMenuBar: UIToolbar {
     // Main properties
     open var controller: PageMenuController?
     open var collectionView: UICollectionView?
-    open var buttonItems: [UIButton] = []
+    open var barItems: [UIButton] = []
     public private(set) var selectedItem: UIButton?
     
     // Customization properties
     public fileprivate(set) var alignment: Alignment = .left
+    public fileprivate(set) var sizing: Sizing = .variable
+    public fileprivate(set) var uniformItemWidth: CGFloat = 50.0
     public fileprivate(set) var interspacing: CGFloat = 10.0
     public fileprivate(set) var topSpacing: CGFloat = 6.0
     public fileprivate(set) var leftSpacing: CGFloat = 6.0
     public fileprivate(set) var bottomSpacing: CGFloat = 0
     public fileprivate(set) var rightSpacing: CGFloat = 6.0
     
-    // Alignment calculated property
+    // Alignment calculated properties
     fileprivate var alignmentLeftSpacing: CGFloat = 0
+    fileprivate var alignmentInterspacing: CGFloat = 0
     
     // Menu overflow properties
     open var overflowLeftSpacing: CGFloat = 6.0
@@ -73,30 +82,6 @@ open class PageMenuBar: UIToolbar {
 // MARK: - Setup Functions
 extension PageMenuBar {
     
-    // MARK: Add/Remove Items
-    public func addItem(title: String, at: Int) {
-        let button = UIButton()
-        button.setTitle(title, for: .normal)
-        button.sizeToFit()
-        button.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
-        buttonItems.insert(button, at: at)
-        adjustAlignment()
-    }
-    
-    public func addItem(image: UIImage, at: Int) {
-        let button = UIButton()
-        button.setImage(image, for: .normal)
-        button.sizeToFit()
-        button.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
-        buttonItems.insert(button, at: at)
-        adjustAlignment()
-    }
-    
-    public func removeItem(at: Int) {
-        buttonItems.remove(at: at)
-        adjustAlignment()
-    }
-    
     // MARK: Alignment (changes spacing variables)
     public func setAlignment(alignment: Alignment) {
         self.overflow = false
@@ -124,16 +109,16 @@ extension PageMenuBar {
             if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
                 self.overflow = true
             } else {
-                if buttonItems.count % 2 == 0 {
+                if barItems.count % 2 == 0 {
                     alignmentLeftSpacing = (self.frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
                 } else {
-                    alignmentLeftSpacing = (self.frame.width - buttonItems[buttonItems.count/2].frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
+                    alignmentLeftSpacing = (self.frame.width - barItems[barItems.count/2].frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
                 }
             }
         } else if alignment == .fit {
-            if buttonItems.count > 1 {
+            if barItems.count > 1 {
                 alignmentLeftSpacing = 0
-                self.interspacing = (self.frame.width - getTotalItemWidth() - leftSpacing - rightSpacing) / CGFloat(buttonItems.count - 1)
+                self.alignmentInterspacing = (self.frame.width - getTotalItemWidth() - leftSpacing - rightSpacing) / CGFloat(barItems.count - 1)
             } else {
                 setAlignment(alignment: .centered)
             }
@@ -155,42 +140,111 @@ extension PageMenuBar {
         adjustAlignment()
     }
     
+    public func setSizing(sizing: Sizing) {
+        if sizing == .uniform {
+            self.sizing = .uniform
+            setUniformItemWidth(width: self.uniformItemWidth)
+        } else {
+            self.sizing = .variable
+            sizeToFitItems()
+        }
+    }
+    
+    public func setUniformItemWidth(width: CGFloat) {
+        self.uniformItemWidth = width
+        if sizing == .uniform {
+            adjustUniformItemWidth()
+            adjustAlignment()
+        }
+    }
+    
+    public func sizeToFitItems() {
+        if sizing == .uniform {
+            adjustUniformItemWidth()
+        } else {
+            for item in barItems {
+                item.sizeToFit()
+            }
+        }
+        adjustAlignment()
+    }
+    
+    public func setBarHeight(height: CGFloat) {
+        self.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: height)
+        collectionView!.frame = CGRect(x: 0, y: 0, width: collectionView!.frame.width, height: height)
+    }
+    
+    // MARK: Add/Remove Items
+    internal func addItem(title: String, at: Int) {
+        let button = UIButton()
+        button.setTitle(title, for: .normal)
+        if sizing == .variable {
+            button.sizeToFit()
+        } else {
+            button.sizeToFit()
+            button.frame.size = CGSize(width: uniformItemWidth, height: button.frame.height)
+        }
+        button.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
+        barItems.insert(button, at: at)
+        adjustAlignment()
+    }
+    
+    internal func addItem(image: UIImage, at: Int) {
+        let button = UIButton()
+        button.setImage(image, for: .normal)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
+        barItems.insert(button, at: at)
+        adjustAlignment()
+    }
+    
+    internal func removeItem(at: Int) {
+        barItems.remove(at: at)
+        adjustAlignment()
+    }
+    
     // MARK: Helpers
-    func adjustAlignment() {
+    fileprivate func adjustAlignment() {
         setAlignment(alignment: self.alignment)
     }
     
-    func getTotalItemWidth() -> CGFloat {
+    fileprivate func adjustUniformItemWidth() {
+        for item in barItems {
+            item.frame.size = CGSize(width: uniformItemWidth, height: item.frame.height)
+        }
+    }
+    
+    fileprivate func getTotalItemWidth() -> CGFloat {
         var totalWidth: CGFloat = 0
-        for item in buttonItems {
+        for item in barItems {
             totalWidth += item.frame.width
         }
         return totalWidth
     }
     
-    func getFirstHalfItemWidth() -> CGFloat {
+    fileprivate func getFirstHalfItemWidth() -> CGFloat {
         var halfWidth: CGFloat = 0
-        for index in 0..<buttonItems.count/2 {
-            halfWidth += buttonItems[index].frame.width
+        for index in 0..<barItems.count/2 {
+            halfWidth += barItems[index].frame.width
         }
         return halfWidth
     }
     
-    func getTotalSpacingWidth() -> CGFloat {
-        return interspacing * CGFloat(buttonItems.count - 1)
+    fileprivate func getTotalSpacingWidth() -> CGFloat {
+        return interspacing * CGFloat(barItems.count - 1)
     }
     
     func scrollToPage(sender: UIButton) {
-        let index = buttonItems.index(of: sender)
+        let index = barItems.index(of: sender)
         let indexPath = IndexPath(item: 0, section: index!)
-        controller?.scrollToPage(indexPath)
+        controller!.scrollToPage(indexPath)
     }
 }
 
-// MARK: - Private
+// MARK: - ItemForIndexPath
 extension PageMenuBar {
     func itemForIndexPath(_ indexPath: IndexPath) -> UIButton {
-        return buttonItems[(indexPath as NSIndexPath).item]
+        return barItems[(indexPath as NSIndexPath).item]
     }
 }
 
@@ -203,7 +257,7 @@ extension PageMenuBar: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return buttonItems.count
+        return barItems.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -223,7 +277,11 @@ extension PageMenuBar: UICollectionViewDelegateFlowLayout {
     
     // Interspacing
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return interspacing
+        if alignment == .fit {
+            return alignmentInterspacing
+        } else {
+            return interspacing
+        }
     }
     
     // Padding
@@ -242,10 +300,10 @@ extension PageMenuBar: UICollectionViewDelegateFlowLayout {
             var indexToScrollTo = IndexPath(item: 0, section: 0)
             // Middle and centered alignment are the same when there is overflow (i.e. centering on the middle element)
             if alignment == .middle || alignment == .centered {
-                indexToScrollTo = IndexPath(item: buttonItems.count / 2, section: 0)
+                indexToScrollTo = IndexPath(item: barItems.count / 2, section: 0)
             }
             else if alignment == .right {
-                indexToScrollTo = IndexPath(item: buttonItems.count - 1, section: 0)
+                indexToScrollTo = IndexPath(item: barItems.count - 1, section: 0)
             }
             collectionView.scrollToItem(at: indexToScrollTo, at: .centeredHorizontally, animated: false)
             scrolledOnOverflow = true
