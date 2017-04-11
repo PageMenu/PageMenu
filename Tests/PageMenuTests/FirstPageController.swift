@@ -15,9 +15,9 @@ class FirstPageController: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.green
-        let view2 = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width/2, height: 100))
-        view2.backgroundColor = UIColor.blue
-        view.addSubview(view2)
+//        let view2 = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width/2, height: 100))
+//        view2.backgroundColor = UIColor.blue
+//        view.addSubview(view2)
         print("Green loaded")
     }
 

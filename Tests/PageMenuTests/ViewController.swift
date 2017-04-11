@@ -17,7 +17,7 @@ class ViewController: PageMenuController {
         let first = FirstPageController()
         let second = SecondPageController()
         let third = FirstPageController()
-//        let fourth = SecondPageController()
+        let fourth = SecondPageController()
 //        let fifth = FirstPageController()
 //        let sixth = SecondPageController()
 //        let seventh = FirstPageController()
@@ -28,7 +28,7 @@ class ViewController: PageMenuController {
         addPage(first, title: "Green")
         addPage(second, title: "Red")
         addPage(third, title: "Green2")
-//        addPage(fourth, title: "Red2")
+        
 //        addPage(fifth, title: "Green3")
 //        addPage(sixth, title: "Red3")
 //        addPage(seventh, title: "Green4")
@@ -39,10 +39,9 @@ class ViewController: PageMenuController {
         pageMenuBar.setBarHeight(height: 60)
         pageMenuBar.barItems.forEach { $0.setTitleColor(UIColor.darkGray, for: .normal) }
         pageMenuBar.barItems.forEach { $0.titleLabel!.font = UIFont.systemFont(ofSize: 20.0) }
-        pageMenuBar.setSpacing(12, 6, 0, 6)
-        pageMenuBar.setSizing(sizing: .uniform)
-        pageMenuBar.setUniformItemWidth(width: 80)
+        pageMenuBar.barItems.forEach { $0.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)  }
         pageMenuBar.setAlignment(alignment: .fit)
+        pageMenuBar.setSizing(sizing: .uniform)
     }
 
     override func didReceiveMemoryWarning() {

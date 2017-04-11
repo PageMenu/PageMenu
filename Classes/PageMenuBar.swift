@@ -32,17 +32,19 @@ open class PageMenuBar: UIToolbar {
     open var controller: PageMenuController?
     open var collectionView: UICollectionView?
     open var barItems: [UIButton] = []
-    public private(set) var selectedItem: UIButton?
+    open var indicator: UIView = UIView(frame: CGRect(x: 30, y: 20, width: 5, height: 2))
+    fileprivate var selectedItem: UIButton?
     
     // Customization properties
     public fileprivate(set) var alignment: Alignment = .left
     public fileprivate(set) var sizing: Sizing = .variable
-    public fileprivate(set) var uniformItemWidth: CGFloat = 50.0
-    public fileprivate(set) var interspacing: CGFloat = 10.0
-    public fileprivate(set) var topSpacing: CGFloat = 6.0
-    public fileprivate(set) var leftSpacing: CGFloat = 6.0
+    public fileprivate(set) var uniformItemWidth: CGFloat? = nil
+    public fileprivate(set) var interspacing: CGFloat = 0
+    public fileprivate(set) var topSpacing: CGFloat = 0
+    public fileprivate(set) var leftSpacing: CGFloat = 0
     public fileprivate(set) var bottomSpacing: CGFloat = 0
-    public fileprivate(set) var rightSpacing: CGFloat = 6.0
+    public fileprivate(set) var rightSpacing: CGFloat = 0
+    public fileprivate(set) var defaultIndicatorColor: UIColor = UIColor.blue
     
     // Alignment calculated properties
     fileprivate var alignmentLeftSpacing: CGFloat = 0
@@ -59,6 +61,7 @@ open class PageMenuBar: UIToolbar {
         self.controller = controller
         setupCollectionView()
         adjustAlignment()
+        addSubview(indicator)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -144,7 +147,8 @@ extension PageMenuBar {
     public func setSizing(sizing: Sizing) {
         if sizing == .uniform {
             self.sizing = .uniform
-            setUniformItemWidth(width: self.uniformItemWidth)
+            adjustUniformItemWidth()
+            adjustAlignment()
         } else {
             self.sizing = .variable
             sizeToFitItems()
@@ -154,7 +158,6 @@ extension PageMenuBar {
     public func setUniformItemWidth(width: CGFloat) {
         self.uniformItemWidth = width
         if sizing == .uniform {
-            adjustUniformItemWidth()
             adjustAlignment()
         }
     }
@@ -164,38 +167,49 @@ extension PageMenuBar {
             adjustUniformItemWidth()
         } else {
             for item in barItems {
-                item.sizeToFit()
+                sizeItemToFit(item)
             }
         }
-        adjustAlignment()
     }
     
     public func setBarHeight(height: CGFloat) {
         self.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: height)
         collectionView!.frame = CGRect(x: 0, y: 0, width: collectionView!.frame.width, height: height)
+        sizeToFitItems()
+    }
+    
+    public func setDefaultIndicatorColor(color: UIColor) {
+        self.defaultIndicatorColor = color
+        adjustIndicator()
     }
     
     // MARK: Add/Remove Items
     internal func addItem(title: String, at: Int) {
-        let button = UIButton()
-        button.setTitle(title, for: .normal)
+        let item = UIButton()
+        item.setTitle(title, for: .normal)
         if sizing == .variable {
-            button.sizeToFit()
+            sizeItemToFit(item)
         } else {
-            button.sizeToFit()
-            button.frame.size = CGSize(width: uniformItemWidth, height: button.frame.height)
+            sizeItemToFit(item)
+            item.frame.size = CGSize(width: getUniformItemWidth(), height: item.frame.height)
         }
-        button.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
-        barItems.insert(button, at: at)
+        item.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
+        barItems.insert(item, at: at)
         adjustAlignment()
     }
     
     internal func addItem(image: UIImage, at: Int) {
-        let button = UIButton()
-        button.setImage(image, for: .normal)
-        button.sizeToFit()
-        button.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
-        barItems.insert(button, at: at)
+        let item = UIButton()
+        item.setImage(image, for: .normal)
+        if sizing == .variable {
+            sizeItemToFit(item)
+        } else {
+            sizeItemToFit(item)
+            item.frame.size = CGSize(width: getUniformItemWidth(), height: item.frame.height)
+        }
+        sizeItemToFit(item)
+        item.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
+        barItems.insert(item, at: at)
         adjustAlignment()
     }
     
@@ -206,13 +220,40 @@ extension PageMenuBar {
     
     // MARK: Helpers
     fileprivate func adjustAlignment() {
+        if sizing == .uniform {
+            adjustUniformItemWidth()
+        }
+        sizeToFitItems()
         setAlignment(alignment: self.alignment)
+        adjustIndicator()
+    }
+    
+    fileprivate func adjustIndicator() {
+        if barItems.count == 0 {
+            indicator.backgroundColor = UIColor.clear
+        } else {
+            guard let selectedItem = selectedItem else {
+                self.selectedItem = barItems[0]
+                return
+            }
+            indicator.backgroundColor = defaultIndicatorColor
+            indicator.frame.origin.y = collectionView!.frame.height - indicator.frame.height
+            indicator.frame.origin.x = selectedItem.bounds.origin.x + leftSpacing
+            indicator.frame.size = CGSize(width: selectedItem.frame.width, height: indicator.frame.height)
+        }
     }
     
     fileprivate func adjustUniformItemWidth() {
         for item in barItems {
-            item.frame.size = CGSize(width: uniformItemWidth, height: item.frame.height)
+            item.frame.size = CGSize(width: getUniformItemWidth(), height: item.frame.height)
         }
+    }
+    
+    fileprivate func getUniformItemWidth() -> CGFloat {
+        guard let uniformItemWidth = uniformItemWidth else {
+            return ((collectionView!.frame.width - leftSpacing - rightSpacing) / CGFloat(barItems.count)) - (interspacing / 2)
+        }
+        return uniformItemWidth
     }
     
     fileprivate func getTotalItemWidth() -> CGFloat {
@@ -235,9 +276,17 @@ extension PageMenuBar {
         return interspacing * CGFloat(barItems.count - 1)
     }
     
+    fileprivate func sizeItemToFit(_ item: UIButton) {
+        item.sizeToFit()
+        item.frame.size = CGSize(width: item.frame.width, height: collectionView!.frame.height)
+    }
+    
+    // MARK: Item Pressed
     func scrollToPage(sender: UIButton) {
         let index = barItems.index(of: sender)
         let indexPath = IndexPath(item: 0, section: index!)
+        selectedItem = sender
+        adjustIndicator()
         controller!.scrollToPage(indexPath)
     }
 }
