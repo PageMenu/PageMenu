@@ -8,6 +8,7 @@
 
 import Foundation
 
+// How the bar items are aligned
 public enum Alignment {
     case left
     case centered
@@ -22,6 +23,12 @@ public enum Sizing {
     case uniform
     case variable
 }
+
+//
+public enum IndicatorMovement {
+    case synced
+    case delayed
+}
 open class PageMenuBar: UIToolbar {
     //internal var itemContainer: UICollectionView?
     
@@ -34,6 +41,7 @@ open class PageMenuBar: UIToolbar {
     open var barItems: [UIButton] = []
     open var indicator: UIView = UIView(frame: CGRect(x: 30, y: 20, width: 5, height: 2))
     fileprivate var selectedItem: UIButton?
+    fileprivate var lastSelectedItem: UIButton?
     
     // Customization properties
     public fileprivate(set) var alignment: Alignment = .left
@@ -45,6 +53,11 @@ open class PageMenuBar: UIToolbar {
     public fileprivate(set) var bottomSpacing: CGFloat = 0
     public fileprivate(set) var rightSpacing: CGFloat = 0
     public fileprivate(set) var defaultIndicatorColor: UIColor = UIColor.blue
+    public fileprivate(set) var indicatorMovement: IndicatorMovement = .synced
+    public fileprivate(set) var selectionColor: UIColor = UIColor.blue
+    public fileprivate(set) var defaultColor: UIColor = UIColor.darkGray
+    public fileprivate(set) var useDefaultColors: Bool = true
+    public fileprivate(set) var defaultSelectedPageIndex: Int = 0
     
     // Alignment calculated properties
     fileprivate var alignmentLeftSpacing: CGFloat = 0
@@ -60,8 +73,7 @@ open class PageMenuBar: UIToolbar {
         super.init(frame: frame)
         self.controller = controller
         setupCollectionView()
-        adjustAlignment()
-        addSubview(indicator)
+        collectionView!.addSubview(indicator)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -176,11 +188,35 @@ extension PageMenuBar {
         self.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: height)
         collectionView!.frame = CGRect(x: 0, y: 0, width: collectionView!.frame.width, height: height)
         sizeToFitItems()
+        adjustIndicator()
     }
     
     public func setDefaultIndicatorColor(color: UIColor) {
         self.defaultIndicatorColor = color
         adjustIndicator()
+    }
+    
+    public func setIndicatorMovement(movement: IndicatorMovement) {
+        self.indicatorMovement = movement
+        adjustIndicator()
+    }
+    
+    public func setSelectionColor(color: UIColor) {
+        self.selectionColor = color
+    }
+    
+    public func setDefaultColor(color: UIColor) {
+        self.defaultColor = color
+    }
+    
+    public func setUseDefaultColors(selection: Bool) {
+        self.useDefaultColors = selection
+    }
+    
+    public func setDefaultSelectedPageIndex(index: Int) {
+        self.defaultSelectedPageIndex = index
+        let indexPath = IndexPath(item: 0, section: index)
+        controller?.scrollToPage(indexPath)
     }
     
     // MARK: Add/Remove Items
@@ -207,6 +243,7 @@ extension PageMenuBar {
             sizeItemToFit(item)
             item.frame.size = CGSize(width: getUniformItemWidth(), height: item.frame.height)
         }
+        
         sizeItemToFit(item)
         item.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
         barItems.insert(item, at: at)
@@ -218,7 +255,42 @@ extension PageMenuBar {
         adjustAlignment()
     }
     
+    // MARK: Animate Indicator
+    
+    public func moveIndicator(_ offset: CGFloat) {
+        let pageIndex = Int(round(offset / self.frame.width))
+        if pageIndex >= 0 && pageIndex < barItems.count {
+            lastSelectedItem = selectedItem
+            UIView.animate(withDuration: 0.15, animations: { () -> Void in
+                var indicatorWidth : CGFloat = self.indicator.frame.width
+                var indicatorX : CGFloat = 0.0
+                indicatorWidth = self.barItems[pageIndex].frame.width
+                indicatorX += self.leftSpacing
+                indicatorX += self.getSpacingWidthUntil(index: pageIndex) + self.getItemWidthUntil(index: pageIndex)
+                
+                self.indicator.frame = CGRect(x: indicatorX, y: self.indicator.frame.origin.y, width: indicatorWidth, height: self.indicator.frame.height)
+                self.selectedItem = self.barItems[pageIndex]
+                // Switch newly selected menu item title label to selected color and old one to unselected color
+                if self.barItems.count > 0 && self.useDefaultColors {
+                    guard let _ = self.lastSelectedItem?.titleLabel else {
+                        self.lastSelectedItem?.titleLabel?.textColor = self.defaultColor
+                        return
+                    }
+                    guard let _ = self.selectedItem?.titleLabel else {
+                        self.selectedItem?.titleLabel?.textColor = self.selectionColor
+                        return
+                    }
+                }
+            })
+        }
+        setSelectedItem(pageIndex)
+    }
+    
     // MARK: Helpers
+    fileprivate func setSelectedItem(_ index: Int) {
+        selectedItem = barItems[index]
+    }
+    
     fileprivate func adjustAlignment() {
         if sizing == .uniform {
             adjustUniformItemWidth()
@@ -232,14 +304,11 @@ extension PageMenuBar {
         if barItems.count == 0 {
             indicator.backgroundColor = UIColor.clear
         } else {
-            guard let selectedItem = selectedItem else {
-                self.selectedItem = barItems[0]
-                return
-            }
+            setSelectedItem(defaultSelectedPageIndex)
             indicator.backgroundColor = defaultIndicatorColor
+            indicator.frame.size = CGSize(width: self.selectedItem!.frame.width, height: indicator.frame.height)
             indicator.frame.origin.y = collectionView!.frame.height - indicator.frame.height
-            indicator.frame.origin.x = selectedItem.bounds.origin.x + leftSpacing
-            indicator.frame.size = CGSize(width: selectedItem.frame.width, height: indicator.frame.height)
+            indicator.frame.origin.x = selectedItem!.bounds.origin.x + leftSpacing
         }
     }
     
@@ -256,7 +325,7 @@ extension PageMenuBar {
         return uniformItemWidth
     }
     
-    fileprivate func getTotalItemWidth() -> CGFloat {
+    public func getTotalItemWidth() -> CGFloat {
         var totalWidth: CGFloat = 0
         for item in barItems {
             totalWidth += item.frame.width
@@ -264,7 +333,15 @@ extension PageMenuBar {
         return totalWidth
     }
     
-    fileprivate func getFirstHalfItemWidth() -> CGFloat {
+    public func getItemWidthUntil(index: Int) -> CGFloat {
+        var totalWidth: CGFloat = 0
+        for item in 0..<index {
+            totalWidth += barItems[item].frame.width
+        }
+        return totalWidth
+    }
+    
+    public func getFirstHalfItemWidth() -> CGFloat {
         var halfWidth: CGFloat = 0
         for index in 0..<barItems.count/2 {
             halfWidth += barItems[index].frame.width
@@ -272,8 +349,15 @@ extension PageMenuBar {
         return halfWidth
     }
     
-    fileprivate func getTotalSpacingWidth() -> CGFloat {
+    public func getTotalSpacingWidth() -> CGFloat {
         return interspacing * CGFloat(barItems.count - 1)
+    }
+    
+    public func getSpacingWidthUntil(index: Int) -> CGFloat {
+        if index == 0 {
+            return 0
+        }
+        return interspacing * CGFloat(index - 1)
     }
     
     fileprivate func sizeItemToFit(_ item: UIButton) {
@@ -285,8 +369,6 @@ extension PageMenuBar {
     func scrollToPage(sender: UIButton) {
         let index = barItems.index(of: sender)
         let indexPath = IndexPath(item: 0, section: index!)
-        selectedItem = sender
-        adjustIndicator()
         controller!.scrollToPage(indexPath)
     }
 }

@@ -10,9 +10,18 @@ import UIKit
 
 open class PageMenuController : UIViewController {
     
+    public enum ScrollDirection {
+        case none
+        case right
+        case left
+        case up
+        case down
+    }
+    
     // MARK: - Properties
     var reuseIdentifier = "PageCell"
     var pages: [UIViewController] = []
+    var offset: CGFloat = 0
     
     open var collectionView: UICollectionView?
     
@@ -47,6 +56,7 @@ open class PageMenuController : UIViewController {
         collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.view.addSubview(collectionView!)
         collectionView!.dataSource = self
+        collectionView!.delegate = self
         collectionView!.isPagingEnabled = true
         collectionView!.isScrollEnabled = true
         collectionView!.showsHorizontalScrollIndicator = false
@@ -82,7 +92,7 @@ open class PageMenuController : UIViewController {
         removePage(at: pages.count - 1)
     }
     
-    // MARK: - Scroll to Page
+    // MARK: - Scrolling
     public func scrollToPage(_ indexPath: IndexPath) {
         collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
@@ -112,6 +122,12 @@ extension PageMenuController: UICollectionViewDataSource {
         cell.contentView.addSubview(pageForIndexPath(indexPath))
         return cell
     }
+}
+
+extension PageMenuController: UICollectionViewDelegate {
     
-    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.offset = scrollView.contentOffset.x
+        pageMenuBar.moveIndicator(offset)
+    }
 }

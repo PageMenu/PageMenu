@@ -28,7 +28,7 @@ class ViewController: PageMenuController {
         addPage(first, title: "Green")
         addPage(second, title: "Red")
         addPage(third, title: "Green2")
-        
+        addPage(fourth, title: "Red2")
 //        addPage(fifth, title: "Green3")
 //        addPage(sixth, title: "Red3")
 //        addPage(seventh, title: "Green4")
@@ -38,10 +38,15 @@ class ViewController: PageMenuController {
 //        addPage(eleventh, title: "Green6")
         pageMenuBar.setBarHeight(height: 60)
         pageMenuBar.barItems.forEach { $0.setTitleColor(UIColor.darkGray, for: .normal) }
-        pageMenuBar.barItems.forEach { $0.titleLabel!.font = UIFont.systemFont(ofSize: 20.0) }
-        pageMenuBar.barItems.forEach { $0.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)  }
-        pageMenuBar.setAlignment(alignment: .fit)
-        pageMenuBar.setSizing(sizing: .uniform)
+        //pageMenuBar.barItems.forEach { $0.titleLabel!.font = UIFont.systemFont(ofSize: 20.0) }
+        pageMenuBar.barItems.forEach { $0.titleEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)  }
+        pageMenuBar.barItems[0].backgroundColor = UIColor.green
+        pageMenuBar.barItems[1].backgroundColor = UIColor.red
+        pageMenuBar.barItems[2].backgroundColor = UIColor.green
+        pageMenuBar.barItems[3].backgroundColor = UIColor.red
+        pageMenuBar.setDefaultSelectedPageIndex(index: 2)
+        //pageMenuBar.sizeToFitItems()
+        pageMenuBar.setAlignment(alignment: .left)
     }
 
     override func didReceiveMemoryWarning() {
