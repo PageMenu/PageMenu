@@ -8,15 +8,15 @@
 
 import UIKit
 
+public enum ScrollDirection {
+    case none
+    case right
+    case left
+    case up
+    case down
+}
+
 open class PageMenuController : UIViewController {
-    
-    public enum ScrollDirection {
-        case none
-        case right
-        case left
-        case up
-        case down
-    }
     
     // MARK: - Properties
     var reuseIdentifier = "PageCell"
@@ -60,7 +60,6 @@ open class PageMenuController : UIViewController {
         collectionView!.isPagingEnabled = true
         collectionView!.isScrollEnabled = true
         collectionView!.showsHorizontalScrollIndicator = false
-        collectionView!.bounces = false
     }
     
     // MARK: - Add/Remove Pages
@@ -92,6 +91,14 @@ open class PageMenuController : UIViewController {
         removePage(at: pages.count - 1)
     }
     
+    // MARK: - Navigation Bar
+    public func useNavigationBar() {
+        self.navigationItem.titleView = pageMenuBar.collectionView
+        pageMenuBar.collectionView!.frame.size = CGSize(width: navigationItem.titleView!.frame.width, height: pageMenuBar.collectionView!.frame.height)
+        pageMenuBar.adjustAlignment()
+        pageMenuBar.frame.size = CGSize(width: pageMenuBar.frame.width, height: 0)
+    }
+    
     // MARK: - Scrolling
     public func scrollToPage(_ indexPath: IndexPath) {
         collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -119,6 +126,9 @@ extension PageMenuController: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as UICollectionViewCell
+        for view in cell.contentView.subviews {
+            view.removeFromSuperview()
+        }
         cell.contentView.addSubview(pageForIndexPath(indexPath))
         return cell
     }
@@ -128,6 +138,16 @@ extension PageMenuController: UICollectionViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.offset = scrollView.contentOffset.x
-        pageMenuBar.moveIndicator(offset)
+        pageMenuBar.moveIndicator(offset, false)
+    }
+    
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.offset = scrollView.contentOffset.x
+        pageMenuBar.moveIndicator(offset, true)
+    }
+    
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        self.offset = scrollView.contentOffset.x
+        pageMenuBar.moveIndicator(offset, true)
     }
 }

@@ -27,6 +27,7 @@ public enum Sizing {
 //
 public enum IndicatorMovement {
     case synced
+    case halfDelayed
     case delayed
 }
 open class PageMenuBar: UIToolbar {
@@ -53,7 +54,7 @@ open class PageMenuBar: UIToolbar {
     public fileprivate(set) var bottomSpacing: CGFloat = 0
     public fileprivate(set) var rightSpacing: CGFloat = 0
     public fileprivate(set) var defaultIndicatorColor: UIColor = UIColor.blue
-    public fileprivate(set) var indicatorMovement: IndicatorMovement = .synced
+    public fileprivate(set) var indicatorMovement: IndicatorMovement = .halfDelayed
     public fileprivate(set) var selectionColor: UIColor = UIColor.blue
     public fileprivate(set) var defaultColor: UIColor = UIColor.darkGray
     public fileprivate(set) var useDefaultColors: Bool = true
@@ -83,7 +84,7 @@ open class PageMenuBar: UIToolbar {
     func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 200.0
+        layout.minimumLineSpacing = 0
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
         collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView!.backgroundColor = UIColor.clear
@@ -104,43 +105,44 @@ extension PageMenuBar {
         self.scrolledOnOverflow = false
         self.alignment = alignment
         if alignment == .left {
-            if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
+            if getTotalSpacingWidth() + getTotalItemWidth() > self.collectionView!.frame.width {
                 self.overflow = true
             } else {
                 alignmentLeftSpacing = 0
             }
         } else if alignment == .centered {
-            if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
+            if getTotalSpacingWidth() + getTotalItemWidth() > self.collectionView!.frame.width {
                 self.overflow = true
             } else {
-                alignmentLeftSpacing = (self.frame.width - getTotalItemWidth() - getTotalSpacingWidth()) / 2 - rightSpacing
+                alignmentLeftSpacing = (self.collectionView!.frame.width - getTotalItemWidth() - getTotalSpacingWidth()) / 2 - rightSpacing
             }
         } else if alignment == .right {
-            if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
+            if getTotalSpacingWidth() + getTotalItemWidth() > self.collectionView!.frame.width {
                 self.overflow = true
             } else {
-                alignmentLeftSpacing = self.frame.width - getTotalItemWidth() - getTotalSpacingWidth() - leftSpacing - rightSpacing
+                alignmentLeftSpacing = self.collectionView!.frame.width - getTotalItemWidth() - getTotalSpacingWidth() - leftSpacing - rightSpacing
             }
         } else if alignment == .middle {
-            if getTotalSpacingWidth() + getTotalItemWidth() > self.frame.width {
+            if getTotalSpacingWidth() + getTotalItemWidth() > self.collectionView!.frame.width {
                 self.overflow = true
             } else {
                 if barItems.count % 2 == 0 {
-                    alignmentLeftSpacing = (self.frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
+                    alignmentLeftSpacing = (self.collectionView!.frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
                 } else {
-                    alignmentLeftSpacing = (self.frame.width - barItems[barItems.count/2].frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
+                    alignmentLeftSpacing = (self.collectionView!.frame.width - barItems[barItems.count/2].frame.width - getTotalSpacingWidth()) / 2 - getFirstHalfItemWidth() - rightSpacing
                 }
             }
         } else if alignment == .fit {
             if barItems.count > 1 {
                 alignmentLeftSpacing = 0
-                self.fitInterspacing = (self.frame.width - getTotalItemWidth() - leftSpacing - rightSpacing) / CGFloat(barItems.count - 1)
+                self.fitInterspacing = (self.collectionView!.frame.width - getTotalItemWidth() - leftSpacing - rightSpacing) / CGFloat(barItems.count - 1)
             } else {
                 setAlignment(alignment: .centered)
             }
         } else {
             alignmentLeftSpacing = 0
         }
+        adjustIndicator()
     }
     
     public func setInterspacing(interspacing: CGFloat) {
@@ -198,7 +200,6 @@ extension PageMenuBar {
     
     public func setIndicatorMovement(movement: IndicatorMovement) {
         self.indicatorMovement = movement
-        adjustIndicator()
     }
     
     public func setSelectionColor(color: UIColor) {
@@ -215,8 +216,7 @@ extension PageMenuBar {
     
     public func setDefaultSelectedPageIndex(index: Int) {
         self.defaultSelectedPageIndex = index
-        let indexPath = IndexPath(item: 0, section: index)
-        controller?.scrollToPage(indexPath)
+        adjustIndicator()
     }
     
     // MARK: Add/Remove Items
@@ -228,6 +228,12 @@ extension PageMenuBar {
         } else {
             sizeItemToFit(item)
             item.frame.size = CGSize(width: getUniformItemWidth(), height: item.frame.height)
+        }
+        if useDefaultColors {
+            item.setTitleColor(self.defaultColor, for: .normal)
+        }
+        if barItems.count == 0 {
+            selectedItem = item
         }
         item.addTarget(self, action: #selector(scrollToPage), for: .touchUpInside)
         barItems.insert(item, at: at)
@@ -257,58 +263,85 @@ extension PageMenuBar {
     
     // MARK: Animate Indicator
     
-    public func moveIndicator(_ offset: CGFloat) {
+    open func moveIndicator(_ offset: CGFloat, _ stoppedScrolling: Bool) {
         let pageIndex = Int(round(offset / self.frame.width))
-        if pageIndex >= 0 && pageIndex < barItems.count {
-            lastSelectedItem = selectedItem
+        if pageIndex >= 0 && pageIndex < barItems.count && ((stoppedScrolling && self.indicatorMovement == .delayed) || self.indicatorMovement != .delayed) {
             UIView.animate(withDuration: 0.15, animations: { () -> Void in
                 var indicatorWidth : CGFloat = self.indicator.frame.width
                 var indicatorX : CGFloat = 0.0
                 indicatorWidth = self.barItems[pageIndex].frame.width
-                indicatorX += self.leftSpacing
+                if self.overflow {
+                   indicatorX += self.leftSpacing + self.alignmentLeftSpacing + self.overflowLeftSpacing
+                } else {
+                   indicatorX += self.leftSpacing + self.alignmentLeftSpacing
+                }
+                if self.indicatorMovement == .synced {
+                    let thing = (self.collectionView!.frame.width - self.leftSpacing - self.rightSpacing) / CGFloat(self.barItems.count) - (self.interspacing / 2)
+                    let thing2 = thing - (self.getTotalItemWidth() / CGFloat(self.barItems.count))
+                    indicatorX += offset / CGFloat(self.barItems.count) - ((thing2 - (self.interspacing / 2)) * (offset / self.frame.width))
+                } else {
+                    indicatorX += self.getSpacingWidthUntil(index: pageIndex) + self.getItemWidthUntil(index: pageIndex)
+                }
+                self.indicator.frame = CGRect(x: indicatorX, y: self.indicator.frame.origin.y, width: indicatorWidth, height: self.indicator.frame.height)
+                self.lastSelectedItem = self.selectedItem
+                self.selectedItem = self.barItems[pageIndex]
+                self.switchColors()
+            })
+        }
+    }
+    
+    open func moveIndicator(index: Int, _ stoppedScrolling: Bool) {
+        let pageIndex = index
+        if pageIndex >= 0 && pageIndex < barItems.count && ((stoppedScrolling && self.indicatorMovement == .delayed) || self.indicatorMovement != .delayed) {
+            UIView.animate(withDuration: 0, animations: { () -> Void in
+                var indicatorWidth : CGFloat = self.indicator.frame.width
+                var indicatorX : CGFloat = 0.0
+                indicatorWidth = self.barItems[pageIndex].frame.width
+                if self.overflow {
+                    indicatorX += self.leftSpacing + self.alignmentLeftSpacing + self.overflowLeftSpacing
+                } else {
+                    indicatorX += self.leftSpacing + self.alignmentLeftSpacing
+                }
                 indicatorX += self.getSpacingWidthUntil(index: pageIndex) + self.getItemWidthUntil(index: pageIndex)
                 
                 self.indicator.frame = CGRect(x: indicatorX, y: self.indicator.frame.origin.y, width: indicatorWidth, height: self.indicator.frame.height)
-                self.selectedItem = self.barItems[pageIndex]
-                // Switch newly selected menu item title label to selected color and old one to unselected color
-                if self.barItems.count > 0 && self.useDefaultColors {
-                    guard let _ = self.lastSelectedItem?.titleLabel else {
-                        self.lastSelectedItem?.titleLabel?.textColor = self.defaultColor
-                        return
-                    }
-                    guard let _ = self.selectedItem?.titleLabel else {
-                        self.selectedItem?.titleLabel?.textColor = self.selectionColor
-                        return
-                    }
-                }
+                self.lastSelectedItem = self.selectedItem
+                self.selectedItem = self.barItems[self.defaultSelectedPageIndex]
+                self.switchColors()
             })
         }
-        setSelectedItem(pageIndex)
     }
     
     // MARK: Helpers
-    fileprivate func setSelectedItem(_ index: Int) {
-        selectedItem = barItems[index]
-    }
     
-    fileprivate func adjustAlignment() {
+    open func adjustAlignment() {
         if sizing == .uniform {
             adjustUniformItemWidth()
         }
         sizeToFitItems()
         setAlignment(alignment: self.alignment)
-        adjustIndicator()
     }
     
     fileprivate func adjustIndicator() {
         if barItems.count == 0 {
             indicator.backgroundColor = UIColor.clear
         } else {
-            setSelectedItem(defaultSelectedPageIndex)
             indicator.backgroundColor = defaultIndicatorColor
             indicator.frame.size = CGSize(width: self.selectedItem!.frame.width, height: indicator.frame.height)
             indicator.frame.origin.y = collectionView!.frame.height - indicator.frame.height
-            indicator.frame.origin.x = selectedItem!.bounds.origin.x + leftSpacing
+            indicator.frame.origin.x = leftSpacing
+            if defaultSelectedPageIndex > 0 {
+                let indexPath = IndexPath(item: 0, section: defaultSelectedPageIndex)
+                controller!.scrollToPage(indexPath)
+            }
+            moveIndicator(index: defaultSelectedPageIndex, true)
+        }
+    }
+    
+    fileprivate func switchColors() {
+        if useDefaultColors {
+            self.lastSelectedItem?.setTitleColor(self.defaultColor, for: .normal)
+            self.selectedItem?.setTitleColor(self.selectionColor, for: .normal)
         }
     }
     
@@ -354,10 +387,7 @@ extension PageMenuBar {
     }
     
     public func getSpacingWidthUntil(index: Int) -> CGFloat {
-        if index == 0 {
-            return 0
-        }
-        return interspacing * CGFloat(index - 1)
+        return interspacing * CGFloat(index)
     }
     
     fileprivate func sizeItemToFit(_ item: UIButton) {
@@ -394,6 +424,9 @@ extension PageMenuBar: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as UICollectionViewCell
+        for view in cell.contentView.subviews {
+            view.removeFromSuperview()
+        }
         cell.contentView.addSubview(itemForIndexPath(indexPath))
         return cell
     }
@@ -421,7 +454,7 @@ extension PageMenuBar: UICollectionViewDelegateFlowLayout {
         if alignment == .fit && sizing == .uniform {
             return fitInterspacing
         } else {
-            return 0
+            return interspacing
         }
     }
     

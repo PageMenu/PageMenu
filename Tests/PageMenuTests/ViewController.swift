@@ -10,7 +10,7 @@ import UIKit
 import PageMenu
 
 class ViewController: PageMenuController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,17 +36,23 @@ class ViewController: PageMenuController {
 //        addPage(ninth, title: "Green5")
 //        addPage(tenth, title: "Red5")
 //        addPage(eleventh, title: "Green6")
-        pageMenuBar.setBarHeight(height: 60)
-        pageMenuBar.barItems.forEach { $0.setTitleColor(UIColor.darkGray, for: .normal) }
-        //pageMenuBar.barItems.forEach { $0.titleLabel!.font = UIFont.systemFont(ofSize: 20.0) }
-        pageMenuBar.barItems.forEach { $0.titleEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)  }
-        pageMenuBar.barItems[0].backgroundColor = UIColor.green
-        pageMenuBar.barItems[1].backgroundColor = UIColor.red
-        pageMenuBar.barItems[2].backgroundColor = UIColor.green
-        pageMenuBar.barItems[3].backgroundColor = UIColor.red
+        pageMenuBar.setBarHeight(height: 44)
+//        pageMenuBar.barItems.forEach { $0.setTitleColor(UIColor.darkGray, for: .normal) }
+//        pageMenuBar.barItems.forEach { $0.titleLabel!.font = UIFont.systemFont(ofSize: 20.0) }
+//        pageMenuBar.barItems.forEach { $0.titleEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)  }
+//        pageMenuBar.barItems[0].backgroundColor = UIColor.green
+//        pageMenuBar.barItems[1].backgroundColor = UIColor.red
+//        pageMenuBar.barItems[2].backgroundColor = UIColor.green
+//        pageMenuBar.barItems[3].backgroundColor = UIColor.red
         pageMenuBar.setDefaultSelectedPageIndex(index: 2)
-        //pageMenuBar.sizeToFitItems()
-        pageMenuBar.setAlignment(alignment: .left)
+        pageMenuBar.setAlignment(alignment: .fit)
+        pageMenuBar.setSizing(sizing: .uniform)
+        useNavigationBar()
+        
+        //pageMenuBar.setAlignment(alignment: .left)
+        //pageMenuBar.setSizing(sizing: .uniform)
+        //pageMenuBar.setUniformItemWidth(width: 60)
+        //pageMenuBar.setInterspacing(interspacing: 10)
     }
 
     override func didReceiveMemoryWarning() {
