@@ -289,6 +289,11 @@ extension PageMenuBar {
                 } else {
                     indicatorX += self.getSpacingWidthUntil(index: pageIndex) + self.getItemWidthUntil(index: pageIndex)
                 }
+                if self.overflow {
+                    let ratio = (self.collectionView!.contentSize.width - self.frame.width) / (self.controller!.collectionView!.contentSize.width - self.frame.width)
+                    self.collectionView?.setContentOffset(CGPoint(x: ratio * offset, y: 0), animated: true)
+                    print(self.collectionView!.contentSize.width)
+                }
                 self.indicator.frame = CGRect(x: indicatorX, y: self.indicator.frame.origin.y, width: indicatorWidth, height: self.indicator.frame.height)
                 self.lastSelectedItem = self.selectedItem
                 self.selectedItem = self.barItems[pageIndex]
@@ -310,11 +315,17 @@ extension PageMenuBar {
                     indicatorX += self.leftSpacing + self.alignmentLeftSpacing
                 }
                 indicatorX += self.getSpacingWidthUntil(index: pageIndex) + self.getItemWidthUntil(index: pageIndex)
-                
                 self.indicator.frame = CGRect(x: indicatorX, y: self.indicator.frame.origin.y, width: indicatorWidth, height: self.indicator.frame.height)
                 self.lastSelectedItem = self.selectedItem
                 self.selectedItem = self.barItems[self.defaultSelectedPageIndex]
                 self.switchColors()
+                if self.overflow {
+                    let widths = self.getTotalItemWidth() + self.getTotalSpacingWidth()
+                    let controllerWidths = self.controller!.view.frame.width * CGFloat(self.barItems.count)
+                    let ratio = (widths - self.frame.width) / (controllerWidths - self.frame.width)
+                    self.collectionView?.setContentOffset(CGPoint(x: ratio * self.controller!.collectionView!.contentOffset.x, y: 0), animated: true)
+                    print(self.controller!.collectionView!.contentSize.width)
+                }
             })
         }
     }
