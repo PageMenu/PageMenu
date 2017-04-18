@@ -59,6 +59,8 @@ open class PageMenuBar: UIToolbar {
     public fileprivate(set) var defaultColor: UIColor = UIColor.darkGray
     public fileprivate(set) var useDefaultColors: Bool = true
     public fileprivate(set) var defaultSelectedPageIndex: Int = 0
+    public fileprivate(set) var isInNavigationBar: Bool = false
+    public fileprivate(set) var navBarMargin: CGFloat = 0.0
     
     // Alignment calculated properties
     fileprivate var alignmentLeftSpacing: CGFloat = 0
@@ -219,6 +221,11 @@ extension PageMenuBar {
         adjustIndicator()
     }
     
+    public func setIsInNavigationBar(margin: CGFloat) {
+        isInNavigationBar = true
+        navBarMargin = margin
+    }
+    
     // MARK: Add/Remove Items
     internal func addItem(title: String, at: Int) {
         let item = UIButton()
@@ -276,9 +283,9 @@ extension PageMenuBar {
                    indicatorX += self.leftSpacing + self.alignmentLeftSpacing
                 }
                 if self.indicatorMovement == .synced {
-                    let thing = (self.collectionView!.frame.width - self.leftSpacing - self.rightSpacing) / CGFloat(self.barItems.count) - (self.interspacing / 2)
+                    let thing = (self.collectionView!.frame.width - self.leftSpacing - self.rightSpacing) / CGFloat(self.barItems.count) - ((self.interspacing) / 2)
                     let thing2 = thing - (self.getTotalItemWidth() / CGFloat(self.barItems.count))
-                    indicatorX += offset / CGFloat(self.barItems.count) - ((thing2 - (self.interspacing / 2)) * (offset / self.frame.width))
+                    indicatorX += offset / CGFloat(self.barItems.count) - ((thing2 - ((self.interspacing - self.navBarMargin) / 2)) * (offset / self.frame.width))
                 } else {
                     indicatorX += self.getSpacingWidthUntil(index: pageIndex) + self.getItemWidthUntil(index: pageIndex)
                 }

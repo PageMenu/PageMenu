@@ -47,6 +47,7 @@ class ViewController: PageMenuController {
         pageMenuBar.setDefaultSelectedPageIndex(index: 2)
         pageMenuBar.setAlignment(alignment: .fit)
         pageMenuBar.setSizing(sizing: .uniform)
+        pageMenuBar.setIndicatorMovement(movement: .synced)
         useNavigationBar()
         
         //pageMenuBar.setAlignment(alignment: .left)

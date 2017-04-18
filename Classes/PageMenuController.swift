@@ -94,9 +94,11 @@ open class PageMenuController : UIViewController {
     // MARK: - Navigation Bar
     public func useNavigationBar() {
         self.navigationItem.titleView = pageMenuBar.collectionView
-        pageMenuBar.collectionView!.frame.size = CGSize(width: navigationItem.titleView!.frame.width, height: pageMenuBar.collectionView!.frame.height)
+        let leftMargin = self.navigationController!.navigationBar.layoutMargins.left
+        pageMenuBar.collectionView!.frame = CGRect(x: leftMargin, y: 0, width: navigationItem.titleView!.frame.width - (leftMargin*2), height: pageMenuBar.collectionView!.frame.height)
+        pageMenuBar.frame = CGRect(x: leftMargin, y: 0, width: pageMenuBar.frame.width - (leftMargin*2), height: 0)
+        pageMenuBar.setIsInNavigationBar(margin: leftMargin)
         pageMenuBar.adjustAlignment()
-        pageMenuBar.frame.size = CGSize(width: pageMenuBar.frame.width, height: 0)
     }
     
     // MARK: - Scrolling
