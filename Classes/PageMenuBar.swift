@@ -30,6 +30,10 @@ public enum IndicatorMovement {
     case halfDelayed
     case delayed
 }
+public enum OverflowScrollMovement {
+    case smooth
+    case centering
+}
 open class PageMenuBar: UIToolbar {
     //internal var itemContainer: UICollectionView?
     
@@ -61,6 +65,7 @@ open class PageMenuBar: UIToolbar {
     public fileprivate(set) var defaultSelectedPageIndex: Int = 0
     public fileprivate(set) var isInNavigationBar: Bool = false
     public fileprivate(set) var navBarMargin: CGFloat = 0.0
+    public fileprivate(set) var overflowScrollMovement: OverflowScrollMovement = .centering
     
     // Alignment calculated properties
     fileprivate var alignmentLeftSpacing: CGFloat = 0
@@ -202,6 +207,7 @@ extension PageMenuBar {
     
     public func setIndicatorMovement(movement: IndicatorMovement) {
         self.indicatorMovement = movement
+        adjustAlignment()
     }
     
     public func setSelectionColor(color: UIColor) {
@@ -278,9 +284,15 @@ extension PageMenuBar {
                 var indicatorX : CGFloat = 0.0
                 indicatorWidth = self.barItems[pageIndex].frame.width
                 if self.overflow {
-                   indicatorX += self.leftSpacing + self.alignmentLeftSpacing + self.overflowLeftSpacing
+                    indicatorX += self.leftSpacing + self.alignmentLeftSpacing + self.overflowLeftSpacing
+                    if self.overflowScrollMovement == .smooth {
+                        let ratio =  (self.getContentWidth() - self.frame.width) / (UIScreen.main.bounds.width * CGFloat(self.barItems.count) - self.frame.width)
+                        self.collectionView!.setContentOffset(CGPoint(x: ratio * offset, y: 0), animated: true)
+                    } else {
+                        
+                    }
                 } else {
-                   indicatorX += self.leftSpacing + self.alignmentLeftSpacing
+                    indicatorX += self.leftSpacing + self.alignmentLeftSpacing
                 }
                 if self.indicatorMovement == .synced {
                     let thing = (self.collectionView!.frame.width - self.leftSpacing - self.rightSpacing) / CGFloat(self.barItems.count) - ((self.interspacing) / 2)
@@ -289,11 +301,7 @@ extension PageMenuBar {
                 } else {
                     indicatorX += self.getSpacingWidthUntil(index: pageIndex) + self.getItemWidthUntil(index: pageIndex)
                 }
-                if self.overflow {
-                    let ratio = (self.collectionView!.contentSize.width - self.frame.width) / (self.controller!.collectionView!.contentSize.width - self.frame.width)
-                    self.collectionView?.setContentOffset(CGPoint(x: ratio * offset, y: 0), animated: true)
-                    print(self.collectionView!.contentSize.width)
-                }
+                
                 self.indicator.frame = CGRect(x: indicatorX, y: self.indicator.frame.origin.y, width: indicatorWidth, height: self.indicator.frame.height)
                 self.lastSelectedItem = self.selectedItem
                 self.selectedItem = self.barItems[pageIndex]
@@ -319,13 +327,7 @@ extension PageMenuBar {
                 self.lastSelectedItem = self.selectedItem
                 self.selectedItem = self.barItems[self.defaultSelectedPageIndex]
                 self.switchColors()
-                if self.overflow {
-                    let widths = self.getTotalItemWidth() + self.getTotalSpacingWidth()
-                    let controllerWidths = self.controller!.view.frame.width * CGFloat(self.barItems.count)
-                    let ratio = (widths - self.frame.width) / (controllerWidths - self.frame.width)
-                    self.collectionView?.setContentOffset(CGPoint(x: ratio * self.controller!.collectionView!.contentOffset.x, y: 0), animated: true)
-                    print(self.controller!.collectionView!.contentSize.width)
-                }
+                
             })
         }
     }
@@ -333,9 +335,6 @@ extension PageMenuBar {
     // MARK: Helpers
     
     open func adjustAlignment() {
-        if sizing == .uniform {
-            adjustUniformItemWidth()
-        }
         sizeToFitItems()
         setAlignment(alignment: self.alignment)
     }
@@ -349,6 +348,7 @@ extension PageMenuBar {
             indicator.frame.origin.y = collectionView!.frame.height - indicator.frame.height
             indicator.frame.origin.x = leftSpacing
             if defaultSelectedPageIndex > 0 {
+                controller!.scrollToPage(IndexPath(item: 0, section: 0)) // To allow scroll calculations to reset
                 let indexPath = IndexPath(item: 0, section: defaultSelectedPageIndex)
                 controller!.scrollToPage(indexPath)
             }
@@ -374,6 +374,13 @@ extension PageMenuBar {
             return ((collectionView!.frame.width - leftSpacing - rightSpacing) / CGFloat(barItems.count)) - (interspacing / 2)
         }
         return uniformItemWidth
+    }
+    
+    public func getContentWidth() -> CGFloat {
+        if overflow {
+            return getTotalSpacingWidth() + getTotalItemWidth() + leftSpacing + rightSpacing + overflowRightSpacing + overflowRightSpacing
+        }
+        return getTotalSpacingWidth() + getTotalItemWidth() + leftSpacing + rightSpacing
     }
     
     public func getTotalItemWidth() -> CGFloat {
@@ -483,22 +490,6 @@ extension PageMenuBar: UICollectionViewDelegateFlowLayout {
         }
         else {
             return UIEdgeInsetsMake(topSpacing, overflowLeftSpacing, bottomSpacing, overflowRightSpacing)
-        }
-    }
-    
-    // Set initial scroll position on overflow
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if !scrolledOnOverflow && overflow {
-            var indexToScrollTo = IndexPath(item: 0, section: 0)
-            // Middle and centered alignment are the same when there is overflow (i.e. centering on the middle element)
-            if alignment == .middle || alignment == .centered {
-                indexToScrollTo = IndexPath(item: barItems.count / 2, section: 0)
-            }
-            else if alignment == .right {
-                indexToScrollTo = IndexPath(item: barItems.count - 1, section: 0)
-            }
-            collectionView.scrollToItem(at: indexToScrollTo, at: .centeredHorizontally, animated: false)
-            scrolledOnOverflow = true
         }
     }
 }
