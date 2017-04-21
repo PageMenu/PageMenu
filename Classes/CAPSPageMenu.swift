@@ -19,7 +19,7 @@
 
 import UIKit
 
-@objc public protocol CAPSPageMenuDelegate {
+public protocol CAPSPageMenuDelegate {
     // MARK: - Delegate functions
 
     @objc optional func willMoveToPage(_ controller: UIViewController, index: Int)
