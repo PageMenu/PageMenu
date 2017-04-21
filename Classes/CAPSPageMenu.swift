@@ -51,7 +51,7 @@ open class CAPSPageMenu: UIViewController {
 
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
-    var didLayoutSubviewsAfterRotation : Bool = false
+    var didLayoutSubviewsAfterRotation : Bool = true
     var didScrollAlready : Bool = false
 
     var lastControllerScrollViewContentOffset : CGFloat = 0.0
