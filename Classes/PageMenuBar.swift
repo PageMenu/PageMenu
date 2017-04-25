@@ -289,7 +289,7 @@ extension PageMenuBar {
                         let ratio =  (self.getContentWidth() - self.frame.width) / (UIScreen.main.bounds.width * CGFloat(self.barItems.count) - self.frame.width)
                         self.collectionView!.setContentOffset(CGPoint(x: ratio * offset, y: 0), animated: true)
                     } else {
-                        
+                        //self.collectionView!.scrollToItem(at: IndexPath(item: pageIndex, section: 0), at: .centeredHorizontally, animated: true)
                     }
                 } else {
                     indicatorX += self.leftSpacing + self.alignmentLeftSpacing
