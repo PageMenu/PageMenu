@@ -44,7 +44,7 @@ class ViewController: PageMenuController {
 //        pageMenuBar.barItems[1].backgroundColor = UIColor.red
 //        pageMenuBar.barItems[2].backgroundColor = UIColor.green
 //        pageMenuBar.barItems[3].backgroundColor = UIColor.red
-        pageMenuBar.setDefaultSelectedPageIndex(index: 5)
+        pageMenuBar.setDefaultSelectedPageIndex(index: 1)
         pageMenuBar.setSizing(sizing: .uniform)
         pageMenuBar.setUniformItemWidth(width: 75)
         pageMenuBar.setIndicatorMovement(movement: .halfDelayed)

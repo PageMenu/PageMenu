@@ -140,16 +140,18 @@ extension PageMenuController: UICollectionViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.offset = scrollView.contentOffset.x
+        let pageIndex = Int(round(offset / self.view.frame.width))
+        self.pageMenuBar.pageMenuScroll(index: pageIndex)
         pageMenuBar.moveIndicator(offset, false)
     }
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         self.offset = scrollView.contentOffset.x
-        pageMenuBar.moveIndicator(offset, true)
+        //pageMenuBar.moveIndicator(offset, true)
     }
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         self.offset = scrollView.contentOffset.x
-        pageMenuBar.moveIndicator(offset, true)
+        //pageMenuBar.moveIndicator(offset, true)
     }
 }

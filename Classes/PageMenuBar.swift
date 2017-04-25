@@ -289,7 +289,8 @@ extension PageMenuBar {
                         let ratio =  (self.getContentWidth() - self.frame.width) / (UIScreen.main.bounds.width * CGFloat(self.barItems.count) - self.frame.width)
                         self.collectionView!.setContentOffset(CGPoint(x: ratio * offset, y: 0), animated: true)
                     } else {
-                        //self.collectionView!.scrollToItem(at: IndexPath(item: pageIndex, section: 0), at: .centeredHorizontally, animated: true)
+                        //let ratio =
+                        //self.collectionView!.setContentOffset(CGPoint(x: , y: 0), animated: true)
                     }
                 } else {
                     indicatorX += self.leftSpacing + self.alignmentLeftSpacing
@@ -327,7 +328,6 @@ extension PageMenuBar {
                 self.lastSelectedItem = self.selectedItem
                 self.selectedItem = self.barItems[self.defaultSelectedPageIndex]
                 self.switchColors()
-                
             })
         }
     }
@@ -415,6 +415,18 @@ extension PageMenuBar {
         return interspacing * CGFloat(index)
     }
     
+    open func getScrollMovement() -> OverflowScrollMovement {
+        return overflowScrollMovement
+    }
+    
+    open func pageMenuScroll() {
+        self.collectionView!.scrollToItem(at: IndexPath(item: barItems.index(of: selectedItem!)!, section: 0), at: .centeredHorizontally, animated: true)
+    }
+    
+    open func pageMenuScroll(index: Int) {
+        self.collectionView!.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+    }
+    
     fileprivate func sizeItemToFit(_ item: UIButton) {
         item.sizeToFit()
         item.frame.size = CGSize(width: item.frame.width, height: collectionView!.frame.height)
@@ -425,6 +437,9 @@ extension PageMenuBar {
         let index = barItems.index(of: sender)
         let indexPath = IndexPath(item: 0, section: index!)
         controller!.scrollToPage(indexPath)
+        if getScrollMovement() == .centering {
+            pageMenuScroll(index: index!)
+        }
     }
 }
 
@@ -490,6 +505,15 @@ extension PageMenuBar: UICollectionViewDelegateFlowLayout {
         }
         else {
             return UIEdgeInsetsMake(topSpacing, overflowLeftSpacing, bottomSpacing, overflowRightSpacing)
+        }
+    }
+    
+    // Set initial scroll position on overflow
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if !scrolledOnOverflow && overflow && overflowScrollMovement == .centering {
+            let indexToScrollTo = IndexPath(item: defaultSelectedPageIndex, section: 0)
+            collectionView.scrollToItem(at: indexToScrollTo, at: .centeredHorizontally, animated: false)
+            scrolledOnOverflow = true
         }
     }
 }
