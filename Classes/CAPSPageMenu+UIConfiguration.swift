@@ -78,7 +78,7 @@ extension CAPSPageMenu {
         controllerScrollView.alwaysBounceHorizontal = configuration.enableHorizontalBounce
         controllerScrollView.bounces = configuration.enableHorizontalBounce
         
-        controllerScrollView.frame = CGRect(x: 0.0, y: configuration.menuHeight, width: self.view.frame.width, height: self.view.frame.height - configuration.menuHeight)
+        controllerScrollView.frame = CGRect(x: 0.0, y: configuration.menuHeight, width: self.view.frame.width, height: self.view.frame.height)
         
         self.view.addSubview(controllerScrollView)
         
