@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6173A1E81EB277BD0016EE5F /* PageMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F05DAB301E71FDD500D6BAE6 /* PageMenu.framework */; };
 		61D55F641E8EEB250083873C /* FirstPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D55F631E8EEB250083873C /* FirstPageController.swift */; };
 		61D55F661E8EEB360083873C /* SecondPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D55F651E8EEB360083873C /* SecondPageController.swift */; };
 		F05DAADC1E71F75F00D6BAE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05DAADB1E71F75F00D6BAE6 /* AppDelegate.swift */; };
@@ -85,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6173A1E81EB277BD0016EE5F /* PageMenu.framework in Frameworks */,
 				F05DAB421E71FF5600D6BAE6 /* PageMenu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -351,8 +351,9 @@ extension PageMenuBar {
                 controller!.scrollToPage(IndexPath(item: 0, section: 0)) // To allow scroll calculations to reset
                 let indexPath = IndexPath(item: 0, section: defaultSelectedPageIndex)
                 controller!.scrollToPage(indexPath)
+            } else {
+                moveIndicator(index: defaultSelectedPageIndex, true)
             }
-            moveIndicator(index: defaultSelectedPageIndex, true)
         }
     }
     

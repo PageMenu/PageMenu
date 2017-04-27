@@ -33,6 +33,7 @@ open class PageMenuController : UIViewController {
         pageMenuBar = PageMenuBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 44.0), controller: self)
         setDefaultCollectionView()
         view.addSubview(pageMenuBar!)
+        
     }
     
     override open func didReceiveMemoryWarning() {
@@ -54,12 +55,12 @@ open class PageMenuController : UIViewController {
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collectionView!)
         collectionView!.dataSource = self
         collectionView!.delegate = self
         collectionView!.isPagingEnabled = true
         collectionView!.isScrollEnabled = true
-        collectionView!.showsHorizontalScrollIndicator = false
     }
     
     // MARK: - Add/Remove Pages
@@ -103,7 +104,7 @@ open class PageMenuController : UIViewController {
     
     // MARK: - Scrolling
     public func scrollToPage(_ indexPath: IndexPath) {
-        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        collectionView!.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 }
 
@@ -140,18 +141,18 @@ extension PageMenuController: UICollectionViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.offset = scrollView.contentOffset.x
+        pageMenuBar.moveIndicator(offset, false)
         let pageIndex = Int(round(offset / self.view.frame.width))
         self.pageMenuBar.pageMenuScroll(index: pageIndex)
-        pageMenuBar.moveIndicator(offset, false)
     }
     
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.offset = scrollView.contentOffset.x
-        //pageMenuBar.moveIndicator(offset, true)
-    }
-    
-    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.offset = scrollView.contentOffset.x
-        //pageMenuBar.moveIndicator(offset, true)
-    }
+//    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        self.offset = scrollView.contentOffset.x
+//        //pageMenuBar.moveIndicator(offset, true)
+//    }
+//    
+//    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+//        self.offset = scrollView.contentOffset.x
+//        //pageMenuBar.moveIndicator(offset, true)
+//    }
 }

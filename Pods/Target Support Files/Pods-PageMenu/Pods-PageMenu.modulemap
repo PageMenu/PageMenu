@@ -1,0 +1,6 @@
+framework module Pods_PageMenu {
+  umbrella header "Pods-PageMenu-umbrella.h"
+
+  export *
+  module * { export * }
+}

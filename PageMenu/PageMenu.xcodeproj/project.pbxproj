@@ -7,12 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		614AE2201EB2735D00974D2D /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 614AE21F1EB2735D00974D2D /* SnapKit.framework */; };
+		B8E4DD17E4604AE797008F21 /* Pods_PageMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2326AB7DE664ABC22902ACA /* Pods_PageMenu.framework */; };
 		D7BF96651B6B8445002F32A0 /* PageMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = D7BF96641B6B8445002F32A0 /* PageMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F05DAB3D1E71FF0D00D6BAE6 /* PageMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05DAB391E71FF0D00D6BAE6 /* PageMenuBar.swift */; };
 		F05DAB3E1E71FF0D00D6BAE6 /* PageMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05DAB3A1E71FF0D00D6BAE6 /* PageMenuController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04B22A8C34C47478D9981EA2 /* Pods-PageMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PageMenu.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-PageMenu/Pods-PageMenu.debug.xcconfig"; sourceTree = "<group>"; };
+		193EA257DB92FBF075C0C898 /* Pods-PageMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PageMenu.release.xcconfig"; path = "../Pods/Target Support Files/Pods-PageMenu/Pods-PageMenu.release.xcconfig"; sourceTree = "<group>"; };
+		614AE21F1EB2735D00974D2D /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "../../Library/Developer/Xcode/DerivedData/PageMenuTests-fskjniqpjywqzhdegelwbpzggaet/Build/Products/Debug-iphoneos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
+		B2326AB7DE664ABC22902ACA /* Pods_PageMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PageMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7BF965F1B6B8445002F32A0 /* PageMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PageMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7BF96631B6B8445002F32A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7BF96641B6B8445002F32A0 /* PageMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageMenu.h; sourceTree = "<group>"; };
@@ -25,17 +31,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				614AE2201EB2735D00974D2D /* SnapKit.framework in Frameworks */,
+				B8E4DD17E4604AE797008F21 /* Pods_PageMenu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27BD51430AAEC13030A78F9C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				04B22A8C34C47478D9981EA2 /* Pods-PageMenu.debug.xcconfig */,
+				193EA257DB92FBF075C0C898 /* Pods-PageMenu.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5EACA99C99494876E8168311 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				614AE21F1EB2735D00974D2D /* SnapKit.framework */,
+				B2326AB7DE664ABC22902ACA /* Pods_PageMenu.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D7BF96551B6B8445002F32A0 = {
 			isa = PBXGroup;
 			children = (
 				D7BF96611B6B8445002F32A0 /* PageMenu */,
 				D7BF96601B6B8445002F32A0 /* Products */,
+				5EACA99C99494876E8168311 /* Frameworks */,
+				27BD51430AAEC13030A78F9C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,10 +112,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7BF96751B6B8445002F32A0 /* Build configuration list for PBXNativeTarget "PageMenu" */;
 			buildPhases = (
+				9543A446F501996FF135FD82 /* [CP] Check Pods Manifest.lock */,
 				D7BF965A1B6B8445002F32A0 /* Sources */,
 				D7BF965B1B6B8445002F32A0 /* Frameworks */,
 				D7BF965C1B6B8445002F32A0 /* Headers */,
 				D7BF965D1B6B8445002F32A0 /* Resources */,
+				F1CE50220F99CD274F6307E0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -141,6 +171,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9543A446F501996FF135FD82 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F1CE50220F99CD274F6307E0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-PageMenu/Pods-PageMenu-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D7BF965A1B6B8445002F32A0 /* Sources */ = {
@@ -252,6 +315,7 @@
 		};
 		D7BF96761B6B8445002F32A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04B22A8C34C47478D9981EA2 /* Pods-PageMenu.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -273,6 +337,7 @@
 		};
 		D7BF96771B6B8445002F32A0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 193EA257DB92FBF075C0C898 /* Pods-PageMenu.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

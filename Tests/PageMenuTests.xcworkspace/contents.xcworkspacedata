@@ -5,6 +5,9 @@
       location = "group:../PageMenu/PageMenu.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:../Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:PageMenuTests.xcodeproj">
    </FileRef>
 </Workspace>
