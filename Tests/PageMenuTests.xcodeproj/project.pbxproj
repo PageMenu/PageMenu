@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6173A1E81EB277BD0016EE5F /* PageMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F05DAB301E71FDD500D6BAE6 /* PageMenu.framework */; };
-		618AC3CA1EB27AD1005D77C6 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 618AC3C31EB279E4005D77C6 /* SnapKit.framework */; };
-		618AC3CB1EB27AD1005D77C6 /* SnapKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 618AC3C31EB279E4005D77C6 /* SnapKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		618AC3CE1EB27AD5005D77C6 /* Pods_PageMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 618AC3C11EB279E4005D77C6 /* Pods_PageMenu.framework */; };
 		618AC3CF1EB27AD5005D77C6 /* Pods_PageMenu.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 618AC3C11EB279E4005D77C6 /* Pods_PageMenu.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		61D55F641E8EEB250083873C /* FirstPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D55F631E8EEB250083873C /* FirstPageController.swift */; };
@@ -36,25 +34,11 @@
 			remoteGlobalIDString = E9B41A616C49BF3153EA82AC27A8E918;
 			remoteInfo = "Pods-PageMenu";
 		};
-		618AC3C21EB279E4005D77C6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 618AC3BB1EB279E4005D77C6 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A7889EA607242DFFD0CAE0F4DC3D2166;
-			remoteInfo = SnapKit;
-		};
-		618AC3CC1EB27AD1005D77C6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 618AC3BB1EB279E4005D77C6 /* Pods.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 079A1B24DACE261B97B435F223263A46;
-			remoteInfo = SnapKit;
-		};
 		618AC3D01EB27AD5005D77C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 618AC3BB1EB279E4005D77C6 /* Pods.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = EAE9A937F875BA0E071AD1CF999A0C3D;
+			remoteGlobalIDString = BF1EBBB109B17B166936D4A265A5B88A;
 			remoteInfo = "Pods-PageMenu";
 		};
 		F05DAAED1E71F75F00D6BAE6 /* PBXContainerItemProxy */ = {
@@ -82,7 +66,6 @@
 			files = (
 				F05DAB431E71FF5600D6BAE6 /* PageMenu.framework in Embed Frameworks */,
 				618AC3CF1EB27AD5005D77C6 /* Pods_PageMenu.framework in Embed Frameworks */,
-				618AC3CB1EB27AD1005D77C6 /* SnapKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,7 +104,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				618AC3CA1EB27AD1005D77C6 /* SnapKit.framework in Frameworks */,
 				6173A1E81EB277BD0016EE5F /* PageMenu.framework in Frameworks */,
 				618AC3CE1EB27AD5005D77C6 /* Pods_PageMenu.framework in Frameworks */,
 				F05DAB421E71FF5600D6BAE6 /* PageMenu.framework in Frameworks */,
@@ -149,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				618AC3C11EB279E4005D77C6 /* Pods_PageMenu.framework */,
-				618AC3C31EB279E4005D77C6 /* SnapKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -239,7 +220,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				618AC3CD1EB27AD1005D77C6 /* PBXTargetDependency */,
 				618AC3D11EB27AD5005D77C6 /* PBXTargetDependency */,
 			);
 			name = PageMenuTests;
@@ -345,13 +325,6 @@
 			remoteRef = 618AC3C01EB279E4005D77C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		618AC3C31EB279E4005D77C6 /* SnapKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SnapKit.framework;
-			remoteRef = 618AC3C21EB279E4005D77C6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -415,11 +388,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		618AC3CD1EB27AD1005D77C6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SnapKit;
-			targetProxy = 618AC3CC1EB27AD1005D77C6 /* PBXContainerItemProxy */;
-		};
 		618AC3D11EB27AD5005D77C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-PageMenu";
@@ -553,7 +521,6 @@
 		F05DAB011E71F75F00D6BAE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 79J92XV598;
 				INFOPLIST_FILE = PageMenuTests/Info.plist;
@@ -568,7 +535,6 @@
 		F05DAB021E71F75F00D6BAE6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 79J92XV598;
 				INFOPLIST_FILE = PageMenuTests/Info.plist;
