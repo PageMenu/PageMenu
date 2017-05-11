@@ -833,7 +833,11 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 if (index == 0) {
                     item.frame = CGRectMake(_startingMenuMargin + _menuMargin, 0.0, _menuItemWidth, _menuHeight);
                 } else {
-                    item.frame = CGRectMake(_menuItemWidth * (CGFloat)index + _menuMargin * (CGFloat)index + 1.0 + _startingMenuMargin, 0.0, _menuItemWidth, _menuHeight);
+                    
+                    // In the case of _centerMenuItems = YES,
+                    // the position of the menu item view can not be displayed properly
+                    // because the X-axis of the menu item view here is reduced by a _menuMargin.
+                    item.frame = CGRectMake(_menuItemWidth * (CGFloat)index + _menuMargin * (CGFloat)(index + 1) + 1.0 + _startingMenuMargin, 0.0, _menuItemWidth, _menuHeight);
                 }
                 
                 index++;
