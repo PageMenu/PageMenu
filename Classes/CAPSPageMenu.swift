@@ -235,16 +235,18 @@ extension CAPSPageMenu {
     // MARK: - Orientation Change
     
     override open func viewDidLayoutSubviews() {
+        // Prevent from calculating the wrong size of menuItems
+        guard isViewLoaded && view.window != nil else { return }
+        
         // Configure controller scroll view content size
         controllerScrollView.contentSize = CGSize(width: self.view.frame.width * CGFloat(controllerArray.count), height: self.view.frame.height - configuration.menuHeight)
         
         let oldCurrentOrientationIsPortrait : Bool = currentOrientationIsPortrait
         
-        if UIDevice.current.orientation != UIDeviceOrientation.unknown {
-            currentOrientationIsPortrait = UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat
-        }
+        // Sometimes the returned value of UIDevice.current.orientation.isPortrait is false although the device is actually portrait, in this situation, the index of page will be wrong, which can cause the disappear of current viewController during scrolling
+        currentOrientationIsPortrait = UIApplication.shared.statusBarOrientation.isPortrait
         
-        if (oldCurrentOrientationIsPortrait && UIDevice.current.orientation.isLandscape) || (!oldCurrentOrientationIsPortrait && (UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat)) {
+        if (oldCurrentOrientationIsPortrait && UIApplication.shared.statusBarOrientation.isLandscape) || (!oldCurrentOrientationIsPortrait && (UIApplication.shared.statusBarOrientation.isPortrait)) {
             didLayoutSubviewsAfterRotation = true
             
             //Resize menu items if using as segmented control
