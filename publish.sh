@@ -1,4 +1,4 @@
-INCREMENTING=${1:-"minor"}
+INCREMENTING=${1:-"patch"}
 podspec-bump ${INCREMENTING} -w;
 git commit -am "Publishing `podspec-bump --dump-version`";
 git tag "`podspec-bump --dump-version`";
