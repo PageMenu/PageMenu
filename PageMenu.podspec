@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "PageMenu"
-  s.version      = "2.0.2"
+  s.version      = "2.0.3"
   s.summary      = "Highly customizable paging controller"
 
   # This description is used to generate tags and improve search results.
@@ -55,10 +55,10 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  # s.platform     = :ios, "5.0"
+  s.platform     = :ios, "9.0"
 
   #  When using multiple platforms
-   s.ios.deployment_target = "8.1"
+   s.ios.deployment_target = "9.0"
    # s.osx.deployment_target = "10.7"
    # s.watchos.deployment_target = "2.0"
    # s.tvos.deployment_target = "9.0"
