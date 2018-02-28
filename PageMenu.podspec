@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "PageMenu"
-  s.version      = "2.0.1"
+  s.version      = "2.0.2"
   s.summary      = "Highly customizable paging controller"
 
   # This description is used to generate tags and improve search results.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = 'A paging menu controller built from other view controllers allowing the user to switch between any kind of view controller.'
 
-  s.homepage     = "https://github.com/uacaps/PageMenu"
+  s.homepage     = "https://github.com/igordeoliveirasa/PageMenu"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -70,7 +70,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/uacaps/PageMenu.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/igordeoliveirasa/PageMenu.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
