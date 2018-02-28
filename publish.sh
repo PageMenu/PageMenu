@@ -1,4 +1,5 @@
-podspec-bump -w;
+INCREMENTING=${1:-"minor"}
+podspec-bump ${INCREMENTING} -w;
 git commit -am "Publishing `podspec-bump --dump-version`";
 git tag "`podspec-bump --dump-version`";
 git push --tags;
