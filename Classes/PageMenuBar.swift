@@ -27,7 +27,6 @@ public enum Sizing {
 //
 public enum IndicatorMovement {
     case synced
-    case halfDelayed
     case delayed
 }
 public enum OverflowScrollMovement {
@@ -58,7 +57,7 @@ open class PageMenuBar: UIToolbar {
     public fileprivate(set) var bottomSpacing: CGFloat = 0
     public fileprivate(set) var rightSpacing: CGFloat = 0
     public fileprivate(set) var defaultIndicatorColor: UIColor = UIColor.blue
-    public fileprivate(set) var indicatorMovement: IndicatorMovement = .halfDelayed
+    public fileprivate(set) var indicatorMovement: IndicatorMovement = .delayed
     public fileprivate(set) var selectionColor: UIColor = UIColor.blue
     public fileprivate(set) var defaultColor: UIColor = UIColor.darkGray
     public fileprivate(set) var useDefaultColors: Bool = true
@@ -278,7 +277,7 @@ extension PageMenuBar {
     
     open func moveIndicator(_ offset: CGFloat, _ stoppedScrolling: Bool) {
         let pageIndex = Int(round(offset / self.frame.width))
-        if pageIndex >= 0 && pageIndex < barItems.count && ((stoppedScrolling && self.indicatorMovement == .delayed) || self.indicatorMovement != .delayed) {
+        if pageIndex >= 0 && pageIndex < barItems.count {
             UIView.animate(withDuration: 0.15, animations: { () -> Void in
                 var indicatorWidth : CGFloat = self.indicator.frame.width
                 var indicatorX : CGFloat = 0.0
@@ -313,7 +312,7 @@ extension PageMenuBar {
     
     open func moveIndicator(index: Int, _ stoppedScrolling: Bool) {
         let pageIndex = index
-        if pageIndex >= 0 && pageIndex < barItems.count && ((stoppedScrolling && self.indicatorMovement == .delayed) || self.indicatorMovement != .delayed) {
+        if pageIndex >= 0 && pageIndex < barItems.count {
             UIView.animate(withDuration: 0, animations: { () -> Void in
                 var indicatorWidth : CGFloat = self.indicator.frame.width
                 var indicatorX : CGFloat = 0.0
@@ -434,7 +433,7 @@ extension PageMenuBar {
     }
     
     // MARK: Item Pressed
-    func scrollToPage(sender: UIButton) {
+    @objc func scrollToPage(sender: UIButton) {
         let index = barItems.index(of: sender)
         let indexPath = IndexPath(item: 0, section: index!)
         controller!.scrollToPage(indexPath)
