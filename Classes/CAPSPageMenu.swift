@@ -91,6 +91,7 @@ public enum CAPSPageMenuOption {
     case iconIndicator(Bool)
     case iconIndicatorView(UIView)
     case showStepperView(Bool)
+    case kerning(CGFloat)
 }
 
 open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -112,7 +113,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     open var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     var startingMenuMargin : CGFloat = 0.0
     var menuItemMargin : CGFloat = 0.0
-    
+    open var kerning: CGFloat = 0.0
     var iconIndicator:Bool = false
     var selectionIndicatorCustomView: UIView?
     var selectionIndicatorView : UIView = UIView()
@@ -261,6 +262,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                     selectionIndicatorCustomView = value
                 case let .showStepperView(value):
                     showStepperView = value
+                case let .kerning(value):
+                    kerning = value
                 }
             }
             
@@ -471,8 +474,24 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
             // Set title depending on if controller has a title set
             if controller.title != nil {
                 menuItemView.titleLabel!.text = controller.title!
+                if kerning > 0 {
+                    var attributedString = NSMutableAttributedString(string: controller.title!)
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    paragraphStyle.alignment = .center
+                    attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+                    attributedString.addAttribute(NSKernAttributeName, value: kerning, range: NSMakeRange(0, attributedString.length))
+                    menuItemView.titleLabel!.attributedText = attributedString
+                }
             } else {
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
+                if kerning > 0 {
+                    var attributedString = NSMutableAttributedString(string: controller.title!)
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    paragraphStyle.alignment = .center
+                    attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+                    attributedString.addAttribute(NSKernAttributeName, value: kerning, range: NSMakeRange(0, attributedString.length))
+                    menuItemView.titleLabel!.attributedText = attributedString
+                }
             }
             
             // Add separator between menu items when using as segmented control
