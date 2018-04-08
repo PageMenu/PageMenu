@@ -131,14 +131,14 @@ controllerArray.append(controller)
 
 // Customize page menu to your liking (optional) or use default settings by sending nil for 'options' in the init
 // Example:
-var parameters: [CAPSPageMenuOption] = [
-    .MenuItemSeparatorWidth(4.3), 
-    .UseMenuLikeSegmentedControl(true), 
-    .MenuItemSeparatorPercentageHeight(0.1)
+let parameters: [CAPSPageMenuOption] = [
+    .menuItemSeparatorWidth(4.3),
+    .useMenuLikeSegmentedControl(true),
+    .menuItemSeparatorPercentageHeight(0.1)
 ]
 
 // Initialize page menu with controller array, frame, and optional parameters
-pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
+pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height), pageMenuOptions: parameters)
 
 // Lastly add page menu as subview of base view controller view
 // or use pageMenu controller in you view hierachy as desired
