@@ -74,6 +74,7 @@ public enum CAPSPageMenuOption {
     case useMenuLikeSegmentedControl(Bool)
     case menuItemSeparatorRoundEdges(Bool)
     case menuItemFont(UIFont)
+    case selectedMenuItemFont(UIFont)
     case menuItemSeparatorPercentageHeight(CGFloat)
     case menuItemWidth(CGFloat)
     case enableHorizontalBounce(Bool)
@@ -91,6 +92,7 @@ public enum CAPSPageMenuOption {
     case iconIndicator(Bool)
     case iconIndicatorView(UIView)
     case showStepperView(Bool)
+    case kerning(CGFloat)
 }
 
 open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
@@ -112,7 +114,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     open var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     var startingMenuMargin : CGFloat = 0.0
     var menuItemMargin : CGFloat = 0.0
-    
+    open var kerning: CGFloat = 0.0
     var iconIndicator:Bool = false
     var selectionIndicatorCustomView: UIView?
     var selectionIndicatorView : UIView = UIView()
@@ -130,6 +132,17 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     open var menuItemSeparatorColor : UIColor = UIColor.lightGray
     
     open var menuItemFont : UIFont = UIFont.systemFont(ofSize: 15.0)
+  private var _selectedMenuItemFont: UIFont? = nil
+
+  open var selectedMenuItemFont : UIFont {
+    get {
+      return _selectedMenuItemFont ?? menuItemFont
+    }
+    set {
+      _selectedMenuItemFont = newValue
+    }
+  }
+
     open var menuItemSeparatorPercentageHeight : CGFloat = 0.2
     open var menuItemSeparatorWidth : CGFloat = 0.5
     open var menuItemSeparatorRoundEdges : Bool = false
@@ -227,6 +240,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                     menuItemSeparatorRoundEdges = value
                 case let .menuItemFont(value):
                     menuItemFont = value
+                case let .selectedMenuItemFont(value):
+                  selectedMenuItemFont = value
                 case let .menuItemSeparatorPercentageHeight(value):
                     menuItemSeparatorPercentageHeight = value
                 case let .menuItemWidth(value):
@@ -261,6 +276,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                     selectionIndicatorCustomView = value
                 case let .showStepperView(value):
                     showStepperView = value
+                case let .kerning(value):
+                    kerning = value
                 }
             }
             
@@ -471,8 +488,24 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
             // Set title depending on if controller has a title set
             if controller.title != nil {
                 menuItemView.titleLabel!.text = controller.title!
+                if kerning > 0 {
+                    var attributedString = NSMutableAttributedString(string: controller.title!)
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    paragraphStyle.alignment = .center
+                    attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+                    attributedString.addAttribute(NSKernAttributeName, value: kerning, range: NSMakeRange(0, attributedString.length))
+                    menuItemView.titleLabel!.attributedText = attributedString
+                }
             } else {
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
+                if kerning > 0 {
+                    var attributedString = NSMutableAttributedString(string: controller.title!)
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    paragraphStyle.alignment = .center
+                    attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+                    attributedString.addAttribute(NSKernAttributeName, value: kerning, range: NSMakeRange(0, attributedString.length))
+                    menuItemView.titleLabel!.attributedText = attributedString
+                }
             }
             
             // Add separator between menu items when using as segmented control
@@ -498,6 +531,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         if menuItems.count > 0 {
             if menuItems[currentPageIndex].titleLabel != nil {
                 menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
+              menuItems[currentPageIndex].titleLabel!.font = selectedMenuItemFont
             }
         }
         
@@ -810,8 +844,10 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                 // Switch newly selected menu item title label to selected color and old one to unselected color
                 if self.menuItems.count > 0 {
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
+                        self.menuItems[self.lastPageIndex].titleLabel!.font = self.menuItemFont
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.unselectedMenuItemLabelColor
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.selectedMenuItemLabelColor
+                      self.menuItems[self.currentPageIndex].titleLabel!.font = self.selectedMenuItemFont
                     }
                 }
             })
