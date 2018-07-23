@@ -48,6 +48,8 @@ extension CAPSPageMenu {
                 configuration.menuItemWidth = value
             case let .enableHorizontalBounce(value):
                 configuration.enableHorizontalBounce = value
+            case let .enableHorizontalSwipe(value):
+                configuration.enableHorizontalSwipe = value
             case let .addBottomMenuHairline(value):
                 configuration.addBottomMenuHairline = value
             case let .menuItemWidthBasedOnTitleTextWidth(value):
@@ -157,6 +159,7 @@ extension CAPSPageMenu {
         }
         
         // Configure controller scroll view content size
+        controllerScrollView.isScrollEnabled = configuration.enableHorizontalSwipe
         controllerScrollView.contentSize = CGSize(width: self.view.frame.width * CGFloat(controllerArray.count), height: 0.0)
         
         var index : CGFloat = 0.0

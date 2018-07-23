@@ -33,6 +33,7 @@ public class CAPSPageMenuConfiguration {
     open var useMenuLikeSegmentedControl : Bool = false
     open var centerMenuItems : Bool = false
     open var enableHorizontalBounce : Bool = true
+    open var enableHorizontalSwipe : Bool = true
     open var hideTopMenuBar : Bool = false
     
     public init() {
