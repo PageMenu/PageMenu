@@ -5,7 +5,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/PageMenu.svg?style=flat)](http://cocoapods.org/pods/PageMenu)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-# TOTAL REWRITE IN SWIFT 3 WITH LOTS OF AMAZING FEATURES COMING SOON
+### Unfortunately, life gets in the way sometimes and I won't be able to maintain this library any longer and upgrade this library to where it needs to be.
 
 #### Featured In
 <table>
