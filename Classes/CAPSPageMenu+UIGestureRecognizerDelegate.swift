@@ -1,7 +1,7 @@
 //
 //  CAPSPageMenu+UIGestureRecognizerDelegate.swift
 //  PageMenuNoStoryboardConfigurationDemo
-//
+///Users/ryokagaya/App/swift/PageMenu/Demos/PageMenu/PageMenu
 //  Created by Matthew York on 3/6/17.
 //  Copyright © 2017 UACAPS. All rights reserved.
 //
@@ -9,7 +9,7 @@
 import UIKit
 
 extension CAPSPageMenu : UIGestureRecognizerDelegate {
-    func handleMenuItemTap(_ gestureRecognizer : UITapGestureRecognizer) {
+    @objc func handleMenuItemTap(_ gestureRecognizer : UITapGestureRecognizer) {
         let tappedPoint : CGPoint = gestureRecognizer.location(in: menuScrollView)
         
         if tappedPoint.y < menuScrollView.frame.height {
