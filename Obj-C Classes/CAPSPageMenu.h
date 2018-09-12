@@ -44,6 +44,7 @@
 @property (nonatomic) CGFloat menuHeight;
 @property (nonatomic) CGFloat menuMargin;
 @property (nonatomic) CGFloat menuItemWidth;
+@property (nonatomic) CGFloat totalMenuItemWidth;
 @property (nonatomic) CGFloat selectionIndicatorHeight;
 @property (nonatomic) NSInteger scrollAnimationDurationOnMenuItemTap;
 
