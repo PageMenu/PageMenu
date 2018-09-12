@@ -311,7 +311,7 @@ There are many ways you are able to customize page menu for your needs and there
         addBottomMenuHairline (Bool)
 
 
-  * Menu item witdh based on title text width (see Demo 3)
+  * Menu item width based on title text width (see Demo 3)
 
         menuItemWidthBasedOnTitleTextWidth (Bool)
 
