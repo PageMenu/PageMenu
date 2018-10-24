@@ -100,7 +100,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     // MARK: - Properties
     
     let menuScrollView = UIScrollView()
-    open let controllerScrollView = UIScrollView()
+    public let controllerScrollView = UIScrollView()
     var controllerArray : [UIViewController] = []
     var menuItems : [MenuItemView] = []
     var menuItemWidths : [CGFloat] = []
@@ -327,8 +327,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         
         self.view.addSubview(controllerScrollView)
         
-        let controllerScrollView_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[controllerScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let controllerScrollView_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:|[controllerScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let controllerScrollView_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[controllerScrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let controllerScrollView_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:|[controllerScrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         
         self.view.addConstraints(controllerScrollView_constraint_H)
         self.view.addConstraints(controllerScrollView_constraint_V)
@@ -340,8 +340,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         
         self.view.addSubview(menuScrollView)
         
-        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[menuScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:[menuScrollView(\(menuHeight))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[menuScrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:[menuScrollView(\(menuHeight))]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         
         self.view.addConstraints(menuScrollView_constraint_H)
         self.view.addConstraints(menuScrollView_constraint_V)
@@ -354,8 +354,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
             
             self.view.addSubview(menuBottomHairline)
             
-            let menuBottomHairline_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[menuBottomHairline]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
-            let menuBottomHairline_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(menuHeight)-[menuBottomHairline(0.5)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
+            let menuBottomHairline_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[menuBottomHairline]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
+            let menuBottomHairline_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(menuHeight)-[menuBottomHairline(0.5)]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
             
             self.view.addConstraints(menuBottomHairline_constraint_H)
             self.view.addConstraints(menuBottomHairline_constraint_V)
@@ -438,7 +438,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                 
                 let titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
                 
-                let itemWidthRect : CGRect = (titleText as NSString).boundingRect(with: CGSize(width: 1000, height: 1000), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName:menuItemFont], context: nil)
+                let itemWidthRect : CGRect = (titleText as NSString).boundingRect(with: CGSize(width: 1000, height: 1000), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font:menuItemFont], context: nil)
                 
                 menuItemWidth = itemWidthRect.width
                 
@@ -489,21 +489,21 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
             if controller.title != nil {
                 menuItemView.titleLabel!.text = controller.title!
                 if kerning > 0 {
-                    var attributedString = NSMutableAttributedString(string: controller.title!)
+                    let attributedString = NSMutableAttributedString(string: controller.title!)
                     let paragraphStyle = NSMutableParagraphStyle()
                     paragraphStyle.alignment = .center
-                    attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-                    attributedString.addAttribute(NSKernAttributeName, value: kerning, range: NSMakeRange(0, attributedString.length))
+                    attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+                    attributedString.addAttribute(NSAttributedString.Key.kern, value: kerning, range: NSMakeRange(0, attributedString.length))
                     menuItemView.titleLabel!.attributedText = attributedString
                 }
             } else {
                 menuItemView.titleLabel!.text = "Menu \(Int(index) + 1)"
                 if kerning > 0 {
-                    var attributedString = NSMutableAttributedString(string: controller.title!)
+                    let attributedString = NSMutableAttributedString(string: controller.title!)
                     let paragraphStyle = NSMutableParagraphStyle()
                     paragraphStyle.alignment = .center
-                    attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-                    attributedString.addAttribute(NSKernAttributeName, value: kerning, range: NSMakeRange(0, attributedString.length))
+                    attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+                    attributedString.addAttribute(NSAttributedString.Key.kern, value: kerning, range: NSMakeRange(0, attributedString.length))
                     menuItemView.titleLabel!.attributedText = attributedString
                 }
             }
@@ -592,7 +592,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
             for (index, menuItem) in menuItems.enumerated() {
                 let controllerTitle = controllerArray[index].title!
                 
-                let itemWidthRect = controllerTitle.boundingRect(with: CGSize(width: 1000, height: 1000), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName:menuItemFont], context: nil)
+                let itemWidthRect = controllerTitle.boundingRect(with: CGSize(width: 1000, height: 1000), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font:menuItemFont], context: nil)
                 
                 menuItemWidth = itemWidthRect.width
                 
@@ -792,7 +792,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         }
     }
     
-    func scrollViewDidEndTapScrollingAnimation() {
+    @objc func scrollViewDidEndTapScrollingAnimation() {
         // Call didMoveToPage delegate function
         let currentController = controllerArray[currentPageIndex]
         delegate?.didMoveToPage?(currentController, index: currentPageIndex)
@@ -857,7 +857,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     
     // MARK: - Tap gesture recognizer selector
     
-    func handleMenuItemTap(_ gestureRecognizer : UITapGestureRecognizer) {
+    @objc func handleMenuItemTap(_ gestureRecognizer : UITapGestureRecognizer) {
         let tappedPoint : CGPoint = gestureRecognizer.location(in: menuScrollView)
         
         if tappedPoint.y < menuScrollView.frame.height {
@@ -968,22 +968,22 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         
         let newVC = controllerArray[index]
         
-        newVC.willMove(toParentViewController: self)
+        newVC.willMove(toParent: self)
         
         newVC.view.frame = CGRect(x: self.view.frame.width * CGFloat(index), y: menuHeight, width: self.view.frame.width, height: self.view.frame.height - menuHeight)
         
-        self.addChildViewController(newVC)
+        self.addChild(newVC)
         self.controllerScrollView.addSubview(newVC.view)
-        newVC.didMove(toParentViewController: self)
+        newVC.didMove(toParent: self)
     }
     
     func removePageAtIndex(_ index : Int) {
         let oldVC = controllerArray[index]
         
-        oldVC.willMove(toParentViewController: nil)
+        oldVC.willMove(toParent: nil)
         
         oldVC.view.removeFromSuperview()
-        oldVC.removeFromParentViewController()
+        oldVC.removeFromParent()
     }
     
     
