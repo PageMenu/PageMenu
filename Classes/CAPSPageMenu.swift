@@ -211,8 +211,6 @@ extension CAPSPageMenu {
         
         let newVC = controllerArray[index]
         
-        newVC.willMove(toParentViewController: self)
-        
         newVC.view.frame = CGRect(x: self.view.frame.width * CGFloat(index), y: configuration.menuHeight, width: self.view.frame.width, height: self.view.frame.height - configuration.menuHeight)
         
         self.addChildViewController(newVC)
