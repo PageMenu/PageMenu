@@ -93,6 +93,7 @@ NSString * const CAPSPageMenuOptionMenuItemWidthBasedOnTitleTextWidth   = @"menu
 NSString * const CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap = @"scrollAnimationDurationOnMenuItemTap";
 NSString * const CAPSPageMenuOptionCenterMenuItems                      = @"centerMenuItems";
 NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hideTopMenuBar";
+NSString * const CAPSPageMenuOptionCenterMenuScrollView                 = @"CenterMenuScrollView";
 
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers frame:(CGRect)frame options:(NSDictionary *)options
 {
@@ -151,6 +152,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 _centerMenuItems = [options[key] boolValue];
             } else if ([key isEqualToString:CAPSPageMenuOptionHideTopMenuBar]) {
                 _hideTopMenuBar = [options[key] boolValue];
+            } else if ([key isEqualToString:CAPSPageMenuOptionCenterMenuScrollView]) {
+                _centerMenuScrollView = [options[key] boolValue];
             }
         }
         
@@ -216,6 +219,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _lastControllerScrollViewContentOffset = 0.0;
     _startingPageForScroll = 0;
     _didTapMenuItemToScroll = NO;
+    _centerMenuScrollView = NO;
     
     _pagesAddedSet = [NSMutableSet set];
 }
@@ -544,6 +548,10 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                                 [self removePageAtIndex:indexRightTwo];
                             }
                         }
+                    }
+                    
+                    if(_centerMenuScrollView) {
+                        [self setUpCenterMenuScrollView:page];
                     }
                     
                     // Move selection indicator view when swiping
@@ -935,5 +943,28 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
 {
     return _mutableMenuItemWidths;
 }
+
+// CenterMenuScrollView
+- (void)setUpCenterMenuScrollView:(NSInteger)pageIndex{
+    CGFloat halfView = self.view.frame.size.width / 2;
+    
+    CGFloat leftBoundry = halfView;
+    CGFloat rightBoundry = _menuScrollView.contentSize.width - halfView;
+    
+    CGFloat seletedMenuX = [_mutableMenuItems[pageIndex] frame].origin.x;
+    CGFloat seletedMenuY = _menuScrollView.frame.origin.y;
+    
+    CGPoint seletedMenuOffset;
+    
+    if(seletedMenuX < leftBoundry) {
+        seletedMenuOffset = CGPointMake(0, seletedMenuY);
+    } else if(seletedMenuX >= leftBoundry && seletedMenuX < rightBoundry) {
+        seletedMenuOffset = CGPointMake(seletedMenuX - halfView + ([_mutableMenuItems[pageIndex] frame].size.width / 2), seletedMenuY);
+    } else {
+        seletedMenuOffset = CGPointMake(_menuScrollView.contentSize.width - (self.view.frame.size.width), seletedMenuY);
+    }
+    [_menuScrollView setContentOffset:seletedMenuOffset];
+}
+
 
 @end

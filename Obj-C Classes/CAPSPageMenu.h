@@ -66,6 +66,7 @@
 @property (nonatomic) BOOL centerMenuItems;
 @property (nonatomic) BOOL enableHorizontalBounce;
 @property (nonatomic) BOOL hideTopMenuBar;
+@property (nonatomic) BOOL centerMenuScrollView;
 
 @property (nonatomic, weak) id <CAPSPageMenuDelegate> delegate;
 
@@ -96,5 +97,6 @@ extern NSString * const CAPSPageMenuOptionMenuItemWidthBasedOnTitleTextWidth;
 extern NSString * const CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap;
 extern NSString * const CAPSPageMenuOptionCenterMenuItems;
 extern NSString * const CAPSPageMenuOptionHideTopMenuBar;
+extern NSString * const CAPSPageMenuOptionCenterMenuScrollView;
 
 @end
