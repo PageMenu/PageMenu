@@ -323,6 +323,9 @@ NSString * const CAPSPageMenuOptionCenterMenuScrollView                 = @"Cent
             // Add first two controllers to scrollview and as child view controller
             [controller viewWillAppear:YES];
             [self addPageAtIndex:0];
+            [self addPageAtIndex:1];
+            [_pagesAddedSet addObject:@(0)];
+            [_pagesAddedSet addObject:@(1)];
             [controller viewDidAppear:YES];
         }
         
