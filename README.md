@@ -68,6 +68,8 @@ A fully customizable and flexible paging menu controller built from other view c
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemoSegmentedControlGif.gif" alt="PageMenuDemoSegmentedControlGif">
 <img src="https://raw.githubusercontent.com/uacaps/ResourceRepo/master/PageMenu/PageMenuDemoScreen6.png" alt="PageMenuDemoScreen6">
 
+![](PageMenuDemoScreen7.gif)
+
 ## Installation
 
 **CocoaPods**
