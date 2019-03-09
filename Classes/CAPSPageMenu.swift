@@ -79,6 +79,7 @@ public enum CAPSPageMenuOption {
     case menuItemWidth(CGFloat)
     case enableHorizontalBounce(Bool)
     case addBottomMenuHairline(Bool)
+    case enableMenuBarTapReset(Bool)
     case menuItemWidthBasedOnTitleTextWidth(Bool)
     case titleTextSizeBasedOnMenuItemWidth(Bool)
     case scrollAnimationDurationOnMenuItemTap(Int)
@@ -155,6 +156,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
     open var enableHorizontalBounce : Bool = true
     open var hideTopMenuBar : Bool = false
     open var showStepperView : Bool = false
+    open var enableMenuBarTapReset : Bool = true
     
     public var menuShadowRadius : CGFloat = 0
     public var menuShadowOpacity : Float = 0
@@ -250,6 +252,8 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
                     enableHorizontalBounce = value
                 case let .addBottomMenuHairline(value):
                     addBottomMenuHairline = value
+                case let .enableMenuBarTapReset(value):
+                    enableMenuBarTapReset = value
                 case let .menuItemWidthBasedOnTitleTextWidth(value):
                     menuItemWidthBasedOnTitleTextWidth = value
                 case let .titleTextSizeBasedOnMenuItemWidth(value):
@@ -863,7 +867,7 @@ open class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureRecogn
         if tappedPoint.y < menuScrollView.frame.height {
             
             // Calculate tapped page
-            var itemIndex : Int = 0
+            var itemIndex : Int = enableMenuBarTapReset ? 0 : -1
             
             if useMenuLikeSegmentedControl {
                 itemIndex = Int(tappedPoint.x / (self.view.frame.width / CGFloat(controllerArray.count)))
