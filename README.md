@@ -43,6 +43,9 @@
 </table>
 
 ## Latest Update
+** 2.1.0 Release (11/06/2019)
+* Swift 5 upgrade
+
 
 **1.2.8 Release (06/22/2015)**
 * Bug fixes
