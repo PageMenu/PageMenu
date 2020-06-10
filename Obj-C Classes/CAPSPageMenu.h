@@ -36,6 +36,7 @@
 
 @property (nonatomic, readonly) NSArray *controllerArray;
 @property (nonatomic, readonly) NSArray *menuItems;
+
 @property (nonatomic, readonly) NSArray *menuItemWidths;
 
 @property (nonatomic) NSInteger currentPageIndex;
@@ -56,6 +57,8 @@
 @property (nonatomic) UIColor *menuItemSeparatorColor;
 
 @property (nonatomic) UIFont *menuItemFont;
+@property (nonatomic) UIFont *menuSelectedItemFont;
+
 @property (nonatomic) CGFloat menuItemSeparatorPercentageHeight;
 @property (nonatomic) CGFloat menuItemSeparatorWidth;
 @property (nonatomic) BOOL menuItemSeparatorRoundEdges;
@@ -88,6 +91,7 @@ extern NSString * const CAPSPageMenuOptionUnselectedMenuItemLabelColor;
 extern NSString * const CAPSPageMenuOptionUseMenuLikeSegmentedControl;
 extern NSString * const CAPSPageMenuOptionMenuItemSeparatorRoundEdges;
 extern NSString * const CAPSPageMenuOptionMenuItemFont;
+extern NSString * const CAPSPageMenuOptionMenuSelectedItemFont;
 extern NSString * const CAPSPageMenuOptionMenuItemSeparatorPercentageHeight;
 extern NSString * const CAPSPageMenuOptionMenuItemWidth;
 extern NSString * const CAPSPageMenuOptionEnableHorizontalBounce;
