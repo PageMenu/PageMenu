@@ -246,8 +246,14 @@ extension CAPSPageMenu {
                 selectionIndicatorFrame = CGRect(x: configuration.menuMargin, y: configuration.menuHeight - configuration.selectionIndicatorHeight, width: configuration.menuItemWidth, height: configuration.selectionIndicatorHeight)
             }
         }
-        
-        selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
+        if menuItems[currentPageIndex].titleLabel != nil {
+              let width = menuItems[currentPageIndex].titleLabel!.getSize(constrainedWidth: 100).width
+              selectionIndicatorView.frame = CGRect(x: selectionIndicatorFrame.origin.x, y: selectionIndicatorFrame.origin.y, width: width, height: configuration.selectionIndicatorHeight)
+              selectionIndicatorView.center = CGPoint(x: self.menuItems[currentPageIndex].frame.midX, y: self.selectionIndicatorView.frame.midY)
+              
+          }else{
+                selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
+          }
         selectionIndicatorView.backgroundColor = configuration.selectionIndicatorColor
         menuScrollView.addSubview(selectionIndicatorView)
     }

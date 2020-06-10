@@ -21,18 +21,18 @@ import UIKit
 
 @objc public protocol CAPSPageMenuDelegate {
     // MARK: - Delegate functions
-
+    
     @objc optional func willMoveToPage(_ controller: UIViewController, index: Int)
     @objc optional func didMoveToPage(_ controller: UIViewController, index: Int)
 }
 
 open class CAPSPageMenu: UIViewController {
-
+    
     //MARK: - Configuration
     var configuration = CAPSPageMenuConfiguration()
     
     // MARK: - Properties
-
+    
     let menuScrollView = UIScrollView()
     let controllerScrollView = UIScrollView()
     var controllerArray : [UIViewController] = []
@@ -43,37 +43,37 @@ open class CAPSPageMenu: UIViewController {
     
     var startingMenuMargin : CGFloat = 0.0
     var menuItemMargin : CGFloat = 0.0
-
+    
     var selectionIndicatorView : UIView = UIView()
-
+    
     public var currentPageIndex : Int = 0
     var lastPageIndex : Int = 0
-
+    
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
     var didLayoutSubviewsAfterRotation : Bool = false
     var didScrollAlready : Bool = false
-
+    
     var lastControllerScrollViewContentOffset : CGFloat = 0.0
-
+    
     var lastScrollDirection : CAPSPageMenuScrollDirection = .other
     var startingPageForScroll : Int = 0
     var didTapMenuItemToScroll : Bool = false
-
+    
     var pagesAddedDictionary : [Int : Int] = [:]
-
+    
     open weak var delegate : CAPSPageMenuDelegate?
-
+    
     var tapTimer : Timer?
-
+    
     enum CAPSPageMenuScrollDirection : Int {
         case left
         case right
         case other
     }
-
+    
     // MARK: - View life cycle
-
+    
     /**
      Initialize PageMenu with view controllers
      
@@ -104,17 +104,17 @@ open class CAPSPageMenu: UIViewController {
     }
     
     /**
-    Initialize PageMenu with view controllers
-
-    - parameter viewControllers: List of view controllers that must be subclasses of UIViewController
-    - parameter frame: Frame for page menu view
-    - parameter configuration: A configuration instance for page menu
-    */
+     Initialize PageMenu with view controllers
+     
+     - parameter viewControllers: List of view controllers that must be subclasses of UIViewController
+     - parameter frame: Frame for page menu view
+     - parameter configuration: A configuration instance for page menu
+     */
     public init(viewControllers: [UIViewController], frame: CGRect, configuration: CAPSPageMenuConfiguration) {
         super.init(nibName: nil, bundle: nil)
         self.configuration = configuration
         controllerArray = viewControllers
-
+        
         self.view.frame = frame
         
         //Build UI
@@ -154,13 +154,17 @@ open class CAPSPageMenu: UIViewController {
             configureUserInterface()
         }
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
 }
 
-
+extension UILabel {
+    func getSize(constrainedWidth: CGFloat) -> CGSize {
+        return systemLayoutSizeFitting(CGSize(width: constrainedWidth, height: UIView.layoutFittingCompressedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+    }
+}
 
 extension CAPSPageMenu {    
     // MARK: - Handle Selection Indicator
@@ -190,8 +194,10 @@ extension CAPSPageMenu {
                     }
                 }
                 
-                self.selectionIndicatorView.frame = CGRect(x: selectionIndicatorX, y: self.selectionIndicatorView.frame.origin.y, width: selectionIndicatorWidth, height: self.selectionIndicatorView.frame.height)
-                
+                //                self.selectionIndicatorView.frame = CGRect(x: selectionIndicatorX, y: self.selectionIndicatorView.frame.origin.y, width: selectionIndicatorWidth, height: self.selectionIndicatorView.frame.height)
+                let width = self.menuItems[self.currentPageIndex].titleLabel!.getSize(constrainedWidth: 100).width
+                self.selectionIndicatorView.frame = CGRect(x: self.selectionIndicatorView.frame.origin.x, y: self.selectionIndicatorView.frame.origin.y, width: width, height: self.selectionIndicatorView.frame.height)
+                self.selectionIndicatorView.center =  CGPoint(x: self.menuItems[pageIndex].frame.midX, y: self.selectionIndicatorView.frame.midY)
                 // Switch newly selected menu item title label to selected color and old one to unselected color
                 if self.menuItems.count > 0 {
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
@@ -275,9 +281,9 @@ extension CAPSPageMenu {
                     startingMenuMargin = 0.0
                 }
                 
-                let selectionIndicatorX : CGFloat = self.configuration.menuItemWidth * CGFloat(currentPageIndex) + self.configuration.menuMargin * CGFloat(currentPageIndex + 1) + self.startingMenuMargin
-                selectionIndicatorView.frame =  CGRect(x: selectionIndicatorX, y: self.selectionIndicatorView.frame.origin.y, width: self.selectionIndicatorView.frame.width, height: self.selectionIndicatorView.frame.height)
-                
+                //                let selectionIndicatorX : CGFloat = self.configuration.menuItemWidth * CGFloat(currentPageIndex) + self.configuration.menuMargin * CGFloat(currentPageIndex + 1) + self.startingMenuMargin
+                //                selectionIndicatorView.frame =  CGRect(x: selectionIndicatorX, y: self.selectionIndicatorView.frame.origin.y, width: self.selectionIndicatorView.frame.width, height: self.selectionIndicatorView.frame.height)
+                //
                 // Recalculate frame for menu items if centered
                 var index : Int = 0
                 
@@ -306,6 +312,10 @@ extension CAPSPageMenu {
                 offset.x = controllerScrollView.contentOffset.x * ratio
                 menuScrollView.setContentOffset(offset, animated: false)
             }
+            let selectionIndicatorX : CGFloat = self.configuration.menuItemWidth * CGFloat(currentPageIndex) + self.configuration.menuMargin * CGFloat(currentPageIndex + 1) + self.startingMenuMargin
+            let width = menuItems[currentPageIndex].titleLabel!.getSize(constrainedWidth: 100).width
+            selectionIndicatorView.frame =  CGRect(x: self.selectionIndicatorView.frame.origin.x, y: self.selectionIndicatorView.frame.origin.y, width: width, height: self.selectionIndicatorView.frame.height)
+            selectionIndicatorView.center = CGPoint(x: self.menuItems[currentPageIndex].frame.midX, y: self.selectionIndicatorView.frame.midY)
         }
         
         // Hsoi 2015-02-05 - Running on iOS 7.1 complained: "'NSInternalInconsistencyException', reason: 'Auto Layout
