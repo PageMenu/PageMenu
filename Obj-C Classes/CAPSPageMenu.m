@@ -336,7 +336,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             
             NSString *titleText = controllerTitle != nil ? controllerTitle : [NSString stringWithFormat:@"Menu %.0f", index + 1];
             
-            CGRect itemWidthRect = [titleText boundingRectWithSize:CGSizeMake(1000, 1000) options: NSStringDrawingUsesLineFragmentOrigin attributes: @{NSFontAttributeName:_menuItemFont} context: nil];
+            CGRect itemWidthRect = [titleText boundingRectWithSize:CGSizeMake(1000, 1000) options: NSStringDrawingUsesLineFragmentOrigin attributes: @{NSFontAttributeName:_menuSelectedItemFont} context: nil];
             
             _menuItemWidth = itemWidthRect.size.width;
             
