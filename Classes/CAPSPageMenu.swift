@@ -251,7 +251,6 @@ extension CAPSPageMenu {
         if (oldCurrentOrientationIsPortrait && orientation.isLandscape) || (!oldCurrentOrientationIsPortrait && (orientation.isPortrait)) {
             didLayoutSubviewsAfterRotation = true
             
-            //Resize menu items if using as segmented control
             if configuration.useMenuLikeSegmentedControl {
                 menuScrollView.contentSize = CGSize(width: self.view.frame.width, height: configuration.menuHeight)
                 
