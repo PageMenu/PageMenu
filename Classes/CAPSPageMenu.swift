@@ -49,7 +49,7 @@ open class CAPSPageMenu: UIViewController {
     public var currentPageIndex : Int = 0
     var lastPageIndex : Int = 0
     
-    var currentOrientationIsPortrait : Bool = true
+    var currentOrientationIsPortrait : Bool = UIApplication.shared.statusBarOrientation.isPortrait
     var pageIndexForOrientationChange : Int = 0
     var didLayoutSubviewsAfterRotation : Bool = false
     var didScrollAlready : Bool = false
@@ -241,11 +241,14 @@ extension CAPSPageMenu {
         
         let oldCurrentOrientationIsPortrait : Bool = currentOrientationIsPortrait
         
-        if UIDevice.current.orientation != UIDeviceOrientation.unknown {
-            currentOrientationIsPortrait = UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat
-        }
+        let orientation = UIApplication.shared.statusBarOrientation
         
-        if (oldCurrentOrientationIsPortrait && UIDevice.current.orientation.isLandscape) || (!oldCurrentOrientationIsPortrait && (UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat)) {
+        if orientation != .unknown {
+            currentOrientationIsPortrait = orientation.isPortrait
+        }
+
+        
+        if (oldCurrentOrientationIsPortrait && orientation.isLandscape) || (!oldCurrentOrientationIsPortrait && (orientation.isPortrait)) {
             didLayoutSubviewsAfterRotation = true
             
             //Resize menu items if using as segmented control
