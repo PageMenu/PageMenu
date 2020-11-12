@@ -21,19 +21,19 @@ import UIKit
 
 @objc public protocol CAPSPageMenuDelegate {
     // MARK: - Delegate functions
-
+    
     @objc optional func willMoveToPage(_ controller: UIViewController, index: Int)
     @objc optional func didMoveToPage(_ controller: UIViewController, index: Int)
 }
 
 open class CAPSPageMenu: UIViewController {
-
+    
     //MARK: - Configuration
     var configuration = CAPSPageMenuConfiguration()
     
     // MARK: - Properties
-
-    let menuScrollView = UIScrollView()
+    
+    public let menuScrollView = UIScrollView()
     let controllerScrollView = UIScrollView()
     var controllerArray : [UIViewController] = []
     var menuItems : [MenuItemView] = []
@@ -43,37 +43,37 @@ open class CAPSPageMenu: UIViewController {
     
     var startingMenuMargin : CGFloat = 0.0
     var menuItemMargin : CGFloat = 0.0
-
+    
     var selectionIndicatorView : UIView = UIView()
-
+    
     public var currentPageIndex : Int = 0
     var lastPageIndex : Int = 0
-
-    var currentOrientationIsPortrait : Bool = true
+    
+    var currentOrientationIsPortrait : Bool = UIApplication.shared.statusBarOrientation.isPortrait
     var pageIndexForOrientationChange : Int = 0
     var didLayoutSubviewsAfterRotation : Bool = false
     var didScrollAlready : Bool = false
-
+    
     var lastControllerScrollViewContentOffset : CGFloat = 0.0
-
+    
     var lastScrollDirection : CAPSPageMenuScrollDirection = .other
     var startingPageForScroll : Int = 0
     var didTapMenuItemToScroll : Bool = false
-
+    
     var pagesAddedDictionary : [Int : Int] = [:]
-
+    
     open weak var delegate : CAPSPageMenuDelegate?
-
+    
     var tapTimer : Timer?
-
+    
     enum CAPSPageMenuScrollDirection : Int {
         case left
         case right
         case other
     }
-
+    
     // MARK: - View life cycle
-
+    
     /**
      Initialize PageMenu with view controllers
      
@@ -104,17 +104,17 @@ open class CAPSPageMenu: UIViewController {
     }
     
     /**
-    Initialize PageMenu with view controllers
-
-    - parameter viewControllers: List of view controllers that must be subclasses of UIViewController
-    - parameter frame: Frame for page menu view
-    - parameter configuration: A configuration instance for page menu
-    */
+     Initialize PageMenu with view controllers
+     
+     - parameter viewControllers: List of view controllers that must be subclasses of UIViewController
+     - parameter frame: Frame for page menu view
+     - parameter configuration: A configuration instance for page menu
+     */
     public init(viewControllers: [UIViewController], frame: CGRect, configuration: CAPSPageMenuConfiguration) {
         super.init(nibName: nil, bundle: nil)
         self.configuration = configuration
         controllerArray = viewControllers
-
+        
         self.view.frame = frame
         
         //Build UI
@@ -139,9 +139,9 @@ open class CAPSPageMenu: UIViewController {
         //Setup storyboard
         self.view.frame = CGRect(x: 0, y: 0, width: controller.view.frame.size.width, height: controller.view.frame.size.height)
         if usingStoryboards {
-            controller.addChildViewController(self)
+            controller.addChild(self)
             controller.view.addSubview(self.view)
-            didMove(toParentViewController: controller)
+            didMove(toParent: controller)
         }
         else {
             controller.view.addSubview(self.view)
@@ -154,12 +154,11 @@ open class CAPSPageMenu: UIViewController {
             configureUserInterface()
         }
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
 }
-
 
 
 extension CAPSPageMenu {    
@@ -197,6 +196,8 @@ extension CAPSPageMenu {
                     if self.menuItems[self.lastPageIndex].titleLabel != nil && self.menuItems[self.currentPageIndex].titleLabel != nil {
                         self.menuItems[self.lastPageIndex].titleLabel!.textColor = self.configuration.unselectedMenuItemLabelColor
                         self.menuItems[self.currentPageIndex].titleLabel!.textColor = self.configuration.selectedMenuItemLabelColor
+                        self.menuItems[self.lastPageIndex].titleLabel!.font = self.configuration.menuItemFont;
+                        self.menuItems[self.currentPageIndex].titleLabel!.font  = self.configuration.menuSelectedItemFont;
                     }
                 }
             })
@@ -211,24 +212,24 @@ extension CAPSPageMenu {
         
         let newVC = controllerArray[index]
         
-        newVC.willMove(toParentViewController: self)
+        newVC.willMove(toParent: self)
         
         newVC.view.frame = CGRect(x: self.view.frame.width * CGFloat(index), y: configuration.menuHeight, width: self.view.frame.width, height: self.view.frame.height - configuration.menuHeight)
         
-        self.addChildViewController(newVC)
+        self.addChild(newVC)
         self.controllerScrollView.addSubview(newVC.view)
-        newVC.didMove(toParentViewController: self)
+        newVC.didMove(toParent: self)
     }
     
     func removePageAtIndex(_ index : Int) {
         let oldVC = controllerArray[index]
         
-        oldVC.willMove(toParentViewController: nil)
+        oldVC.willMove(toParent: nil)
         
         oldVC.view.removeFromSuperview()
-        oldVC.removeFromParentViewController()
+        oldVC.removeFromParent()
         
-        oldVC.didMove(toParentViewController: nil)
+        oldVC.didMove(toParent: nil)
     }
     
     
@@ -240,14 +241,16 @@ extension CAPSPageMenu {
         
         let oldCurrentOrientationIsPortrait : Bool = currentOrientationIsPortrait
         
-        if UIDevice.current.orientation != UIDeviceOrientation.unknown {
-            currentOrientationIsPortrait = UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat
-        }
+        let orientation = UIApplication.shared.statusBarOrientation
         
-        if (oldCurrentOrientationIsPortrait && UIDevice.current.orientation.isLandscape) || (!oldCurrentOrientationIsPortrait && (UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isFlat)) {
+        if orientation != .unknown {
+            currentOrientationIsPortrait = orientation.isPortrait
+        }
+
+        
+        if (oldCurrentOrientationIsPortrait && orientation.isLandscape) || (!oldCurrentOrientationIsPortrait && (orientation.isPortrait)) {
             didLayoutSubviewsAfterRotation = true
             
-            //Resize menu items if using as segmented control
             if configuration.useMenuLikeSegmentedControl {
                 menuScrollView.contentSize = CGSize(width: self.view.frame.width, height: configuration.menuHeight)
                 
@@ -324,6 +327,44 @@ extension CAPSPageMenu {
      
      - parameter index: Index of the page to move to
      */
+    public func setStartIndexToPage(index: Int) {
+          if index >= 0 && index < controllerArray.count {
+              // Update page if changed
+              if index != currentPageIndex {
+                  startingPageForScroll = index
+                  lastPageIndex = currentPageIndex
+                  currentPageIndex = index
+                  didTapMenuItemToScroll = true
+
+                  // Add pages in between current and tapped page if necessary
+                  let smallerIndex : Int = lastPageIndex < currentPageIndex ? lastPageIndex : currentPageIndex
+                  let largerIndex : Int = lastPageIndex > currentPageIndex ? lastPageIndex : currentPageIndex
+
+                  if smallerIndex + 1 != largerIndex {
+                      for i in (smallerIndex + 1)...(largerIndex - 1) {
+                          if pagesAddedDictionary[i] != i {
+                              addPageAtIndex(i)
+                              pagesAddedDictionary[i] = i
+                          }
+                      }
+                  }
+
+                  addPageAtIndex(index)
+
+                  // Add page from which tap is initiated so it can be removed after tap is done
+                  pagesAddedDictionary[lastPageIndex] = lastPageIndex
+              }
+
+              // Move controller scroll view when tapping menu item
+              let duration: Double = 0
+
+              UIView.animate(withDuration: duration, animations: { () -> Void in
+                  let xOffset : CGFloat = CGFloat(index) * self.controllerScrollView.frame.width
+                  self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
+              })
+          }
+      }
+    
     open func moveToPage(_ index: Int) {
         if index >= 0 && index < controllerArray.count {
             // Update page if changed

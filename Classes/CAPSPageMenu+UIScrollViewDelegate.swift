@@ -84,8 +84,8 @@ extension CAPSPageMenu : UIScrollViewDelegate {
                         
                         if menuScrollView.contentSize.width > self.view.frame.width {
                             var offset : CGPoint = menuScrollView.contentOffset
-                            offset.x = controllerScrollView.contentOffset.x * ratio
-                            menuScrollView.setContentOffset(offset, animated: false)
+                            offset.x = self.menuItems[currentPageIndex].frame.minX-(self.view.frame.width-self.menuItemWidths[currentPageIndex])/2
+                            menuScrollView.scrollRectToVisible(CGRect(origin: offset, size: menuScrollView.frame.size), animated: true)
                         }
                         
                         // Calculate current page
@@ -132,8 +132,8 @@ extension CAPSPageMenu : UIScrollViewDelegate {
                     
                     if menuScrollView.contentSize.width > self.view.frame.width {
                         var offset : CGPoint = menuScrollView.contentOffset
-                        offset.x = controllerScrollView.contentOffset.x * ratio
-                        menuScrollView.setContentOffset(offset, animated: false)
+                        offset.x = self.menuItems[currentPageIndex].frame.minX-(self.view.frame.width-self.menuItemWidths[currentPageIndex])/2
+                        menuScrollView.scrollRectToVisible(CGRect(origin: offset, size: menuScrollView.frame.size), animated: true)
                     }
                 }
             }
@@ -167,7 +167,7 @@ extension CAPSPageMenu : UIScrollViewDelegate {
         }
     }
     
-    func scrollViewDidEndTapScrollingAnimation() {
+    @objc func scrollViewDidEndTapScrollingAnimation() {
         // Call didMoveToPage delegate function
         let currentController = controllerArray[currentPageIndex]
         delegate?.didMoveToPage?(currentController, index: currentPageIndex)

@@ -42,6 +42,8 @@ extension CAPSPageMenu {
                 configuration.menuItemSeparatorRoundEdges = value
             case let .menuItemFont(value):
                 configuration.menuItemFont = value
+           case let .menuSelectedItemFont(value):
+            configuration.menuSelectedItemFont = value
             case let .menuItemSeparatorPercentageHeight(value):
                 configuration.menuItemSeparatorPercentageHeight = value
             case let .menuItemWidth(value):
@@ -82,8 +84,8 @@ extension CAPSPageMenu {
         
         self.view.addSubview(controllerScrollView)
         
-        let controllerScrollView_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[controllerScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let controllerScrollView_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:|[controllerScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let controllerScrollView_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[controllerScrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let controllerScrollView_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:|[controllerScrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         
         self.view.addConstraints(controllerScrollView_constraint_H)
         self.view.addConstraints(controllerScrollView_constraint_V)
@@ -95,8 +97,8 @@ extension CAPSPageMenu {
         
         self.view.addSubview(menuScrollView)
         
-        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[menuScrollView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:[menuScrollView(\(configuration.menuHeight))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let menuScrollView_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[menuScrollView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let menuScrollView_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:[menuScrollView(\(configuration.menuHeight))]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         
         self.view.addConstraints(menuScrollView_constraint_H)
         self.view.addConstraints(menuScrollView_constraint_V)
@@ -109,8 +111,8 @@ extension CAPSPageMenu {
             
             self.view.addSubview(menuBottomHairline)
             
-            let menuBottomHairline_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[menuBottomHairline]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
-            let menuBottomHairline_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(configuration.menuHeight)-[menuBottomHairline(0.5)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
+            let menuBottomHairline_constraint_H:Array = NSLayoutConstraint.constraints(withVisualFormat: "H:|[menuBottomHairline]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
+            let menuBottomHairline_constraint_V:Array = NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(configuration.menuHeight)-[menuBottomHairline(0.5)]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["menuBottomHairline":menuBottomHairline])
             
             self.view.addConstraints(menuBottomHairline_constraint_H)
             self.view.addConstraints(menuBottomHairline_constraint_V)
@@ -186,7 +188,7 @@ extension CAPSPageMenu {
                 let controllerTitle : String? = controller.title
                 
                 let titleText : String = controllerTitle != nil ? controllerTitle! : "Menu \(Int(index) + 1)"
-                let itemWidthRect : CGRect = (titleText as NSString).boundingRect(with: CGSize(width: 1000, height: 1000), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName:configuration.menuItemFont], context: nil)
+                let itemWidthRect : CGRect = (titleText as NSString).boundingRect(with: CGSize(width: 1000, height: 1000), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font:configuration.menuSelectedItemFont], context: nil)
                 configuration.menuItemWidth = itemWidthRect.width
                 
                 menuItemFrame = CGRect(x: totalMenuItemWidthIfDifferentWidths + configuration.menuMargin + (configuration.menuMargin * index), y: 0.0, width: configuration.menuItemWidth, height: configuration.menuHeight)
@@ -226,6 +228,7 @@ extension CAPSPageMenu {
         if menuItems.count > 0 {
             if menuItems[currentPageIndex].titleLabel != nil {
                 menuItems[currentPageIndex].titleLabel!.textColor = configuration.selectedMenuItemLabelColor
+                menuItems[currentPageIndex].titleLabel!.font = configuration.menuSelectedItemFont
             }
         }
         

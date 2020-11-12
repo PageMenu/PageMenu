@@ -85,6 +85,7 @@ NSString * const CAPSPageMenuOptionUnselectedMenuItemLabelColor         = @"unse
 NSString * const CAPSPageMenuOptionUseMenuLikeSegmentedControl          = @"useMenuLikeSegmentedControl";
 NSString * const CAPSPageMenuOptionMenuItemSeparatorRoundEdges          = @"menuItemSeparatorRoundEdges";
 NSString * const CAPSPageMenuOptionMenuItemFont                         = @"menuItemFont";
+NSString * const CAPSPageMenuOptionMenuSelectedItemFont                 = @"menuSelectedItemFont";
 NSString * const CAPSPageMenuOptionMenuItemSeparatorPercentageHeight    = @"menuItemSeparatorPercentageHeight";
 NSString * const CAPSPageMenuOptionMenuItemWidth                        = @"menuItemWidth";
 NSString * const CAPSPageMenuOptionEnableHorizontalBounce               = @"enableHorizontalBounce";
@@ -135,6 +136,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 _menuItemSeparatorRoundEdges = [options[key] boolValue];
             } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemFont]) {
                 _menuItemFont = options[key];
+            } else if ([key isEqualToString:CAPSPageMenuOptionMenuSelectedItemFont]) {
+                _menuSelectedItemFont = options[key];
             } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemSeparatorPercentageHeight]) {
                 _menuItemSeparatorPercentageHeight = [options[key] floatValue];
             } else if ([key isEqualToString:CAPSPageMenuOptionMenuItemWidth]) {
@@ -197,6 +200,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _menuItemSeparatorColor       = [UIColor lightGrayColor];
     
     _menuItemFont = [UIFont systemFontOfSize:15.0];
+    _menuSelectedItemFont = [UIFont systemFontOfSize:15.0];
     _menuItemSeparatorPercentageHeight = 0.2;
     _menuItemSeparatorWidth            = 0.5;
     _menuItemSeparatorRoundEdges       = NO;
@@ -332,7 +336,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             
             NSString *titleText = controllerTitle != nil ? controllerTitle : [NSString stringWithFormat:@"Menu %.0f", index + 1];
             
-            CGRect itemWidthRect = [titleText boundingRectWithSize:CGSizeMake(1000, 1000) options: NSStringDrawingUsesLineFragmentOrigin attributes: @{NSFontAttributeName:_menuItemFont} context: nil];
+            CGRect itemWidthRect = [titleText boundingRectWithSize:CGSizeMake(1000, 1000) options: NSStringDrawingUsesLineFragmentOrigin attributes: @{NSFontAttributeName:_menuSelectedItemFont} context: nil];
             
             _menuItemWidth = itemWidthRect.size.width;
             
@@ -399,6 +403,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     if (_mutableMenuItems.count > 0) {
         if ([_mutableMenuItems[_currentPageIndex] titleLabel] != nil) {
             [_mutableMenuItems[_currentPageIndex] titleLabel].textColor = _selectedMenuItemLabelColor;
+            [_mutableMenuItems[_currentPageIndex] titleLabel].font = _menuSelectedItemFont;
         }
     }
     
@@ -653,6 +658,8 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                 if ([self.menuItems[self.lastPageIndex] titleLabel] != nil && [self.menuItems[self.currentPageIndex] titleLabel] != nil) {
                     [self.menuItems[self.lastPageIndex] titleLabel].textColor = self.unselectedMenuItemLabelColor;
                     [self.menuItems[self.currentPageIndex] titleLabel].textColor = self.selectedMenuItemLabelColor;
+                    [self.menuItems[self.lastPageIndex] titleLabel].font = self.menuItemFont;
+                    [self.menuItems[self.currentPageIndex] titleLabel].font = self.menuSelectedItemFont;
                 }
             }
         }];
