@@ -24,10 +24,10 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<-", style: UIBarButtonItemStyle.done, target: self, action: #selector(ViewController.didTapGoToLeft))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "->", style: UIBarButtonItemStyle.done, target: self, action: #selector(ViewController.didTapGoToRight))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<-", style: UIBarButtonItem.Style.done, target: self, action: #selector(ViewController.didTapGoToLeft))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "->", style: UIBarButtonItem.Style.done, target: self, action: #selector(ViewController.didTapGoToRight))
         
         // MARK: - Scroll menu setup
         
@@ -62,13 +62,13 @@ class ViewController: UIViewController {
         // Initialize scroll menu
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height), pageMenuOptions: parameters)
 
-		self.addChildViewController(pageMenu!)
+        self.addChild(pageMenu!)
         self.view.addSubview(pageMenu!.view)
 		
-		pageMenu!.didMove(toParentViewController: self)
+        pageMenu!.didMove(toParent: self)
     }
     
-    func didTapGoToLeft() {
+    @objc func didTapGoToLeft() {
         let currentIndex = pageMenu!.currentPageIndex
         
         if currentIndex > 0 {
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func didTapGoToRight() {
+    @objc func didTapGoToRight() {
         let currentIndex = pageMenu!.currentPageIndex
         
         if currentIndex < pageMenu!.controllerArray.count {
