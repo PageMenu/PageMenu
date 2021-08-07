@@ -73,8 +73,8 @@ class ContactsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("select contact row")
-        let contactPrompt = UIAlertController(title: "Contact Selected", message: "You have selected a contact.", preferredStyle: UIAlertControllerStyle.alert)
-        contactPrompt.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+        let contactPrompt = UIAlertController(title: "Contact Selected", message: "You have selected a contact.", preferredStyle: UIAlertController.Style.alert)
+        contactPrompt.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
         present(contactPrompt, animated: true, completion: nil)
     }
 }
